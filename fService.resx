@@ -3719,7 +3719,7 @@
   <data name="btnClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        jQAAAI0Bxmb3pAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACHSURBVDhPrZNB
+        jAAAAIwBFCEVQAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACHSURBVDhPrZNB
         DoAgDASL8Uni2UfwRw8+srIkKJUCTfCwgW539lbijQL75eSDVmYmk5AFE1lKH++Yd3eZSpBBFkxkpTEq
         UbLNhQWGPwyMdm9BK9iBIVkAfYEODInhUVnSgaHKSJoqKGG85V8pEUMFY9a8gunDht0YzmpkbHCWkv3h
         mKbOmcINC6ZQK3EC/NgAAAAASUVORK5CYII=
@@ -4890,6 +4890,21 @@
         fQelTjS35wRsI+Mc6KM3Y7AMCKIUhH62PnPxo7KyjMs8nR0AdJJ3VXvYk5LySQStJlzLmSbZj91D3YF/
         v/IBHGpd3NEVRUk+YY0nTL7xyrn0iyDf/v8AqYZ3bUzmpJNST8nPk127ejEv6P2fIbb5p+Vp8z43IP8A
         /CHsv+j2fZeTi+d/y+N9I/H95P8A8C+y/wCp2/8AofIYez7OXtdr2Y9l/XxP2u2fadrp+Rf/2Q==
+</value>
+  </data>
+  <data name="btnErase.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAK8AAAAoCAYAAACIJ6oVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIVSURBVHhe7dwhTCNBFMbxcWAuQSBIMBcUDhRBIEgwl1Pg
+        kBgcCoVEgcLhTlxQ4KouZ0gQCBIMOCQSiUQ+9ttpt1N4gIEyL/mT/MLs2y3qy/A6nWlqfgwIyi0CEbhF
+        IAK3CETgFoEI3CIQgVtsTU4k2/yd7PQo2cVJsvvzZHYHfB1lTFnrHSfb2kg29cPPZp9btF8r+Q8puArw
+        6lKyn7P+s8BnUcaUtfW1ZH8PcgYVYu/ZxmhBSdeL/v9JNjM9eg8Ytw/yOLzQgze9d5MOfAt1Aldnr/77
+        Dy+UcIKLWqmdUD9c1PJAydbUXNwAqnO4m2xvu7vOqwpqjOlxUTtlVa3t/Fx7nVsFtQzlQ0CtNPNqBm7G
+        eU1NSxPlA0CtFufz7NuMk93966ZhoHpqHZ5u23Gyx+sPP8kAqqJP45rf3QAIg/AiLMKLsAgvwiK8CIvw
+        IizCi7C68GrBVwu/5U2gZl14tSmHUxKIpAuvtkJqS2R5E6iVtjJoS0MzHtmlA1Sv2AWZWwYlmb4XERS7
+        IHNhfycbXAM1GnwVQ/86DzTr6nzQ8sLwQaAmOumjDqHYATm8qUa4OGIBVEPB1eSqQ5hFfeSinXkV4OKQ
+        G/Ct1N9qxn0RXHlVaFsIrT4o6Xpnx8FMjJtag0F/qzdobxyWcIstJV1LEg+XeVEYGBed7hl81ZiXzT63
+        CETgFoEI3CIQgVsEInCLQOWSPQOCRPUKpFNg4wAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="btnInsert.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

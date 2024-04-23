@@ -35,8 +35,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fService));
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.groupService = new System.Windows.Forms.GroupBox();
-            this.comboboxID = new MetroFramework.Controls.MetroComboBox();
-            this.comboBoxServiceType = new MetroFramework.Controls.MetroComboBox();
             this.txbName = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txbPrice = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label16 = new System.Windows.Forms.Label();
@@ -47,8 +45,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txbSearch = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnCancel = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnSearch = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btnCancel = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridViewService = new System.Windows.Forms.DataGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,6 +71,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.saveService = new System.Windows.Forms.SaveFileDialog();
+            this.comboBoxServiceType = new MetroFramework.Controls.MetroComboBox();
+            this.comboboxID = new MetroFramework.Controls.MetroComboBox();
+            this.btnErase = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupService.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -110,40 +111,6 @@
             this.groupService.TabIndex = 41;
             this.groupService.TabStop = false;
             this.groupService.Text = "Thông tin dịch vụ";
-            // 
-            // comboboxID
-            // 
-            this.comboboxID.BackColor = System.Drawing.Color.Transparent;
-            this.comboboxID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboboxID.ForeColor = System.Drawing.Color.Black;
-            this.comboboxID.FormattingEnabled = true;
-            this.comboboxID.ItemHeight = 24;
-            this.comboboxID.Location = new System.Drawing.Point(15, 46);
-            this.comboboxID.Name = "comboboxID";
-            this.comboboxID.Size = new System.Drawing.Size(175, 30);
-            this.comboboxID.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.comboboxID.TabIndex = 61;
-            this.comboboxID.UseCustomBackColor = true;
-            this.comboboxID.UseCustomForeColor = true;
-            this.comboboxID.UseSelectable = true;
-            this.comboboxID.UseStyleColors = true;
-            // 
-            // comboBoxServiceType
-            // 
-            this.comboBoxServiceType.BackColor = System.Drawing.Color.Transparent;
-            this.comboBoxServiceType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxServiceType.ForeColor = System.Drawing.Color.Black;
-            this.comboBoxServiceType.FormattingEnabled = true;
-            this.comboBoxServiceType.ItemHeight = 24;
-            this.comboBoxServiceType.Location = new System.Drawing.Point(15, 157);
-            this.comboBoxServiceType.Name = "comboBoxServiceType";
-            this.comboBoxServiceType.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxServiceType.Style = MetroFramework.MetroColorStyle.Yellow;
-            this.comboBoxServiceType.TabIndex = 56;
-            this.comboBoxServiceType.UseCustomBackColor = true;
-            this.comboBoxServiceType.UseCustomForeColor = true;
-            this.comboBoxServiceType.UseSelectable = true;
-            this.comboBoxServiceType.UseStyleColors = true;
             // 
             // txbName
             // 
@@ -302,6 +269,32 @@
             this.label5.TabIndex = 28;
             this.label5.Text = "Tên dịch vụ:";
             // 
+            // btnSearch
+            // 
+            this.btnSearch.ActiveBorderThickness = 1;
+            this.btnSearch.ActiveCornerRadius = 20;
+            this.btnSearch.ActiveFillColor = System.Drawing.Color.Gold;
+            this.btnSearch.ActiveForecolor = System.Drawing.Color.Black;
+            this.btnSearch.ActiveLineColor = System.Drawing.Color.Gold;
+            this.btnSearch.BackColor = System.Drawing.Color.Black;
+            this.btnSearch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSearch.BackgroundImage")));
+            this.btnSearch.ButtonText = "Tìm Kiếm";
+            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.ForeColor = System.Drawing.Color.Gold;
+            this.btnSearch.IdleBorderThickness = 1;
+            this.btnSearch.IdleCornerRadius = 20;
+            this.btnSearch.IdleFillColor = System.Drawing.Color.Black;
+            this.btnSearch.IdleForecolor = System.Drawing.Color.Gold;
+            this.btnSearch.IdleLineColor = System.Drawing.Color.Gold;
+            this.btnSearch.Location = new System.Drawing.Point(235, 37);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(175, 40);
+            this.btnSearch.TabIndex = 46;
+            this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // btnCancel
             // 
             this.btnCancel.ActiveBorderThickness = 1;
@@ -328,32 +321,6 @@
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.ActiveBorderThickness = 1;
-            this.btnSearch.ActiveCornerRadius = 20;
-            this.btnSearch.ActiveFillColor = System.Drawing.Color.Gold;
-            this.btnSearch.ActiveForecolor = System.Drawing.Color.Black;
-            this.btnSearch.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btnSearch.BackColor = System.Drawing.Color.Black;
-            this.btnSearch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSearch.BackgroundImage")));
-            this.btnSearch.ButtonText = "Tìm Kiếm";
-            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.ForeColor = System.Drawing.Color.Gold;
-            this.btnSearch.IdleBorderThickness = 1;
-            this.btnSearch.IdleCornerRadius = 20;
-            this.btnSearch.IdleFillColor = System.Drawing.Color.Black;
-            this.btnSearch.IdleForecolor = System.Drawing.Color.Gold;
-            this.btnSearch.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnSearch.Location = new System.Drawing.Point(235, 37);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(175, 40);
-            this.btnSearch.TabIndex = 46;
-            this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // groupBox1
             // 
@@ -603,6 +570,7 @@
             // groupBox2
             // 
             this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
+            this.groupBox2.Controls.Add(this.btnErase);
             this.groupBox2.Controls.Add(this.btnInsert);
             this.groupBox2.Controls.Add(this.btnCLose1);
             this.groupBox2.Controls.Add(this.btnUpdate);
@@ -661,7 +629,7 @@
             this.btnUpdate.IdleFillColor = System.Drawing.Color.Black;
             this.btnUpdate.IdleForecolor = System.Drawing.Color.Gold;
             this.btnUpdate.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnUpdate.Location = new System.Drawing.Point(21, 92);
+            this.btnUpdate.Location = new System.Drawing.Point(21, 83);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(175, 40);
@@ -700,6 +668,67 @@
             // 
             this.saveService.FileName = "Danh sách dịch vụ";
             this.saveService.Filter = "Excel File(*.xls)|*.xls|Excel File (*.xlsx) |.xlsx|PDF File(*.pdf)|*.pdf";
+            // 
+            // comboBoxServiceType
+            // 
+            this.comboBoxServiceType.BackColor = System.Drawing.Color.Transparent;
+            this.comboBoxServiceType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxServiceType.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxServiceType.FormattingEnabled = true;
+            this.comboBoxServiceType.ItemHeight = 24;
+            this.comboBoxServiceType.Location = new System.Drawing.Point(15, 163);
+            this.comboBoxServiceType.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxServiceType.Name = "comboBoxServiceType";
+            this.comboBoxServiceType.Size = new System.Drawing.Size(175, 30);
+            this.comboBoxServiceType.TabIndex = 62;
+            this.comboBoxServiceType.UseCustomBackColor = true;
+            this.comboBoxServiceType.UseCustomForeColor = true;
+            this.comboBoxServiceType.UseSelectable = true;
+            this.comboBoxServiceType.UseStyleColors = true;
+            // 
+            // comboboxID
+            // 
+            this.comboboxID.BackColor = System.Drawing.Color.Transparent;
+            this.comboboxID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboboxID.ForeColor = System.Drawing.Color.Gold;
+            this.comboboxID.FormattingEnabled = true;
+            this.comboboxID.ItemHeight = 24;
+            this.comboboxID.Location = new System.Drawing.Point(20, 49);
+            this.comboboxID.Margin = new System.Windows.Forms.Padding(4);
+            this.comboboxID.Name = "comboboxID";
+            this.comboboxID.Size = new System.Drawing.Size(170, 30);
+            this.comboboxID.TabIndex = 63;
+            this.comboboxID.UseCustomBackColor = true;
+            this.comboboxID.UseCustomForeColor = true;
+            this.comboboxID.UseSelectable = true;
+            this.comboboxID.UseStyleColors = true;
+            // 
+            // btnErase
+            // 
+            this.btnErase.ActiveBorderThickness = 1;
+            this.btnErase.ActiveCornerRadius = 20;
+            this.btnErase.ActiveFillColor = System.Drawing.Color.Gold;
+            this.btnErase.ActiveForecolor = System.Drawing.Color.Black;
+            this.btnErase.ActiveLineColor = System.Drawing.Color.Gold;
+            this.btnErase.BackColor = System.Drawing.Color.Black;
+            this.btnErase.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnErase.BackgroundImage")));
+            this.btnErase.ButtonText = "Xóa";
+            this.btnErase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnErase.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnErase.ForeColor = System.Drawing.Color.Gold;
+            this.btnErase.IdleBorderThickness = 1;
+            this.btnErase.IdleCornerRadius = 20;
+            this.btnErase.IdleFillColor = System.Drawing.Color.Black;
+            this.btnErase.IdleForecolor = System.Drawing.Color.Gold;
+            this.btnErase.IdleLineColor = System.Drawing.Color.Gold;
+            this.btnErase.Location = new System.Drawing.Point(21, 131);
+            this.btnErase.Margin = new System.Windows.Forms.Padding(4);
+            this.btnErase.Name = "btnErase";
+            this.btnErase.Size = new System.Drawing.Size(175, 40);
+            this.btnErase.TabIndex = 53;
+            this.btnErase.TabStop = false;
+            this.btnErase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
             // 
             // fService
             // 
@@ -769,7 +798,6 @@
         private System.Windows.Forms.Label label6;
         private Bunifu.Framework.UI.BunifuThinButton2 btnUpdate;
         private Bunifu.Framework.UI.BunifuMetroTextbox txbPrice;
-        private MetroFramework.Controls.MetroComboBox comboBoxServiceType;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label20;
         private Bunifu.Framework.UI.BunifuThinButton2 btnCLose1;
@@ -783,5 +811,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameServiceType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdServiceType;
         private MetroFramework.Controls.MetroComboBox comboboxID;
+        private MetroFramework.Controls.MetroComboBox comboBoxServiceType;
+        private Bunifu.Framework.UI.BunifuThinButton2 btnErase;
     }
 }

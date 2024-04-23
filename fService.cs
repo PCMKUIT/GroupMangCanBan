@@ -190,5 +190,34 @@ namespace HotelManager
         {
             this.Close();
         }
+
+        private void btnErase_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Có chắc là muốn xóa dịch vụ này?", "Có", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                txbName.DataBindings.Clear();
+                txbPrice.DataBindings.Clear();
+                if (con == null) { con = new SqlConnection(connectstring); }
+                if (con.State == System.Data.ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                string valueToDelete = comboboxID.Text.Trim();
+                string query = $"DELETE FROM Service WHERE IDService = @ValueToDelete";
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@ValueToDelete", valueToDelete);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Dịch vụ đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                if (btnCancel.Visible == false)
+                    LoadFullService(GetFullService());
+                else
+                    BtnCancel_Click(null, null);
+            }
+
+        }
     }
 }
