@@ -35,6 +35,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fService));
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.groupService = new System.Windows.Forms.GroupBox();
+            this.comboboxID = new MetroFramework.Controls.MetroComboBox();
+            this.comboBoxServiceType = new MetroFramework.Controls.MetroComboBox();
             this.txbName = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txbPrice = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label16 = new System.Windows.Forms.Label();
@@ -66,14 +68,12 @@
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnErase = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnCLose1 = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnUpdate = new Bunifu.Framework.UI.BunifuThinButton2();
             this.label6 = new System.Windows.Forms.Label();
             this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.saveService = new System.Windows.Forms.SaveFileDialog();
-            this.comboBoxServiceType = new MetroFramework.Controls.MetroComboBox();
-            this.comboboxID = new MetroFramework.Controls.MetroComboBox();
-            this.btnErase = new Bunifu.Framework.UI.BunifuThinButton2();
             this.groupService.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -111,6 +111,42 @@
             this.groupService.TabIndex = 41;
             this.groupService.TabStop = false;
             this.groupService.Text = "Thông tin dịch vụ";
+            // 
+            // comboboxID
+            // 
+            this.comboboxID.BackColor = System.Drawing.Color.Transparent;
+            this.comboboxID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboboxID.ForeColor = System.Drawing.Color.Gold;
+            this.comboboxID.FormattingEnabled = true;
+            this.comboboxID.ItemHeight = 24;
+            this.comboboxID.Location = new System.Drawing.Point(20, 49);
+            this.comboboxID.Margin = new System.Windows.Forms.Padding(4);
+            this.comboboxID.Name = "comboboxID";
+            this.comboboxID.Size = new System.Drawing.Size(170, 30);
+            this.comboboxID.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.comboboxID.TabIndex = 63;
+            this.comboboxID.UseCustomBackColor = true;
+            this.comboboxID.UseCustomForeColor = true;
+            this.comboboxID.UseSelectable = true;
+            this.comboboxID.UseStyleColors = true;
+            // 
+            // comboBoxServiceType
+            // 
+            this.comboBoxServiceType.BackColor = System.Drawing.Color.Transparent;
+            this.comboBoxServiceType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxServiceType.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxServiceType.FormattingEnabled = true;
+            this.comboBoxServiceType.ItemHeight = 24;
+            this.comboBoxServiceType.Location = new System.Drawing.Point(15, 163);
+            this.comboBoxServiceType.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxServiceType.Name = "comboBoxServiceType";
+            this.comboBoxServiceType.Size = new System.Drawing.Size(175, 30);
+            this.comboBoxServiceType.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.comboBoxServiceType.TabIndex = 62;
+            this.comboBoxServiceType.UseCustomBackColor = true;
+            this.comboBoxServiceType.UseCustomForeColor = true;
+            this.comboBoxServiceType.UseSelectable = true;
+            this.comboBoxServiceType.UseStyleColors = true;
             // 
             // txbName
             // 
@@ -365,11 +401,11 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Gold;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewService.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewService.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewService.GridColor = System.Drawing.Color.Gold;
+            this.dataGridViewService.GridColor = System.Drawing.Color.Black;
             this.dataGridViewService.Location = new System.Drawing.Point(3, 73);
             this.dataGridViewService.Name = "dataGridViewService";
             this.dataGridViewService.ReadOnly = true;
@@ -584,6 +620,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chức Năng";
             // 
+            // btnErase
+            // 
+            this.btnErase.ActiveBorderThickness = 1;
+            this.btnErase.ActiveCornerRadius = 20;
+            this.btnErase.ActiveFillColor = System.Drawing.Color.Gold;
+            this.btnErase.ActiveForecolor = System.Drawing.Color.Black;
+            this.btnErase.ActiveLineColor = System.Drawing.Color.Gold;
+            this.btnErase.BackColor = System.Drawing.Color.Black;
+            this.btnErase.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnErase.BackgroundImage")));
+            this.btnErase.ButtonText = "Xóa";
+            this.btnErase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnErase.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnErase.ForeColor = System.Drawing.Color.Gold;
+            this.btnErase.IdleBorderThickness = 1;
+            this.btnErase.IdleCornerRadius = 20;
+            this.btnErase.IdleFillColor = System.Drawing.Color.Black;
+            this.btnErase.IdleForecolor = System.Drawing.Color.Gold;
+            this.btnErase.IdleLineColor = System.Drawing.Color.Gold;
+            this.btnErase.Location = new System.Drawing.Point(21, 131);
+            this.btnErase.Margin = new System.Windows.Forms.Padding(4);
+            this.btnErase.Name = "btnErase";
+            this.btnErase.Size = new System.Drawing.Size(175, 40);
+            this.btnErase.TabIndex = 53;
+            this.btnErase.TabStop = false;
+            this.btnErase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
+            // 
             // btnCLose1
             // 
             this.btnCLose1.ActiveBorderThickness = 1;
@@ -668,67 +731,6 @@
             // 
             this.saveService.FileName = "Danh sách dịch vụ";
             this.saveService.Filter = "Excel File(*.xls)|*.xls|Excel File (*.xlsx) |.xlsx|PDF File(*.pdf)|*.pdf";
-            // 
-            // comboBoxServiceType
-            // 
-            this.comboBoxServiceType.BackColor = System.Drawing.Color.Transparent;
-            this.comboBoxServiceType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxServiceType.ForeColor = System.Drawing.Color.Gold;
-            this.comboBoxServiceType.FormattingEnabled = true;
-            this.comboBoxServiceType.ItemHeight = 24;
-            this.comboBoxServiceType.Location = new System.Drawing.Point(15, 163);
-            this.comboBoxServiceType.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxServiceType.Name = "comboBoxServiceType";
-            this.comboBoxServiceType.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxServiceType.TabIndex = 62;
-            this.comboBoxServiceType.UseCustomBackColor = true;
-            this.comboBoxServiceType.UseCustomForeColor = true;
-            this.comboBoxServiceType.UseSelectable = true;
-            this.comboBoxServiceType.UseStyleColors = true;
-            // 
-            // comboboxID
-            // 
-            this.comboboxID.BackColor = System.Drawing.Color.Transparent;
-            this.comboboxID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboboxID.ForeColor = System.Drawing.Color.Gold;
-            this.comboboxID.FormattingEnabled = true;
-            this.comboboxID.ItemHeight = 24;
-            this.comboboxID.Location = new System.Drawing.Point(20, 49);
-            this.comboboxID.Margin = new System.Windows.Forms.Padding(4);
-            this.comboboxID.Name = "comboboxID";
-            this.comboboxID.Size = new System.Drawing.Size(170, 30);
-            this.comboboxID.TabIndex = 63;
-            this.comboboxID.UseCustomBackColor = true;
-            this.comboboxID.UseCustomForeColor = true;
-            this.comboboxID.UseSelectable = true;
-            this.comboboxID.UseStyleColors = true;
-            // 
-            // btnErase
-            // 
-            this.btnErase.ActiveBorderThickness = 1;
-            this.btnErase.ActiveCornerRadius = 20;
-            this.btnErase.ActiveFillColor = System.Drawing.Color.Gold;
-            this.btnErase.ActiveForecolor = System.Drawing.Color.Black;
-            this.btnErase.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btnErase.BackColor = System.Drawing.Color.Black;
-            this.btnErase.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnErase.BackgroundImage")));
-            this.btnErase.ButtonText = "Xóa";
-            this.btnErase.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnErase.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnErase.ForeColor = System.Drawing.Color.Gold;
-            this.btnErase.IdleBorderThickness = 1;
-            this.btnErase.IdleCornerRadius = 20;
-            this.btnErase.IdleFillColor = System.Drawing.Color.Black;
-            this.btnErase.IdleForecolor = System.Drawing.Color.Gold;
-            this.btnErase.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnErase.Location = new System.Drawing.Point(21, 131);
-            this.btnErase.Margin = new System.Windows.Forms.Padding(4);
-            this.btnErase.Name = "btnErase";
-            this.btnErase.Size = new System.Drawing.Size(175, 40);
-            this.btnErase.TabIndex = 53;
-            this.btnErase.TabStop = false;
-            this.btnErase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
             // 
             // fService
             // 

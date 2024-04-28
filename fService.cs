@@ -24,11 +24,14 @@ namespace HotelManager
             dataGridViewService.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F);
         }
         private void LoadFullService(DataTable table)
-        {        
-            dataGridViewService.DataSource = table;
-            comboboxID.DataSource = table;
-            txbName.DataBindings.Add("Text", dataGridViewService.DataSource, "name");
-            txbPrice.DataBindings.Add("Text", dataGridViewService.DataSource, "price_new");
+        {
+            BindingSource source = new BindingSource();
+            source.DataSource = table;
+            dataGridViewService.DataSource = source;
+            comboboxID.DataSource = source;
+            bindingService.BindingSource = source;
+            txbName.DataBindings.Add("Text", source, "name");
+            txbPrice.DataBindings.Add("Text", source, "price_new");
         }
         private DataTable GetFullService()
         {
@@ -118,11 +121,13 @@ namespace HotelManager
                 cmd.Parameters.AddWithValue("@PriceService", txbPrice.Text.Trim());
                 cmd.Parameters.AddWithValue("@IDServiceType", ServiceTypeID);
                 int rowsAffected = cmd.ExecuteNonQuery();
+                con.Close();
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (btnCancel.Visible == false)
-                    {
+                    {   
+                        
                         LoadFullService(GetFullService());
                     }
                     else
@@ -132,7 +137,6 @@ namespace HotelManager
                 {
                     MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                con.Close();
             }
         }
 
@@ -210,6 +214,7 @@ namespace HotelManager
                 int rowsAffected = cmd.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
+                    con.Close();
                     MessageBox.Show("Dịch vụ đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 if (btnCancel.Visible == false)
