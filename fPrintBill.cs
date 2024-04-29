@@ -86,7 +86,20 @@ namespace HotelManager
             listViewItemTotalPrice.SubItems.Add(_subItem3);
             listViewItemTotalPrice.SubItems.Add(subItemTotalPrice);
             listViewUseService.Items.Add(listViewItemTotalPrice);
-
+ listViewUseService.Items.Add(listViewItemTotalPrice);
+ // cập nhật Service  Price cho bill
+ /*
+ SqlCommand cmd1;
+ cmd1 = new SqlCommand();
+ cmd1.CommandType = System.Data.CommandType.Text;
+ cmd1.CommandText = " update Bill set ServicePrice = " + _totalPrice + " where IDBill= '"+idBill+"'  ";
+ cmd1.Connection = con;
+ int k = cmd1.ExecuteNonQuery();
+ if ( k > 0)
+ {
+     MessageBox.Show("cập nhật service price thành công");
+ } 
+ */
             id = 1;
             con.Close();
         }
@@ -107,6 +120,24 @@ namespace HotelManager
             SqlDataReader reader = cmd.ExecuteReader();
             dataTable.Load(reader);
             DataRow data = dataTable.Rows[0];
+            DateTime dateCheckIn = (DateTime)data["NgayDen"];
+            DateTime dateCheckOut = (DateTime)data["NgayDi"];
+            int days = dateCheckOut.Subtract(dateCheckIn).Days;
+ /*
+ SqlCommand cmd2;
+ cmd2 = new SqlCommand();
+ cmd2.CommandType = System.Data.CommandType.Text;
+ int totalprice = ((int)data["DonGia"] * days + (int)data["TienDichVu"] + (int)data["PhuThu"]);
+ int roomprice = (int)data["DonGia"] * days;
+ cmd2.CommandText = " update Bill set RoomPrice = " + roomprice + ", TotalPrice ="+ totalprice + " "+
+                                " where IDBill= '" + idBill + "'  ";
+ cmd2.Connection = con;
+ int k = cmd2.ExecuteNonQuery();
+ if (k > 0)
+ {
+     MessageBox.Show("cập nhật room price thành công");
+ }
+ */
             CultureInfo cultureInfo = new CultureInfo("vi-vn");
             lblCustomerName.Text = data["HoTen"].ToString();
             lblIDCard.Text = data["CMND"].ToString();
@@ -118,9 +149,6 @@ namespace HotelManager
             lblRoomTypeName.Text = data["LoaiPhong"].ToString();
             lblRoomPrice_.Text = ((int)data["DonGia"]).ToString("c0", cultureInfo);
             lblDateCheckIn.Text = ((DateTime)data["NgayDen"]).ToString().Split(' ')[0];
-            DateTime dateCheckIn = (DateTime)data["NgayDen"];
-            DateTime dateCheckOut = (DateTime)data["NgayDi"];
-            int days = dateCheckOut.Subtract(dateCheckIn).Days;
             lblDays.Text = days.ToString();
             lblSurcharge.Text = ((int)data["PhuThu"]).ToString("c0", cultureInfo);
             lblServicePrice.Text = ((int)data["TienDichVu"]).ToString("c0", cultureInfo);
