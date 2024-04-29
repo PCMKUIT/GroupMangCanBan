@@ -158,5 +158,11 @@ namespace HotelManager
             lblDiscount.Text = ((int)data["GiamGia"]).ToString() + " %";
             con.Close();
         }
+        private void btnClose_Click(object sender, EventArgs e)
+{
+    fBill fb = new fBill();
+    fb.Show();
+    this.Hide(); 
+}
     }
 }
