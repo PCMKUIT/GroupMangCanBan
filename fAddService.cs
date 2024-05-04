@@ -42,17 +42,18 @@ namespace HotelManager
         private void btnAddCustomer_Click(object sender, System.EventArgs e)
         {
             if (txbName.Text == "")
-            { MessageBox.Show("Tên dịch vụ chưa được nhập");
+            {
+                cMessageBox.Show("Tên dịch vụ chưa được nhập");
                 return;
             }
             if (txbPrice.Text == "" || !(int.TryParse(txbPrice.Text.Trim(), out int result)))
             {
-                MessageBox.Show("Giá dịch vụ không hợp lệ");
+                cMessageBox.Show("Giá dịch vụ không hợp lệ");
                 return;
             }
             if (txbPrice.Text.Length < 3)
             {
-                MessageBox.Show("Giá dịch vụ quá nhỏ ");
+                cMessageBox.Show("Giá dịch vụ quá nhỏ ");
                 return;
             }
             string countQuery = "SELECT COUNT(*) FROM Service";
@@ -87,11 +88,11 @@ namespace HotelManager
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Thêm thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Thêm thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             con.Close();
         }

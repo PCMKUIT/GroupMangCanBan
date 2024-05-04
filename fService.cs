@@ -87,7 +87,7 @@ namespace HotelManager
 
         private void btnUpdate_Click(object sender, System.EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có muốn cập nhật lại dịch vụ?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            DialogResult result = cMessageBox.Show("Bạn có muốn cập nhật lại dịch vụ?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
            if (result == DialogResult.OK)
                 UpdateService();
             comboboxID.Focus();
@@ -98,11 +98,11 @@ namespace HotelManager
             txbName.DataBindings.Clear();
             txbPrice.DataBindings.Clear();
             if (comboboxID.Text == string.Empty)
-                MessageBox.Show("Dịch vụ không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                cMessageBox.Show("Dịch vụ không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             else
             if (txbName.Text == "" || txbPrice.Text == "" || comboBoxServiceType.SelectedItem.ToString() == "")
             {
-                MessageBox.Show("Không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cMessageBox.Show("Không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else
@@ -124,7 +124,7 @@ namespace HotelManager
                 con.Close();
                 if (rowsAffected > 0)
                 {
-                    MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cMessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (btnCancel.Visible == false)
                     {   
                         
@@ -135,7 +135,7 @@ namespace HotelManager
                 }
                 else
                 {
-                    MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace HotelManager
             string searchValue = txbSearch.Text.Trim();
             if (searchValue == string.Empty)
             {
-                MessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return GetFullService();
             }
             string query = "Select Service.IDService as id, Service.NameService as name, PriceService as price_new, ServiceType.NameServiceType as nameServiceType FROM Service, ServiceType where ServiceType.IDServiceType = Service.IDServiceType and NameService like '%'+@SearchValue+'%'";
@@ -193,36 +193,6 @@ namespace HotelManager
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnErase_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Có chắc là muốn xóa dịch vụ này?", "Có", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                txbName.DataBindings.Clear();
-                txbPrice.DataBindings.Clear();
-                if (con == null) { con = new SqlConnection(connectstring); }
-                if (con.State == System.Data.ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-                string valueToDelete = comboboxID.Text.Trim();
-                string query = $"DELETE FROM Service WHERE IDService = @ValueToDelete";
-                cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ValueToDelete", valueToDelete);
-                int rowsAffected = cmd.ExecuteNonQuery();
-                if (rowsAffected > 0)
-                {
-                    con.Close();
-                    MessageBox.Show("Dịch vụ đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                if (btnCancel.Visible == false)
-                    LoadFullService(GetFullService());
-                else
-                    BtnCancel_Click(null, null);
-            }
-
         }
     }
 }

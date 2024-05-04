@@ -68,7 +68,6 @@
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnErase = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnCLose1 = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnUpdate = new Bunifu.Framework.UI.BunifuThinButton2();
             this.label6 = new System.Windows.Forms.Label();
@@ -606,7 +605,6 @@
             // groupBox2
             // 
             this.groupBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox2.BackgroundImage")));
-            this.groupBox2.Controls.Add(this.btnErase);
             this.groupBox2.Controls.Add(this.btnInsert);
             this.groupBox2.Controls.Add(this.btnCLose1);
             this.groupBox2.Controls.Add(this.btnUpdate);
@@ -619,33 +617,6 @@
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chức Năng";
-            // 
-            // btnErase
-            // 
-            this.btnErase.ActiveBorderThickness = 1;
-            this.btnErase.ActiveCornerRadius = 20;
-            this.btnErase.ActiveFillColor = System.Drawing.Color.Gold;
-            this.btnErase.ActiveForecolor = System.Drawing.Color.Black;
-            this.btnErase.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btnErase.BackColor = System.Drawing.Color.Black;
-            this.btnErase.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnErase.BackgroundImage")));
-            this.btnErase.ButtonText = "Xóa";
-            this.btnErase.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnErase.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnErase.ForeColor = System.Drawing.Color.Gold;
-            this.btnErase.IdleBorderThickness = 1;
-            this.btnErase.IdleCornerRadius = 20;
-            this.btnErase.IdleFillColor = System.Drawing.Color.Black;
-            this.btnErase.IdleForecolor = System.Drawing.Color.Gold;
-            this.btnErase.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnErase.Location = new System.Drawing.Point(21, 131);
-            this.btnErase.Margin = new System.Windows.Forms.Padding(4);
-            this.btnErase.Name = "btnErase";
-            this.btnErase.Size = new System.Drawing.Size(175, 40);
-            this.btnErase.TabIndex = 53;
-            this.btnErase.TabStop = false;
-            this.btnErase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnErase.Click += new System.EventHandler(this.btnErase_Click);
             // 
             // btnCLose1
             // 
@@ -814,6 +785,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdServiceType;
         private MetroFramework.Controls.MetroComboBox comboboxID;
         private MetroFramework.Controls.MetroComboBox comboBoxServiceType;
-        private Bunifu.Framework.UI.BunifuThinButton2 btnErase;
     }
 }

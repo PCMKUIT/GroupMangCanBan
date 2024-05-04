@@ -140,10 +140,10 @@ namespace HotelManager
                     UpdateCustomer();
                 }
                 else
-                    MessageBox.Show("Thẻ căn cước/ CMND không hợp lệ.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cMessageBox.Show("Thẻ căn cước/ CMND không hợp lệ.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             LoadData();
         }
         private void UpdateCustomer()
@@ -184,12 +184,12 @@ namespace HotelManager
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 idCard = IDCard;
             }
             else
             {
-                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             con.Close();
         }
@@ -199,7 +199,7 @@ namespace HotelManager
             int idRoomType_index = cbCustomerType.SelectedIndex;
             string idRoomType = ((DataTable)cbRoomType.DataSource).Rows[idRoomType_index]["IDRoomType"].ToString();
             UpdateBookRoom(idBookRoom, idRoomType, dpkDateCheckIn.Value, dpkDateCheckOut.Value);
-            MessageBox.Show("Cập nhật thông tin đặt phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            cMessageBox.Show("Cập nhật thông tin đặt phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadData();
         }
         private void UpdateBookRoom(string IDbookroom, string IDroomtype, DateTime datecheckin, DateTime datecheckout)
@@ -220,11 +220,11 @@ namespace HotelManager
             con.Close();
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             con.Close();
         }
@@ -241,7 +241,7 @@ namespace HotelManager
 
         private void btnEraseCustomer_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Xóa thông tin đặt phòng dẫn đến phiếu đặt phòng cũng bị xóa!\nBạn có muốn tiếp tục?", "Cảnh báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            if (cMessageBox.Show("Xóa thông tin đặt phòng dẫn đến phiếu đặt phòng cũng bị xóa!\nBạn có muốn tiếp tục?", "Cảnh báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
                try
                 {
@@ -256,12 +256,12 @@ namespace HotelManager
                     cmd.Parameters.AddWithValue("@IDBookRoom ", idBookRoom);
                     int rowsAffected = cmd.ExecuteNonQuery();
                     con.Close();
-                    MessageBox.Show("Xóa thông tin đặt phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cMessageBox.Show("Xóa thông tin đặt phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
                 catch
                 {
-                    MessageBox.Show("Xóa thông tin đặt phòng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cMessageBox.Show("Xóa thông tin đặt phòng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

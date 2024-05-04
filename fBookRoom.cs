@@ -9,7 +9,6 @@ using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Net;
 using System.Collections;
-
 namespace HotelManager
 {
     public partial class fBookRoom : Form
@@ -155,7 +154,7 @@ namespace HotelManager
         }
         private void btnBookRoom_Click(object sender, System.EventArgs e)
         {
-            if (MessageBox.Show("Bạn có muốn đặt phòng không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (cMessageBox.Show("Bạn có muốn đặt phòng không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (txbIDCard.Text != String.Empty && txbFullName.Text != String.Empty && txbAddress.Text != String.Empty && txbPhoneNumber.Text != String.Empty && cbNationality.Text != String.Empty)
                 {
@@ -182,7 +181,7 @@ namespace HotelManager
                     int IDRoomType_index = cbRoomType.SelectedIndex;
                     string IDRoomType = ((DataTable)cbRoomType.DataSource).Rows[IDRoomType_index]["IDRoomType"].ToString();
                     InsertBookRoom(idBookroom, IDCustomer, IDRoomType, dpkDateCheckIn.Value, dpkDateCheckOut.Value, DateTime.Now);
-                    MessageBox.Show("Đặt phòng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cMessageBox.Show("Đặt phòng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearData();
                     LoadBookRoom();
                     if (bunifuCheckbox1.Checked)
@@ -194,7 +193,7 @@ namespace HotelManager
                     }
                 }
                 else
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cMessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         public bool IsIdCardExists(string IDCard)
@@ -239,11 +238,11 @@ namespace HotelManager
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Thêm thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Thêm thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             con.Close();
         }
@@ -347,7 +346,7 @@ namespace HotelManager
                     con.Close();
                 }
                 else
-                    MessageBox.Show("Thẻ căn cước/ CMND không tồn tại.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cMessageBox.Show("Thẻ căn cước/ CMND không tồn tại.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
