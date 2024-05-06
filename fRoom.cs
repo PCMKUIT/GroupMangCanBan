@@ -31,14 +31,24 @@ namespace HotelManager
             comboBoxRoomType.Items.Add("Phòng tổng thống");
             comboBoxRoomType.SelectedItem = "Phòng tiêu chuẩn";
 
+            DataBinding();
+            CheckAdminPermission(username, password);
+        }
+        private void DataBinding()
+        {
+            comboboxID.DataBindings.Clear();
+            txbNameRoom.DataBindings.Clear();
+            comboBoxStatusRoom.DataBindings.Clear();
+            comboBoxRoomType.DataBindings.Clear();
+            txbPrice.DataBindings.Clear();
+            txbLimitPerson.DataBindings.Clear();
+
             comboboxID.DataBindings.Add("Text", dataGridViewRoom.DataSource, "IDRoom");
             txbNameRoom.DataBindings.Add("Text", dataGridViewRoom.DataSource, "NameRoom");
             comboBoxStatusRoom.DataBindings.Add("Text", dataGridViewRoom.DataSource, "NameStatusRoom");
             comboBoxRoomType.DataBindings.Add("Text", dataGridViewRoom.DataSource, "NameRoomType");
             txbPrice.DataBindings.Add("Text", dataGridViewRoom.DataSource, "Price");
             txbLimitPerson.DataBindings.Add("Text", dataGridViewRoom.DataSource, "LimitPerson");
-
-            CheckAdminPermission(username, password);
         }
         private void CheckAdminPermission(string username, string password)
         {
@@ -268,6 +278,7 @@ namespace HotelManager
                 MessageBox.Show("Không thể thêm phòng mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             LoadDataToDataGridView();
+            DataBinding();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -380,6 +391,7 @@ namespace HotelManager
                 MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LoadDataToDataGridView();
+            DataBinding();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -456,6 +468,7 @@ namespace HotelManager
 
 
             LoadDataToDataGridView();
+            DataBinding();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -464,6 +477,20 @@ namespace HotelManager
             LoadDataToDataGridView();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             btnSearch.Visible = true;
+        }
+
+        private void dataGridViewRoom_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewRow selectedRow = dataGridViewRoom.Rows[e.RowIndex];
+                comboboxID.Text = selectedRow.Cells["IDRoom"].Value.ToString();
+                txbNameRoom.Text = selectedRow.Cells["NameRoom"].Value.ToString();
+                comboBoxStatusRoom.Text = selectedRow.Cells["NameStatusRoom"].Value.ToString();
+                comboBoxRoomType.Text = selectedRow.Cells["NameRoomType"].Value.ToString();
+                txbPrice.Text = selectedRow.Cells["Price"].Value.ToString();
+                txbLimitPerson.Text = selectedRow.Cells["LimitPerson"].Value.ToString();
+            }
         }
     }
 }

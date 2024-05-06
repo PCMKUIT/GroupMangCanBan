@@ -453,6 +453,7 @@
             this.dataGridViewRoom.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRoom.Size = new System.Drawing.Size(646, 364);
             this.dataGridViewRoom.TabIndex = 28;
+            this.dataGridViewRoom.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRoom_CellContentClick);
             // 
             // bindingRoom
             // 
