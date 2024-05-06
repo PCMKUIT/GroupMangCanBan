@@ -158,7 +158,7 @@
             this.txbSearch.ForeColor = System.Drawing.Color.Gold;
             this.txbSearch.isPassword = false;
             this.txbSearch.Location = new System.Drawing.Point(22, 44);
-            this.txbSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txbSearch.Name = "txbSearch";
             this.txbSearch.Size = new System.Drawing.Size(175, 29);
             this.txbSearch.TabIndex = 27;
@@ -189,6 +189,7 @@
             this.btnCancel.TabIndex = 48;
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click_1);
             // 
             // groupRoom
             // 
@@ -276,7 +277,6 @@
             this.txbLimitPerson.BorderColorMouseHover = System.Drawing.Color.Gold;
             this.txbLimitPerson.BorderThickness = 1;
             this.txbLimitPerson.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txbLimitPerson.Enabled = false;
             this.txbLimitPerson.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbLimitPerson.ForeColor = System.Drawing.Color.Gold;
             this.txbLimitPerson.isPassword = false;
@@ -366,7 +366,6 @@
             this.txbPrice.BorderColorMouseHover = System.Drawing.Color.Gold;
             this.txbPrice.BorderThickness = 1;
             this.txbPrice.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txbPrice.Enabled = false;
             this.txbPrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbPrice.ForeColor = System.Drawing.Color.Gold;
             this.txbPrice.isPassword = false;
@@ -581,7 +580,7 @@
             this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.bunifuSeparator1.LineThickness = 1;
             this.bunifuSeparator1.Location = new System.Drawing.Point(5, 43);
-            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuSeparator1.Name = "bunifuSeparator1";
             this.bunifuSeparator1.Size = new System.Drawing.Size(1102, 14);
             this.bunifuSeparator1.TabIndex = 57;
@@ -629,7 +628,7 @@
             this.btnCLose1.IdleForecolor = System.Drawing.Color.Gold;
             this.btnCLose1.IdleLineColor = System.Drawing.Color.Gold;
             this.btnCLose1.Location = new System.Drawing.Point(247, 89);
-            this.btnCLose1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCLose1.Margin = new System.Windows.Forms.Padding(4);
             this.btnCLose1.Name = "btnCLose1";
             this.btnCLose1.Size = new System.Drawing.Size(175, 40);
             this.btnCLose1.TabIndex = 51;
@@ -656,7 +655,7 @@
             this.btnAddRoom.IdleForecolor = System.Drawing.Color.Gold;
             this.btnAddRoom.IdleLineColor = System.Drawing.Color.Gold;
             this.btnAddRoom.Location = new System.Drawing.Point(22, 35);
-            this.btnAddRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddRoom.Name = "btnAddRoom";
             this.btnAddRoom.Size = new System.Drawing.Size(175, 40);
             this.btnAddRoom.TabIndex = 8;
@@ -683,12 +682,13 @@
             this.btnRoomType.IdleForecolor = System.Drawing.Color.Gold;
             this.btnRoomType.IdleLineColor = System.Drawing.Color.Gold;
             this.btnRoomType.Location = new System.Drawing.Point(247, 35);
-            this.btnRoomType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRoomType.Margin = new System.Windows.Forms.Padding(4);
             this.btnRoomType.Name = "btnRoomType";
             this.btnRoomType.Size = new System.Drawing.Size(175, 40);
             this.btnRoomType.TabIndex = 50;
             this.btnRoomType.TabStop = false;
             this.btnRoomType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnRoomType.Click += new System.EventHandler(this.btnRoomType_Click);
             // 
             // btnUpdate
             // 
@@ -709,7 +709,7 @@
             this.btnUpdate.IdleForecolor = System.Drawing.Color.Gold;
             this.btnUpdate.IdleLineColor = System.Drawing.Color.Gold;
             this.btnUpdate.Location = new System.Drawing.Point(22, 91);
-            this.btnUpdate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(175, 40);
             this.btnUpdate.TabIndex = 52;

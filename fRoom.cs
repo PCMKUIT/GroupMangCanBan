@@ -13,6 +13,7 @@ namespace HotelManager
         string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
         private string userName;
         private string passWord;
+        bool first_time = true;
         public fRoom(string username, string password)
         {
             this.userName = username;
@@ -67,13 +68,16 @@ namespace HotelManager
                 }
             }
             dataGridViewRoom.DataSource = dataTable;
-
-            List<string> idRooms = new List<string>();
-            foreach (DataRow row in dataTable.Rows)
+            if (first_time)
             {
-                idRooms.Add(row["IDRoom"].ToString());
+                List<string> idRooms = new List<string>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    idRooms.Add(row["IDRoom"].ToString());
+                }
+                comboboxID.DataSource = idRooms;
+                first_time = false;
             }
-            comboboxID.DataSource = idRooms;
         }
 
         private void bunifuImageButton1_Click(object sender, System.EventArgs e)
@@ -157,15 +161,11 @@ namespace HotelManager
                 return;
             }
             string roomName = txbNameRoom.Text;
-
-            if (roomName.Length == 9 && roomName.StartsWith("Phòng "))
+            string roomNumber = roomName.Substring(6);
+            if (roomName.Length != 9 || !roomName.StartsWith("Phòng ") || !int.TryParse(roomNumber, out int number))
             {
-                string roomNumber = roomName.Substring(6);
-                if (int.TryParse(roomNumber, out int number))
-                {
-                    MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             bool isDuplicate = false;
@@ -241,7 +241,7 @@ namespace HotelManager
                 connect.Close();
             }
 
-            int rowsAffected1, rowsAffected2, rowsAffected3;
+            int rowsAffected;
             string queryroom = @"INSERT INTO Room (IDRoom,NameRoom,IDRoomType,IDStatusRoom) VALUES (@IDRoom,@NameRoom,@IDRoomType,@IDStatusRoom);";
 
             using (SqlConnection connection = new SqlConnection(connectstring))
@@ -253,46 +253,19 @@ namespace HotelManager
                     command.Parameters.AddWithValue("@IDRoomType", idroomType);
                     command.Parameters.AddWithValue("@IDStatusRoom", idstatusRoom);
                     connection.Open();
-                    rowsAffected1 = command.ExecuteNonQuery();
+                    rowsAffected = command.ExecuteNonQuery();
                     connection.Close();
                 }
             }          
 
-            string queryroomtype = @"INSERT INTO  RoomType(IDRoomType, NameRoomType, Price, LimitPerson) VALUES(@IDRoomType, @NameRoomType, @Price, @LimitPerson);";
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                using (SqlCommand command = new SqlCommand(queryroomtype, connection))
-                {
-                    command.Parameters.AddWithValue("@IDRoomType", idroomType);
-                    command.Parameters.AddWithValue("@NameRoomType", roomType);
-                    command.Parameters.AddWithValue("@Price", Price);
-                    command.Parameters.AddWithValue("@LimitPerson", LimitPerson);
-                    connection.Open();
-                    rowsAffected2 = command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
 
-            string querystatusroom = @"INSERT INTO StatusRoom(IDStatusRoom, NameStatusRoom) VALUES(@IDStatusRoom, @NameStatusRoom);";
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                using (SqlCommand command = new SqlCommand(querystatusroom, connection))
-                {
-                    command.Parameters.AddWithValue("@IDStatusRoom", idstatusRoom);
-                    command.Parameters.AddWithValue("@NameStatusRoom", statusRoom);
-                    connection.Open();
-                    rowsAffected3 = command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-
-            if (rowsAffected1 > 0 && rowsAffected2 > 0 && rowsAffected3 > 0)
+            if (rowsAffected > 0)
             {
                 MessageBox.Show("Phòng đã được thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không thể thêm phòng mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể thêm phòng mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             LoadDataToDataGridView();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -312,15 +285,36 @@ namespace HotelManager
                 return;
             }
             string roomName = txbNameRoom.Text;
-
-            if (roomName.Length == 9 && roomName.StartsWith("Phòng "))
+            string roomNumber = roomName.Substring(6);
+            if (roomName.Length != 9 || !roomName.StartsWith("Phòng ") || !int.TryParse(roomNumber, out int number))
             {
-                string roomNumber = roomName.Substring(6);
-                if (int.TryParse(roomNumber, out int number))
+                MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            bool isDuplicate = false;
+            string queryCheckDuplicate = "SELECT COUNT(*) FROM Room WHERE NameRoom = @NameRoom AND IDRoom != @IDRoom";
+            string IDroom = comboboxID.SelectedItem.ToString();
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicate, connection))
                 {
-                    MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    command.Parameters.AddWithValue("@NameRoom", roomName);
+                    command.Parameters.AddWithValue("@IDRoom", IDroom);
+                    connection.Open();
+
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicate = true;
+                    }
+                    connection.Close();
                 }
+            }
+
+            if (isDuplicate)
+            {
+                MessageBox.Show("Phòng này đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             if (txbPrice.Text == string.Empty)
             {
@@ -359,10 +353,9 @@ namespace HotelManager
             string Price = txbPrice.Text.Trim();
             string LimitPerson = txbLimitPerson.Text.Trim();
 
-            int rowsAffected1, rowsAffected2, rowsAffected3;
-            //lam khuc nay chua xong
-            string query = "UPDATE Room SET NameRoom=@NameRoom, IDRoomType = @IDRoomType, IDStatusRoom = @IDStatusRoom WHERE ";
-            string queryroom = @"INSERT INTO Room (NameRoom,IDRoomType,IDStatusRoom) VALUES (@NameRoom,@IDRoomType,@IDStatusRoom);";
+            int rowsAffected;
+  
+            string queryroom = "UPDATE Room SET NameRoom=@NameRoom, IDRoomType = @IDRoomType, IDStatusRoom = @IDStatusRoom WHERE NameRoom=@NameRoom AND IDRoom=@ID";
 
             using (SqlConnection connection = new SqlConnection(connectstring))
             {
@@ -371,50 +364,106 @@ namespace HotelManager
                     command.Parameters.AddWithValue("@NameRoom", nameRoom);
                     command.Parameters.AddWithValue("@IDRoomType", idroomType);
                     command.Parameters.AddWithValue("@IDStatusRoom", idstatusRoom);
+                    command.Parameters.AddWithValue("@ID", ID);
                     connection.Open();
-                    rowsAffected1 = command.ExecuteNonQuery();
+                    rowsAffected = command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
 
-            string queryroomtype = @"INSERT INTO  RoomType(IDRoomType, NameRoomType, Price, LimitPerson) VALUES(@IDRoomType, @NameRoomType, @Price, @LimitPerson);";
-            using (SqlConnection connection = new SqlConnection(connectstring))
+            if (rowsAffected > 0)
             {
-                using (SqlCommand command = new SqlCommand(queryroomtype, connection))
-                {
-                    command.Parameters.AddWithValue("@IDRoomType", idroomType);
-                    command.Parameters.AddWithValue("@NameRoomType", roomType);
-                    command.Parameters.AddWithValue("@Price", Price);
-                    command.Parameters.AddWithValue("@LimitPerson", LimitPerson);
-                    connection.Open();
-                    rowsAffected2 = command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-
-            string querystatusroom = @"INSERT INTO StatusRoom(IDStatusRoom, NameStatusRoom) VALUES(@IDStatusRoom, @NameStatusRoom);";
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                using (SqlCommand command = new SqlCommand(querystatusroom, connection))
-                {
-                    command.Parameters.AddWithValue("@IDStatusRoom", idstatusRoom);
-                    command.Parameters.AddWithValue("@NameStatusRoom", statusRoom);
-                    connection.Open();
-                    rowsAffected3 = command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-
-            if (rowsAffected1 > 0 && rowsAffected2 > 0 && rowsAffected3 > 0)
-            {
-                MessageBox.Show("Phòng đã được thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Phòng đã được cập nhật thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không thể thêm phòng mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LoadDataToDataGridView();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+        }
+
+        private void btnRoomType_Click(object sender, EventArgs e)
+        {
+            if (userName != "admin" || passWord != "admin")
+            {
+                MessageBox.Show("Bạn không có quyền xóa thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string ID = comboboxID.SelectedItem.ToString();
+            string nameRoom = txbNameRoom.Text.Trim();
+            string query = $"DELETE FROM Room WHERE NameRoom=@NameRoom AND IDRoom=@ID";
+
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand(query, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@ID", ID);
+                            command.Parameters.AddWithValue("@NameRoom", nameRoom);
+
+                            int rowsAffected = command.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Phòng đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DataTable dataTable = new DataTable();
+
+                                using (SqlCommand selectCommand = new SqlCommand("SELECT IDRoom FROM Room ORDER BY CAST(SUBSTRING(IDRoom, 3, 3) AS INT)", connection, transaction))
+                                {
+                                    using (SqlDataAdapter adapter = new SqlDataAdapter(selectCommand))
+                                    {
+                                        adapter.Fill(dataTable);
+                                    }
+                                }
+
+                                for (int i = 0; i < dataTable.Rows.Count; i++)
+                                {
+                                    string oldID = dataTable.Rows[i]["IDRoom"].ToString();
+                                    int newIndex = i + 1;
+                                    string newID = "PH" + newIndex.ToString("D3");
+
+                                    string updateQuery = "UPDATE Room SET IDRoom = @NewID WHERE IDRoom = @OldID";
+
+                                    using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction))
+                                    {
+                                        updateCommand.Parameters.AddWithValue("@NewID", newID);
+                                        updateCommand.Parameters.AddWithValue("@OldID", oldID);
+                                        updateCommand.ExecuteNonQuery();
+                                    }
+                                }
+                                transaction.Commit();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tìm thấy phòng có thông tin này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                transaction.Rollback();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        transaction.Rollback();
+                    }
+                }
+            }
+
+
+            LoadDataToDataGridView();
+            dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+        }
+
+        private void btnCancel_Click_1(object sender, EventArgs e)
+        {
+            LoadDataToDataGridView();
+            dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            btnSearch.Visible = true;
         }
     }
 }
