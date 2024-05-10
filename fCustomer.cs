@@ -1,361 +1,67 @@
-﻿using DAO;
-using DTO;
+﻿
 using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+
 namespace HotelManager
 {
     public partial class fCustomer : Form
     {
-
-        string connectring = @"Data Source=NHDK\SQLEXPRESS;Initial Catalog=hotelmanager;Integrated Security=True"
-        internal fCustomer()
+        string strCon = @"Data Source=NHDK\SQLEXPRESS;Initial Catalog=hotelmanager;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        SqlConnection sqlCon = null;
+        public fCustomer()
         {
             InitializeComponent();
-            cbCustomerSearch.SelectedIndex = 3;
-            LoadFullCustomerType();
-            LoadFullCustomer(GetFullCustomer());
-            comboBoxSex.SelectedIndex = 0;
-            SaveCustomer.OverwritePrompt = true;
-            comboboxID.DisplayMember = "id";
-            FormClosing += FCustomer_FormClosing;
-            txbSearch.KeyPress += TxbSearch_KeyPress;
-            dataGridViewCustomer.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F);
         }
 
-        private void LoadFullCustomer(DataTable table)
+        private void fCustomer_Load(object sender, EventArgs e)
         {
-            BindingSource source = new BindingSource();
-            source.DataSource = table;
-            dataGridViewCustomer.DataSource = source;
-            bindingCustomer.BindingSource = source;
-            comboboxID.DataSource = source;
+            Hienthidanhsach();
         }
-        //Lấy danh sách loại khách hàng
-        private void LoadFullCustomerType()
-        {
-            DataTable table = GetFullCustomerType();
-            comboBoxCustomerType.DataSource = table;
-            comboBoxCustomerType.DisplayMember = "Name";
-            if(table.Rows.Count > 0)
-                comboBoxCustomerType.SelectedIndex = 0;
-        }
-        #endregion
 
-        #region Click
-
-        private void BtnClose_Click(object sender, EventArgs e)
+        private void Hienthidanhsach()
         {
-            this.Close();
-        }
-        private void ToolStripLabel1_Click(object sender, EventArgs e)
-        {
-            bool check;
-            if (SaveCustomer.ShowDialog() == DialogResult.Cancel)
-                return;
-            switch (SaveCustomer.FilterIndex)
+            if (sqlCon == null) 
             {
-                case 2:
-                    check = ExportToExcel.Instance.Export(dataGridViewCustomer, SaveCustomer.FileName, ModeExportToExcel.XLSX);
-                    break;
-                case 3:
-                    check = ExportToExcel.Instance.Export(dataGridViewCustomer, SaveCustomer.FileName, ModeExportToExcel.PDF);
-                    break;
-                default:
-                    check = ExportToExcel.Instance.Export(dataGridViewCustomer, SaveCustomer.FileName, ModeExportToExcel.XLS);
-                    break;
+                sqlCon = new SqlConnection(strCon);
             }
-            if (check)
-                MessageBox.Show( "Xuất file thành công", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else
-                MessageBox.Show("Lỗi (Cần cài đặt Office)", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-        //Thêm khách hàng
-        private void BtnAddCustomer_Click(object sender, EventArgs e)
-        {
-            fAddCustomer f = new fAddCustomer();
-            this.Hide();
-            f.ShowDialog();
-            this.Show();
-            if (btnCancel.Visible == false)
-                LoadFullCustomer(GetFullCustomer());
-            else
-                BtnCancel_Click(null, null);
-        }
-        private void BindingNavigatorAddNewItem_Click(object sender, EventArgs e)
-        {
-            txbFullName.Text = string.Empty;
-            txbAddress.Text = string.Empty;
-            txbIDCard.Text = string.Empty;
-            txbNationality.Text = string.Empty;
-            txbPhoneNumber.Text = string.Empty;
-        }
-        private void BtnClose1_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-        //Cập nhật thông tin khách hàng
-        private void BtnUpdate_Click(object sender, EventArgs e)
-        {
-            DialogResult result =MessageBox.Show( "Bạn có muốn cập nhật khách hàng này không?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.OK)
-                if (CheckDate())
-                {
-                    UpdateCustomer();
-                    comboboxID.Focus();
-                }
-                else
-                   MessageBox.Show( "Ngày sinh phải nhỏ hơn ngày hiện tại", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-        }
-        //Tìm kiếm
-        private void BtnSearch_Click(object sender, EventArgs e)
-        {
-            txbSearch.Text = txbSearch.Text.Trim();
-            if (txbSearch.Text != string.Empty)
+            if (sqlCon.State == ConnectionState.Closed) 
             {
-                txbAddress.Text = string.Empty;
-                txbFullName.Text = string.Empty;
-                txbIDCard.Text = string.Empty;
-                txbPhoneNumber.Text = string.Empty;
-                txbNationality.Text = string.Empty;
-
-                btnSearch.Visible = false;
-                btnCancel.Visible = true;
-                Search();
+                sqlCon.Open();
             }
-        }
-        private void BtnCancel_Click(object sender, EventArgs e)
-        {
-            LoadFullCustomer(GetFullCustomer());
-            btnCancel.Visible = false;
-            btnSearch.Visible = true;
-        }
-        #endregion
 
-        #region Method
-        public static bool CheckFillInText(Control[] controls)
-        {
-            foreach (var control in controls)
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandType = CommandType.Text;
+            sqlCmd.CommandText = "SELECT * FROM Customer";
+
+            sqlCmd.Connection = sqlCon;
+
+            SqlDataReader reader = sqlCmd.ExecuteReader();  
+            lsvDanhSach.Items.Clear();
+            while (reader.Read()) 
             {
-                if (control.Text == string.Empty)
-                    return false;
-            }
-            return true;
-        }
-        //Thêm thông tin khách hàng
-        private void InsertCustomer()
-        {
-            if (!CheckFillInText(new Control[] { txbPhoneNumber, txbFullName, txbIDCard, txbNationality, txbAddress, comboBoxCustomerType}))
-            {
-                MessageBox.Show( "Không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                Customer customer = GetCustomerNow();
-                if (CustomerDAO.Instance.InsertCustomer(customer))
-                {
-                    MessageBox.Show( "Thêm thành công", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (btnCancel.Visible == false)
-                        LoadFullCustomer(GetFullCustomer());
-                    else
-                        BtnCancel_Click(null, null);
-                    comboboxID.SelectedIndex = dataGridViewCustomer.RowCount - 1;
-                }
-                else
-                    MessageBox.Show( "Khách Hàng đã tồn tại\nTrùng số chứng minh nhân dân", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            catch
-            {
-                MessageBox.Show( "Lỗi thêm khách hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        //cập nhật thông tin khách hàng
-        private void UpdateCustomer()
-        {
-            if(comboboxID.Text == string.Empty)
-            {
-                MessageBox.Show( "Khách hàng này chưa tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else
-            if (!CheckFillInText(new Control[] { txbPhoneNumber, txbFullName, txbIDCard, txbNationality, txbAddress, comboBoxCustomerType }))
-            {
-                MessageBox.Show( "Không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else
-            {
-                Customer customerPre = groupCustomer.Tag as Customer;
-                try
-                {
-                    Customer customerNow = GetCustomerNow();
-                    if (customerNow.Equals(customerPre))
-                        MessageBox.Show( "Bạn chưa thay đổi dữ liệu", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    else
-                    {
-                        bool check = CustomerDAO.Instance.UpdateCustomer(customerNow, customerPre);
-                        if (check)
-                        {
-                            MessageBox.Show( "Cập nhật thành công", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            groupCustomer.Tag = customerNow;
-                            int index = dataGridViewCustomer.SelectedRows[0].Index;
-                            LoadFullCustomer(GetFullCustomer());
-                            comboboxID.SelectedIndex = index;
-                        }
-                        else
-                            MessageBox.Show( "Khách hàng này đã tồn tại(Trùng số chứng minh nhân dân)", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show( "Lỗi câp nhật", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        private void ChangeText(DataGridViewRow row)
-        {
-            if (row.IsNewRow)
-            {
-                txbFullName.Text = string.Empty;
-                txbAddress.Text = string.Empty;
-                txbIDCard.Text = string.Empty;
-                txbNationality.Text = string.Empty;
-                txbPhoneNumber.Text = string.Empty;
-                bindingNavigatorMoveFirstItem.Enabled = false;
-                bindingNavigatorMovePreviousItem.Enabled = false;
-            }
-            else
-            {
-                bindingNavigatorMoveFirstItem.Enabled = true;
-                bindingNavigatorMovePreviousItem.Enabled = true;
-                txbFullName.Text = row.Cells["colNameCustomer"].Value.ToString();
-                txbAddress.Text = row.Cells["colAddress"].Value.ToString();
-                txbIDCard.Text = row.Cells["colIDCard"].Value.ToString();
-                txbNationality.Text = row.Cells["colNationality"].Value.ToString();
-                txbPhoneNumber.Text = row.Cells["colPhone"].Value.ToString();
-                //comboBoxCustomerType.SelectedIndex =(int) row.Cells["colIdCustomerType"].Value - 1;
-               comboBoxCustomerType.SelectedItem = row.Cells["colIdCustomerType"].Value.ToString();
+                string MAKH = reader.GetString(0);
+                string TENKH = reader.GetString(1);
+                string LOAIKH = reader.GetString(2);
+                string SOKH = reader.GetString(3);
+                string DCHI = reader.GetString(4);  
+                string QTICH =  reader.GetString(5);
 
-                comboBoxSex.SelectedItem = row.Cells["colSex"].Value;
-                datepickerDateOfBirth.Value = (DateTime)row.Cells["colDateOfBirth"].Value;
-                Customer customer = new Customer(((DataRowView) row.DataBoundItem).Row);
-                groupCustomer.Tag = customer;              
-            }
-        }
-        private void Search()
-        {
-            string @string = txbSearch.Text;
-            int mode = cbCustomerSearch.SelectedIndex;
-            LoadFullCustomer(GetSearchCustomer(@string, mode));
-        }
+                ListViewItem lvi = new ListViewItem(MAKH);  
+                lvi.SubItems.Add(TENKH);
+                lvi.SubItems.Add(LOAIKH);
+                lvi.SubItems.Add(SOKH);
+                lvi.SubItems.Add(DCHI);
+                lvi.SubItems.Add(QTICH);
 
-        private Customer GetCustomerNow()
-        {
-            fStaff.Trim(new Bunifu.Framework.UI.BunifuMetroTextbox[] { txbAddress, txbFullName, txbIDCard });
-            Customer customer = new Customer();
-            if (comboboxID.Text == string.Empty)
-                customer.Id = GetAutomaticID();
-            else
-                customer.Id = comboboxID.Text;
-            customer.IdCard = txbIDCard.Text;
-            int id = comboBoxCustomerType.SelectedIndex;
-            customer.IdCustomerType =((DataTable) comboBoxCustomerType.DataSource).Rows[id]["id"].ToString();
-            customer.Name = txbFullName.Text;
-            customer.Sex = comboBoxSex.Text;
-            customer.PhoneNumber = int.Parse(txbPhoneNumber.Text);
-            customer.DateOfBirth = datepickerDateOfBirth.Value;
-            customer.Nationality = txbNationality.Text;
-            customer.Address = txbAddress.Text;
-            return customer;
-        }
-        private DataTable GetFullCustomer()
-        {
-            return CustomerDAO.Instance.LoadFullCustomer();
-        }
-        private DataTable GetFullCustomerType()
-        {
-            return CustomerTypeDAO.Instance.LoadFullCustomerType();
-        }
-        private string GetAutomaticID()
-        {
-            return  GetIDAutomaticDAO.Instance.Actomatic_ID("Customer","ID");
-        }
-
-        /// <summary>
-        /// --Mode is
-        //--- 0 --- find along id
-        //--- 1 --- find along name
-        //--- 2 --- find along idCard
-        //--- 3 --- find along NumberPhone
-        /// </summary>
-        /// <param name="string"></param>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        private DataTable GetSearchCustomer(string @string, int mode)
-        {
-            return CustomerDAO.Instance.Search(@string, mode);
-        }
+                lsvDanhSach.Items.Add(lvi);
 
 
-        private void DataGridViewCustomer_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dataGridViewCustomer.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dataGridViewCustomer.SelectedRows[0];
-                ChangeText(row);
             }
+            reader.Close();
         }
-
-        //kiểm tra nhập số điện thoại
-        private void TxbPhoneNumber_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsNumber(e.KeyChar) || e.KeyChar == '\b'))
-                e.Handled = true;
-        }
-        //kiểm tra ngày sinh nhỏ hơn ngày hiện tại
-        private bool CheckDate()
-        {
-            if (DateTime.Now.Subtract(datepickerDateOfBirth.Value).Days <= 0)
-                return false;
-            else return true;
-        }
-
-        private void Txb_Enter(object sender, EventArgs e)
-        {
-            Bunifu.Framework.UI.BunifuMetroTextbox text = sender as Bunifu.Framework.UI.BunifuMetroTextbox;
-            text.Tag = text.Text;
-        }
- 
-        private void Txb_Leave(object sender, EventArgs e)
-        {
-            Bunifu.Framework.UI.BunifuMetroTextbox text = sender as Bunifu.Framework.UI.BunifuMetroTextbox;
-            if (text.Text == string.Empty)
-                text.Text = text.Tag as string;
-        }
-
-        //char 13: enter, 27 esc
-        private void TxbSearch_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                BtnSearch_Click(sender, null);
-            else
-                if (e.KeyChar == 27 && btnCancel.Visible == true)
-                BtnCancel_Click(sender, null);
-        }
-        private void FCustomer_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 27 && btnCancel.Visible == true)
-                BtnCancel_Click(sender, null);
-        }
-      
-
-        private void FCustomer_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            LoadFullCustomer(GetFullCustomer());
-        }
-     
     }
 }
