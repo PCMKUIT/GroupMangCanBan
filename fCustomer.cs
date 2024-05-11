@@ -7,6 +7,7 @@ using System.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using MetroFramework.Controls;
 
 namespace HotelManager
 {
@@ -17,6 +18,27 @@ namespace HotelManager
         public fCustomer()
         {
             InitializeComponent();
+            cbCustomerSearch.Items.Clear();
+            cbCustomerSearch.Items.Add("IDCustomer");
+            cbCustomerSearch.Items.Add("IDCard");
+            cbCustomerSearch.Items.Add("IDCustomerType");
+            cbCustomerSearch.Items.Add("Name");
+            cbCustomerSearch.Items.Add("PhoneNumber");
+            cbCustomerSearch.SelectedItem = "IDCustomer";
+
+            comboBoxCustomerType.Items.Add("LK001");
+            comboBoxCustomerType.Items.Add("LK002");
+            comboBoxCustomerType.Items.Add("LK003");
+            comboBoxCustomerType.Items.Add("LK004");
+
+            comboBoxSex.Items.Add("Nam");
+            comboBoxSex.Items.Add("Nữ");
+            //    txbFullName.DataBindings.Add("Text", dataGridCus.DataSource, "UserName");
+            //   txbIDCard.DataBindings.Add("Text", dataGridCus.DataSource, "IDCard");
+            //   comboBoxSex.DataBindings.Add("Text", dataGridCus.DataSource, "Sex");
+            //   datepickerDateOfBirth.DataBindings.Add("Value", dataGridCus.DataSource, "DateOfBirth");
+            //   txbPhoneNumber.DataBindings.Add("Text", dataGridCus.DataSource, "PhoneNumber");
+            //   txbAddress.DataBindings.Add("Text", dataGridCus.DataSource, "Address");
         }
 
         private void fCustomer_Load(object sender, EventArgs e)
@@ -93,7 +115,7 @@ namespace HotelManager
             dataGridCus.DataSource = dataTable;
         }
 
-
+        /*
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             AddN();
@@ -138,6 +160,7 @@ namespace HotelManager
             }
         
         }
+        */
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -148,21 +171,93 @@ namespace HotelManager
         {
             this.Close();
         }
-
-        /*private void btnInsert_Click(object sender, EventArgs e)
+        private bool IsValidPhoneNumber(string phoneNumber)
         {
-            if (comboBoxStaffType.SelectedItem.ToString() != "Chế độ thêm")
-            {
-                MessageBox.Show("Vui lòng chuyển sang chế độ thêm trước khi thêm nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            return phoneNumber.Length == 10 && phoneNumber.All(char.IsDigit);
+        }
+        private bool IsValidID(string idCard)
+        {
+            return idCard.Length == 12 && idCard.All(char.IsDigit);
+        }
 
-            if (txbName.Text == string.Empty)
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+
+            if (txbFullName.Text == string.Empty)
             {
                 MessageBox.Show("Tên không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!IsValidID(txbIDcard.Text))
+            if (!IsValidID(txbIDCard.Text))
+            {
+                MessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!IsValidPhoneNumber(txbPhoneNumber.Text))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (datepickerDateOfBirth.Value > DateTime.Now.Date)
+            {
+                MessageBox.Show("Ngày sinh không thể lớn hơn ngày hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            TimeSpan maxAge = new TimeSpan(365 * 100, 0, 0, 0);
+            if (DateTime.Now.Date - datepickerDateOfBirth.Value > maxAge)
+            {
+                DialogResult result = MessageBox.Show("Ngày sinh này có vẻ không hợp lý, bạn có chắc muốn lưu như vậy không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+            if (txbAddress.Text == string.Empty)
+            {
+                MessageBox.Show("Không được để trống thông tin địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string query = "UPDATE Staff SET UserName=@UserName, DisplayName = @DisplayName, IDCardStaff = @IDCardStaff, SexStaff = @SexStaff, DateOfBirthStaff = @DateOfBirthStaff, PhoneNumberStaff = @PhoneNumberStaff, AddressStaff = @AddressStaff WHERE UserName = @UserName";
+
+            using (SqlConnection connection = new SqlConnection(strCon))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", txbFullName.Text.Trim());
+                    command.Parameters.AddWithValue("@IDCard", txbIDCard.Text.Trim());
+                    command.Parameters.AddWithValue("@SexStaff", comboBoxSex.SelectedItem.ToString());
+                    command.Parameters.AddWithValue("@DateOfBirthStaff", datepickerDateOfBirth.Value);
+                    command.Parameters.AddWithValue("@PhoneNumberStaff", txbPhoneNumber.Text);
+                    command.Parameters.AddWithValue("@AddressStaff", txbAddress.Text.Trim());
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            Hienthidanhsach();
+            dataGridCus.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+
+
+            if (txbFullName.Text == string.Empty)
+            {
+                MessageBox.Show("Tên không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!IsValidID(txbIDCard.Text))
             {
                 MessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -193,17 +288,15 @@ namespace HotelManager
                 MessageBox.Show("Không được để trống thông tin địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string userName = txbUserName.Text.Trim();
-            DateTime startDay = DateTime.Now.Date;
-            string displayName = txbName.Text.Trim();
-            string idCard = txbIDcard.Text.Trim();
+            string userName = txbFullName.Text.Trim();
+            string idCard = txbIDCard.Text.Trim();
             string sex = comboBoxSex.SelectedItem.ToString();
             DateTime dateOfBirth = datepickerDateOfBirth.Value;
             string phoneNumber = txbPhoneNumber.Text.Trim();
             string address = txbAddress.Text.Trim();
-            string countQuery = "SELECT COUNT(*) FROM Staff";
+            string countQuery = "SELECT COUNT(*) FROM Customer";
             string id;
-            using (SqlConnection connect = new SqlConnection(connectstring))
+            using (SqlConnection connect = new SqlConnection(strCon))
             {
                 connect.Open();
                 using (SqlCommand countCommand = new SqlCommand(countQuery, connect))
@@ -214,29 +307,23 @@ namespace HotelManager
                 connect.Close();
             }
 
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(displayName) || string.IsNullOrEmpty(phoneNumber))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
-            string query = "INSERT INTO Staff (IDStaff,UserName,DisplayName,PassWord, IDCardStaff, DateOfBirthStaff,SexStaff, AddressStaff,PhoneNumberStaff ,StartDay) " +
+            string query = "INSERT INTO Customer (IDCustomer,FullName,DisplayName,PassWord, IDCard, DateOfBirthStaff,SexStaff, AddressStaff,PhoneNumberStaff ,StartDay) " +
                            "VALUES (@IDStaff,@UserName,@DisplayName,@PassWord, @IDCardStaff, @DateOfBirthStaff,@SexStaff, @AddressStaff,@PhoneNumberStaff,@StartDay)";
 
-            using (SqlConnection connection = new SqlConnection(connectstring))
+            using (SqlConnection connection = new SqlConnection(strCon))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@IDStaff", id);
                     command.Parameters.AddWithValue("@UserName", userName);
-                    command.Parameters.AddWithValue("@DisplayName", displayName);
                     command.Parameters.AddWithValue("@PassWord", "default");
                     command.Parameters.AddWithValue("@IDCardStaff", idCard);
                     command.Parameters.AddWithValue("@DateOfBirthStaff", dateOfBirth);
                     command.Parameters.AddWithValue("@SexStaff", sex);
                     command.Parameters.AddWithValue("@AddressStaff", address);
                     command.Parameters.AddWithValue("@PhoneNumberStaff", phoneNumber);
-                    command.Parameters.AddWithValue("@StartDay", startDay);
+
                     connection.Open();
 
                     int rowsAffected = command.ExecuteNonQuery();
@@ -251,10 +338,10 @@ namespace HotelManager
                     }
                 }
             }
-            LoadDataToDataGridView();
-            dataGridStaff.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            Hienthidanhsach();
+            dataGridCus.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
-        */
+        
 
     }
 }

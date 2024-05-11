@@ -29,21 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fCustomer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.groupCustomer = new System.Windows.Forms.GroupBox();
-            this.txbNationality = new MetroFramework.Controls.MetroComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txbAddress = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txbPhoneNumber = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBoxSex = new MetroFramework.Controls.MetroComboBox();
-            this.comboBoxCustomerType = new MetroFramework.Controls.MetroComboBox();
-            this.comboboxID = new MetroFramework.Controls.MetroComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txbFullName = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.datepickerDateOfBirth = new Bunifu.Framework.UI.BunifuDatepicker();
@@ -54,6 +50,7 @@
             this.txbIDCard = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGridCus = new System.Windows.Forms.DataGridView();
             this.bindingCustomer = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -78,15 +75,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
-            this.dataGridCus = new System.Windows.Forms.DataGridView();
+            this.txbIDCustomer = new Bunifu.Framework.UI.BunifuMetroTextbox();
+            this.comboBoxCustomerType = new MetroFramework.Controls.MetroComboBox();
+            this.comboBoxSex = new MetroFramework.Controls.MetroComboBox();
+            this.txbNationality = new MetroFramework.Controls.MetroComboBox();
             this.groupCustomer.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridCus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingCustomer)).BeginInit();
             this.bindingCustomer.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridCus)).BeginInit();
             this.SuspendLayout();
             // 
             // bunifuDragControl1
@@ -99,15 +99,15 @@
             // groupCustomer
             // 
             this.groupCustomer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupCustomer.BackgroundImage")));
+            this.groupCustomer.Controls.Add(this.comboBoxSex);
+            this.groupCustomer.Controls.Add(this.txbIDCustomer);
+            this.groupCustomer.Controls.Add(this.comboBoxCustomerType);
             this.groupCustomer.Controls.Add(this.txbNationality);
             this.groupCustomer.Controls.Add(this.label14);
             this.groupCustomer.Controls.Add(this.txbAddress);
             this.groupCustomer.Controls.Add(this.txbPhoneNumber);
             this.groupCustomer.Controls.Add(this.label11);
             this.groupCustomer.Controls.Add(this.label12);
-            this.groupCustomer.Controls.Add(this.comboBoxSex);
-            this.groupCustomer.Controls.Add(this.comboBoxCustomerType);
-            this.groupCustomer.Controls.Add(this.comboboxID);
             this.groupCustomer.Controls.Add(this.label2);
             this.groupCustomer.Controls.Add(this.txbFullName);
             this.groupCustomer.Controls.Add(this.datepickerDateOfBirth);
@@ -126,41 +126,6 @@
             this.groupCustomer.TabIndex = 1;
             this.groupCustomer.TabStop = false;
             this.groupCustomer.Text = "Thông tin khách hàng";
-            // 
-            // txbNationality
-            // 
-            this.txbNationality.BackColor = System.Drawing.Color.Black;
-            this.txbNationality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.txbNationality.ForeColor = System.Drawing.Color.Gold;
-            this.txbNationality.FormattingEnabled = true;
-            this.txbNationality.ItemHeight = 24;
-            this.txbNationality.Items.AddRange(new object[] {
-            "Việt Nam",
-            "Trung Quốc",
-            "Hàn Quốc",
-            "Nhật Bản",
-            "Đài Loan",
-            "Malaysia",
-            "Thái Lan",
-            "Singapore",
-            "Nga",
-            "Anh",
-            "Pháp",
-            "Đức",
-            "Hoa Kỳ",
-            "Hà Lan",
-            "Tây Ban Nha",
-            "Ý",
-            "Khác"});
-            this.txbNationality.Location = new System.Drawing.Point(216, 211);
-            this.txbNationality.Name = "txbNationality";
-            this.txbNationality.Size = new System.Drawing.Size(179, 30);
-            this.txbNationality.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txbNationality.TabIndex = 58;
-            this.txbNationality.UseCustomBackColor = true;
-            this.txbNationality.UseCustomForeColor = true;
-            this.txbNationality.UseSelectable = true;
-            this.txbNationality.UseStyleColors = true;
             // 
             // label14
             // 
@@ -232,57 +197,6 @@
             this.label12.TabIndex = 56;
             this.label12.Text = "Quốc tịch:";
             // 
-            // comboBoxSex
-            // 
-            this.comboBoxSex.BackColor = System.Drawing.Color.Black;
-            this.comboBoxSex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxSex.ForeColor = System.Drawing.Color.Gold;
-            this.comboBoxSex.FormattingEnabled = true;
-            this.comboBoxSex.ItemHeight = 24;
-            this.comboBoxSex.Items.AddRange(new object[] {
-            "Nam",
-            "Nữ",
-            "Khác"});
-            this.comboBoxSex.Location = new System.Drawing.Point(12, 267);
-            this.comboBoxSex.Name = "comboBoxSex";
-            this.comboBoxSex.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxSex.Style = MetroFramework.MetroColorStyle.Blue;
-            this.comboBoxSex.TabIndex = 4;
-            this.comboBoxSex.UseCustomBackColor = true;
-            this.comboBoxSex.UseCustomForeColor = true;
-            this.comboBoxSex.UseSelectable = true;
-            this.comboBoxSex.UseStyleColors = true;
-            // 
-            // comboBoxCustomerType
-            // 
-            this.comboBoxCustomerType.BackColor = System.Drawing.Color.Black;
-            this.comboBoxCustomerType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxCustomerType.ForeColor = System.Drawing.Color.Gold;
-            this.comboBoxCustomerType.FormattingEnabled = true;
-            this.comboBoxCustomerType.ItemHeight = 24;
-            this.comboBoxCustomerType.Location = new System.Drawing.Point(12, 211);
-            this.comboBoxCustomerType.Name = "comboBoxCustomerType";
-            this.comboBoxCustomerType.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxCustomerType.Style = MetroFramework.MetroColorStyle.Blue;
-            this.comboBoxCustomerType.TabIndex = 3;
-            this.comboBoxCustomerType.UseCustomBackColor = true;
-            this.comboBoxCustomerType.UseCustomForeColor = true;
-            this.comboBoxCustomerType.UseSelectable = true;
-            this.comboBoxCustomerType.UseStyleColors = true;
-            // 
-            // comboboxID
-            // 
-            this.comboboxID.BackColor = System.Drawing.Color.Black;
-            this.comboboxID.ForeColor = System.Drawing.Color.Gold;
-            this.comboboxID.FormattingEnabled = true;
-            this.comboboxID.ItemHeight = 24;
-            this.comboboxID.Location = new System.Drawing.Point(12, 44);
-            this.comboboxID.Name = "comboboxID";
-            this.comboboxID.Size = new System.Drawing.Size(175, 30);
-            this.comboboxID.Style = MetroFramework.MetroColorStyle.Blue;
-            this.comboboxID.TabIndex = 0;
-            this.comboboxID.UseSelectable = true;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -323,7 +237,7 @@
             this.datepickerDateOfBirth.Margin = new System.Windows.Forms.Padding(48, 79, 48, 79);
             this.datepickerDateOfBirth.Name = "datepickerDateOfBirth";
             this.datepickerDateOfBirth.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.datepickerDateOfBirth.Size = new System.Drawing.Size(176, 29);
+            this.datepickerDateOfBirth.Size = new System.Drawing.Size(176, 30);
             this.datepickerDateOfBirth.TabIndex = 5;
             this.datepickerDateOfBirth.Value = new System.DateTime(2018, 2, 23, 23, 29, 57, 962);
             // 
@@ -417,6 +331,53 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Danh Sách Khách Hàng";
+            // 
+            // dataGridCus
+            // 
+            this.dataGridCus.AllowUserToAddRows = false;
+            this.dataGridCus.AllowUserToDeleteRows = false;
+            this.dataGridCus.AllowUserToResizeRows = false;
+            this.dataGridCus.BackgroundColor = System.Drawing.Color.Black;
+            this.dataGridCus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridCus.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridCus.ColumnHeadersHeight = 29;
+            this.dataGridCus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridCus.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridCus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridCus.GridColor = System.Drawing.Color.Gold;
+            this.dataGridCus.Location = new System.Drawing.Point(3, 73);
+            this.dataGridCus.Name = "dataGridCus";
+            this.dataGridCus.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridCus.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridCus.RowHeadersVisible = false;
+            this.dataGridCus.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridCus.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridCus.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridCus.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridCus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridCus.Size = new System.Drawing.Size(1090, 479);
+            this.dataGridCus.TabIndex = 30;
             // 
             // bindingCustomer
             // 
@@ -549,25 +510,23 @@
             // 
             // cbCustomerSearch
             // 
-            this.cbCustomerSearch.BackColor = System.Drawing.Color.Black;
+            this.cbCustomerSearch.BackColor = System.Drawing.Color.Transparent;
             this.cbCustomerSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbCustomerSearch.ForeColor = System.Drawing.Color.Gold;
             this.cbCustomerSearch.FormattingEnabled = true;
             this.cbCustomerSearch.ItemHeight = 24;
             this.cbCustomerSearch.Items.AddRange(new object[] {
-            "Mã khách hàng",
-            "Tên khách hàng",
-            "Số CMND",
-            "Số điện thoại"});
-            this.cbCustomerSearch.Location = new System.Drawing.Point(16, 68);
+            "Nam",
+            "Nữ",
+            "Khác"});
+            this.cbCustomerSearch.Location = new System.Drawing.Point(12, 71);
             this.cbCustomerSearch.Name = "cbCustomerSearch";
-            this.cbCustomerSearch.Size = new System.Drawing.Size(175, 30);
-            this.cbCustomerSearch.Style = MetroFramework.MetroColorStyle.Blue;
-            this.cbCustomerSearch.TabIndex = 50;
+            this.cbCustomerSearch.Size = new System.Drawing.Size(179, 30);
+            this.cbCustomerSearch.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.cbCustomerSearch.TabIndex = 60;
             this.cbCustomerSearch.UseCustomBackColor = true;
             this.cbCustomerSearch.UseCustomForeColor = true;
             this.cbCustomerSearch.UseSelectable = true;
-            this.cbCustomerSearch.UseStyleColors = true;
             // 
             // txbSearch
             // 
@@ -767,7 +726,7 @@
             this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.bunifuSeparator1.LineThickness = 1;
             this.bunifuSeparator1.Location = new System.Drawing.Point(5, 34);
-            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.bunifuSeparator1.Name = "bunifuSeparator1";
             this.bunifuSeparator1.Size = new System.Drawing.Size(1522, 10);
             this.bunifuSeparator1.TabIndex = 56;
@@ -789,52 +748,80 @@
             this.btnClose.Zoom = 10;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // dataGridCus
+            // txbIDCustomer
             // 
-            this.dataGridCus.AllowUserToAddRows = false;
-            this.dataGridCus.AllowUserToDeleteRows = false;
-            this.dataGridCus.AllowUserToResizeRows = false;
-            this.dataGridCus.BackgroundColor = System.Drawing.Color.Black;
-            this.dataGridCus.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 12F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridCus.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridCus.ColumnHeadersHeight = 29;
-            this.dataGridCus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 12F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridCus.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridCus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridCus.GridColor = System.Drawing.Color.Gold;
-            this.dataGridCus.Location = new System.Drawing.Point(3, 73);
-            this.dataGridCus.Name = "dataGridCus";
-            this.dataGridCus.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 12F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.Gold;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridCus.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridCus.RowHeadersVisible = false;
-            this.dataGridCus.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridCus.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridCus.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridCus.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridCus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridCus.Size = new System.Drawing.Size(1090, 479);
-            this.dataGridCus.TabIndex = 30;
+            this.txbIDCustomer.BorderColorFocused = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderColorIdle = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderColorMouseHover = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderThickness = 1;
+            this.txbIDCustomer.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txbIDCustomer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbIDCustomer.ForeColor = System.Drawing.Color.Gold;
+            this.txbIDCustomer.isPassword = false;
+            this.txbIDCustomer.Location = new System.Drawing.Point(12, 44);
+            this.txbIDCustomer.Margin = new System.Windows.Forms.Padding(0);
+            this.txbIDCustomer.Name = "txbIDCustomer";
+            this.txbIDCustomer.Size = new System.Drawing.Size(175, 29);
+            this.txbIDCustomer.TabIndex = 60;
+            this.txbIDCustomer.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // comboBoxCustomerType
+            // 
+            this.comboBoxCustomerType.BackColor = System.Drawing.Color.Black;
+            this.comboBoxCustomerType.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxCustomerType.FormattingEnabled = true;
+            this.comboBoxCustomerType.ItemHeight = 24;
+            this.comboBoxCustomerType.Location = new System.Drawing.Point(12, 216);
+            this.comboBoxCustomerType.Name = "comboBoxCustomerType";
+            this.comboBoxCustomerType.Size = new System.Drawing.Size(175, 30);
+            this.comboBoxCustomerType.Style = MetroFramework.MetroColorStyle.Blue;
+            this.comboBoxCustomerType.TabIndex = 59;
+            this.comboBoxCustomerType.UseSelectable = true;
+            // 
+            // comboBoxSex
+            // 
+            this.comboBoxSex.BackColor = System.Drawing.Color.Black;
+            this.comboBoxSex.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxSex.FormattingEnabled = true;
+            this.comboBoxSex.ItemHeight = 24;
+            this.comboBoxSex.Location = new System.Drawing.Point(12, 272);
+            this.comboBoxSex.Name = "comboBoxSex";
+            this.comboBoxSex.Size = new System.Drawing.Size(175, 30);
+            this.comboBoxSex.Style = MetroFramework.MetroColorStyle.Blue;
+            this.comboBoxSex.TabIndex = 61;
+            this.comboBoxSex.UseSelectable = true;
+            // 
+            // txbNationality
+            // 
+            this.txbNationality.BackColor = System.Drawing.Color.Black;
+            this.txbNationality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.txbNationality.ForeColor = System.Drawing.Color.Gold;
+            this.txbNationality.FormattingEnabled = true;
+            this.txbNationality.ItemHeight = 24;
+            this.txbNationality.Items.AddRange(new object[] {
+            "Việt Nam",
+            "Trung Quốc",
+            "Hàn Quốc",
+            "Nhật Bản",
+            "Đài Loan",
+            "Malaysia",
+            "Thái Lan",
+            "Singapore",
+            "Nga",
+            "Anh",
+            "Pháp",
+            "Đức",
+            "Hoa Kỳ",
+            "Hà Lan",
+            "Tây Ban Nha",
+            "Ý",
+            "Khác"});
+            this.txbNationality.Location = new System.Drawing.Point(216, 211);
+            this.txbNationality.Name = "txbNationality";
+            this.txbNationality.Size = new System.Drawing.Size(179, 30);
+            this.txbNationality.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txbNationality.TabIndex = 58;
+            this.txbNationality.UseSelectable = true;
             // 
             // fCustomer
             // 
@@ -863,13 +850,13 @@
             this.groupCustomer.ResumeLayout(false);
             this.groupCustomer.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridCus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingCustomer)).EndInit();
             this.bindingCustomer.ResumeLayout(false);
             this.bindingCustomer.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridCus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -882,9 +869,7 @@
         private System.Windows.Forms.GroupBox groupCustomer;
         private Bunifu.Framework.UI.BunifuDatepicker datepickerDateOfBirth;
         private System.Windows.Forms.Label label1;
-        private MetroFramework.Controls.MetroComboBox comboBoxCustomerType;
         private System.Windows.Forms.Label label20;
-        private MetroFramework.Controls.MetroComboBox comboBoxSex;
         private System.Windows.Forms.Label label13;
         private Bunifu.Framework.UI.BunifuMetroTextbox txbIDCard;
         private System.Windows.Forms.Label label15;
@@ -913,15 +898,17 @@
         private Bunifu.Framework.UI.BunifuThinButton2 btnUpdate;
         private Bunifu.Framework.UI.BunifuThinButton2 btnClose1;
         private System.Windows.Forms.Label label2;
-        private MetroFramework.Controls.MetroComboBox comboboxID;
         private Bunifu.Framework.UI.BunifuThinButton2 btnCancel;
-        private MetroFramework.Controls.MetroComboBox cbCustomerSearch;
         private System.Windows.Forms.Label label14;
         private Bunifu.Framework.UI.BunifuMetroTextbox txbAddress;
         private Bunifu.Framework.UI.BunifuMetroTextbox txbPhoneNumber;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private MetroFramework.Controls.MetroComboBox txbNationality;
         private System.Windows.Forms.DataGridView dataGridCus;
+        private MetroFramework.Controls.MetroComboBox cbCustomerSearch;
+        private Bunifu.Framework.UI.BunifuMetroTextbox txbIDCustomer;
+        private MetroFramework.Controls.MetroComboBox comboBoxSex;
+        private MetroFramework.Controls.MetroComboBox comboBoxCustomerType;
+        private MetroFramework.Controls.MetroComboBox txbNationality;
     }
 }
