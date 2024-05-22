@@ -34,12 +34,13 @@
             this.labelID = new System.Windows.Forms.Label();
             this.txbID = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.btClose = new Bunifu.Framework.UI.BunifuThinButton2();
-            this.lv1 = new MetroFramework.Controls.MetroListView();
             this.tbmessage = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.btSend = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
+            this.btSearch = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.lv1 = new MetroFramework.Controls.MetroListView();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,9 +60,9 @@
             this.labelID.Location = new System.Drawing.Point(25, 40);
             this.labelID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelID.Name = "labelID";
-            this.labelID.Size = new System.Drawing.Size(127, 25);
+            this.labelID.Size = new System.Drawing.Size(129, 25);
             this.labelID.TabIndex = 67;
-            this.labelID.Text = "Mã nhân viên";
+            this.labelID.Text = "Tên nhân viên";
             // 
             // txbID
             // 
@@ -71,6 +72,7 @@
             this.txbID.BorderColorMouseHover = System.Drawing.Color.Gold;
             this.txbID.BorderThickness = 1;
             this.txbID.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txbID.Enabled = false;
             this.txbID.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbID.ForeColor = System.Drawing.Color.Gold;
             this.txbID.isPassword = false;
@@ -94,20 +96,6 @@
             this.label1.TabIndex = 68;
             this.label1.Text = "Chat box";
             // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
-            this.btnClose.ImageActive = null;
-            this.btnClose.Location = new System.Drawing.Point(766, 13);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(21, 20);
-            this.btnClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.btnClose.TabIndex = 69;
-            this.btnClose.TabStop = false;
-            this.btnClose.Zoom = 10;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -121,45 +109,6 @@
             this.label2.TabIndex = 70;
             this.label2.Text = "Chat";
             // 
-            // btClose
-            // 
-            this.btClose.ActiveBorderThickness = 1;
-            this.btClose.ActiveCornerRadius = 20;
-            this.btClose.ActiveFillColor = System.Drawing.Color.Gold;
-            this.btClose.ActiveForecolor = System.Drawing.Color.Black;
-            this.btClose.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btClose.BackColor = System.Drawing.Color.Transparent;
-            this.btClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btClose.BackgroundImage")));
-            this.btClose.ButtonText = "Đóng";
-            this.btClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btClose.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btClose.ForeColor = System.Drawing.Color.Transparent;
-            this.btClose.IdleBorderThickness = 1;
-            this.btClose.IdleCornerRadius = 20;
-            this.btClose.IdleFillColor = System.Drawing.Color.Black;
-            this.btClose.IdleForecolor = System.Drawing.Color.Gold;
-            this.btClose.IdleLineColor = System.Drawing.Color.Gold;
-            this.btClose.Location = new System.Drawing.Point(30, 375);
-            this.btClose.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(271, 49);
-            this.btClose.TabIndex = 72;
-            this.btClose.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lv1
-            // 
-            this.lv1.BackColor = System.Drawing.Color.Black;
-            this.lv1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lv1.ForeColor = System.Drawing.Color.Gold;
-            this.lv1.FullRowSelect = true;
-            this.lv1.Location = new System.Drawing.Point(323, 69);
-            this.lv1.Name = "lv1";
-            this.lv1.OwnerDraw = true;
-            this.lv1.Size = new System.Drawing.Size(445, 241);
-            this.lv1.TabIndex = 73;
-            this.lv1.UseCompatibleStateImageBehavior = false;
-            this.lv1.UseSelectable = true;
-            // 
             // tbmessage
             // 
             this.tbmessage.BackColor = System.Drawing.Color.Black;
@@ -171,10 +120,10 @@
             this.tbmessage.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbmessage.ForeColor = System.Drawing.Color.Gold;
             this.tbmessage.isPassword = false;
-            this.tbmessage.Location = new System.Drawing.Point(323, 323);
+            this.tbmessage.Location = new System.Drawing.Point(30, 254);
             this.tbmessage.Margin = new System.Windows.Forms.Padding(0);
             this.tbmessage.Name = "tbmessage";
-            this.tbmessage.Size = new System.Drawing.Size(445, 31);
+            this.tbmessage.Size = new System.Drawing.Size(271, 31);
             this.tbmessage.TabIndex = 74;
             this.tbmessage.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
@@ -185,7 +134,7 @@
             this.btSend.ActiveFillColor = System.Drawing.Color.Gold;
             this.btSend.ActiveForecolor = System.Drawing.Color.Black;
             this.btSend.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btSend.BackColor = System.Drawing.Color.Transparent;
+            this.btSend.BackColor = System.Drawing.Color.Black;
             this.btSend.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btSend.BackgroundImage")));
             this.btSend.ButtonText = "Gửi tin nhắn";
             this.btSend.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -204,18 +153,87 @@
             this.btSend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btSend.Click += new System.EventHandler(this.btsend_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
+            this.btnClose.ImageActive = null;
+            this.btnClose.Location = new System.Drawing.Point(906, 13);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(21, 20);
+            this.btnClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnClose.TabIndex = 79;
+            this.btnClose.TabStop = false;
+            this.btnClose.Zoom = 10;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btSearch
+            // 
+            this.btSearch.ActiveBorderThickness = 1;
+            this.btSearch.ActiveCornerRadius = 20;
+            this.btSearch.ActiveFillColor = System.Drawing.Color.Gold;
+            this.btSearch.ActiveForecolor = System.Drawing.Color.Black;
+            this.btSearch.ActiveLineColor = System.Drawing.Color.Gold;
+            this.btSearch.BackColor = System.Drawing.Color.Black;
+            this.btSearch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btSearch.BackgroundImage")));
+            this.btSearch.ButtonText = "Tìm kiếm tin nhắn";
+            this.btSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btSearch.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btSearch.ForeColor = System.Drawing.Color.Transparent;
+            this.btSearch.IdleBorderThickness = 1;
+            this.btSearch.IdleCornerRadius = 20;
+            this.btSearch.IdleFillColor = System.Drawing.Color.Black;
+            this.btSearch.IdleForecolor = System.Drawing.Color.Gold;
+            this.btSearch.IdleLineColor = System.Drawing.Color.Gold;
+            this.btSearch.Location = new System.Drawing.Point(31, 364);
+            this.btSearch.Margin = new System.Windows.Forms.Padding(5);
+            this.btSearch.Name = "btSearch";
+            this.btSearch.Size = new System.Drawing.Size(271, 47);
+            this.btSearch.TabIndex = 80;
+            this.btSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
+            // 
+            // listView1
+            // 
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(-19, -19);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(121, 97);
+            this.listView1.TabIndex = 81;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // lv1
+            // 
+            this.lv1.BackColor = System.Drawing.Color.Black;
+            this.lv1.Enabled = false;
+            this.lv1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lv1.ForeColor = System.Drawing.Color.White;
+            this.lv1.FullRowSelect = true;
+            this.lv1.Location = new System.Drawing.Point(323, 68);
+            this.lv1.Name = "lv1";
+            this.lv1.OwnerDraw = true;
+            this.lv1.Size = new System.Drawing.Size(604, 393);
+            this.lv1.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.lv1.TabIndex = 73;
+            this.lv1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lv1.UseCompatibleStateImageBehavior = false;
+            this.lv1.UseSelectable = true;
+            // 
             // fChatServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(958, 488);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.btSearch);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btSend);
             this.Controls.Add(this.tbmessage);
             this.Controls.Add(this.lv1);
-            this.Controls.Add(this.btClose);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelID);
             this.Controls.Add(this.txbID);
@@ -234,11 +252,12 @@
         private System.Windows.Forms.Label labelID;
         private Bunifu.Framework.UI.BunifuMetroTextbox txbID;
         private System.Windows.Forms.Label label1;
-        private Bunifu.Framework.UI.BunifuImageButton btnClose;
         private System.Windows.Forms.Label label2;
-        private Bunifu.Framework.UI.BunifuThinButton2 btClose;
-        private MetroFramework.Controls.MetroListView lv1;
         private Bunifu.Framework.UI.BunifuMetroTextbox tbmessage;
         private Bunifu.Framework.UI.BunifuThinButton2 btSend;
+        private Bunifu.Framework.UI.BunifuImageButton btnClose;
+        private Bunifu.Framework.UI.BunifuThinButton2 btSearch;
+        private System.Windows.Forms.ListView listView1;
+        private MetroFramework.Controls.MetroListView lv1;
     }
 }
