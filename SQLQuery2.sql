@@ -101,12 +101,11 @@ CREATE TABLE StatusRoom(
 	NameStatusRoom nvarchar(100) 
 )
 
-create table  history_message ( 
-     IDMessage char(10) PRIMARY KEY ,
-	 ID_send char(10) ,
-	 UserName nvarchar(100) ,
-	 TIME_SEND smalldatetime ,
-	 Conten_message nvarchar(2000) 
+CREATE TABLE ChatMessages(
+    IDmes INT PRIMARY KEY IDENTITY,
+    Message NVARCHAR(4000) NOT NULL,
+    Sender NVARCHAR(255) NOT NULL DEFAULT '',
+    Timestamp DATETIME NOT NULL DEFAULT GETDATE()
 )
 */
 /*------ INSERT THÔNG TIN GIẢ VÀO DATABASE-----*/
