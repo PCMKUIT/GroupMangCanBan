@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using MetroFramework.Controls;
 
 namespace HotelManager
 {
@@ -26,37 +27,17 @@ namespace HotelManager
             InitializeComponent();
             _username = username;
             txbID.Text = _username;
-            lv1.DrawItem += lv1_DrawItem;
-            lv1.DrawSubItem += lv1_DrawSubItem;
+            lv1.Font = new Font("Segoe UI", 10f);
+            lv1.ForeColor = Color.Gold; // Change the text color here
             lv1.View = View.Details;
             lv1.Columns.Add("Messages", -2, HorizontalAlignment.Left);
+            cbSearch.Items.Add("search by Name");
+            cbSearch.Items.Add("search by Message");
             this.FormClosing += fChatServer_FormClosing;
             this.Load += fChatServer_Load;
+            btnCancel.Visible = false;
         }
-        private void lv1_DrawItem(object sender, DrawListViewItemEventArgs e)
-        {
-            e.DrawDefault = false;
-
-            using (Font font = new Font("Segoe UI", 10f)) // Change the font size here
-            {
-                using (SolidBrush brush = new SolidBrush(Color.White)) // Change the text color here
-                {
-                    e.Graphics.DrawString(e.Item.Text, font, brush, e.Bounds);
-                }
-            }
-        }
-        private void lv1_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
-        {
-            e.DrawDefault = false;
-
-            using (Font font = new Font("Segoe UI", 10f)) // Change the font size here
-            {
-                using (SolidBrush brush = new SolidBrush(Color.White)) // Change the text color here
-                {
-                    e.Graphics.DrawString(e.SubItem.Text, font, brush, e.Bounds);
-                }
-            }
-        }
+        
         private void fChatServer_Load(object sender, EventArgs e)
         {
             StartServer();
@@ -179,8 +160,12 @@ namespace HotelManager
                 }
 
                 Invoke(new Action(() =>
-                {
-                    lv1.Items.Add(msgWithTimestamp); // Assuming you have a ListView named lv1
+                {   
+                    if (btnCancel.Visible == false)
+                    {
+                        lv1.Items.Add(msgWithTimestamp);
+                    }
+                     // Assuming you have a ListView named lv1
                 }));
             }
 
@@ -238,20 +223,57 @@ namespace HotelManager
 
         private void btSearch_Click(object sender, EventArgs e)
         {
+            lv1.Items.Clear();
             string searchTerm = tbmessage.Text; // Assuming you have a TextBox named tbSearch
             SearchListView(searchTerm);
+            btnCancel.Visible = true;
+            btSearch.Visible = false;
         }
         private void SearchListView(string searchTerm)
         {
-            foreach (ListViewItem item in lv1.Items)
+             string query = "";
+            if (cbSearch.SelectedItem == null)
             {
-                if (item.Text.Contains(searchTerm))
+                cMessageBox.Show("Please select a search option");
+                return;
+            }
+            switch (cbSearch.SelectedItem.ToString())
+    {
+        case "search by Name":
+            query = "SELECT Message, Timestamp FROM ChatMessages WHERE UserName LIKE @SearchTerm ORDER BY Timestamp";
+            break;
+        case "search by Message":
+            query = "SELECT Message, Timestamp FROM ChatMessages WHERE Message LIKE @SearchTerm ORDER BY Timestamp";
+            break;
+    }
+
+    using (con = new SqlConnection(connectstring))
+    {
+        con.Open();
+        using (cmd = new SqlCommand(query, con))
+        {
+            cmd.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+
+            using (reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
                 {
-                    item.Selected = true;
-                    item.EnsureVisible();
-                    break;
+                    string message = reader.GetString(0);
+                    DateTime timestamp = reader.GetDateTime(1);
+                    lv1.Items.Add($"{timestamp}: {message}");
                 }
             }
         }
+    }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            LoadMessagesFromDatabase();
+            btnCancel.Visible = false;
+            btSearch.Visible = true;
+        }
+
+
     }
 }

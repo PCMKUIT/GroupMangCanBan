@@ -1,6 +1,6 @@
 ﻿namespace HotelManager
 {
-    partial class fChatServer
+    partial class fChatClient
     {
         /// <summary>
         /// Required designer variable.
@@ -152,7 +152,7 @@
             this.btSend.Size = new System.Drawing.Size(276, 47);
             this.btSend.TabIndex = 75;
             this.btSend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btSend.Click += new System.EventHandler(this.btsend_Click);
+            this.btSend.Click += new System.EventHandler(this.btSend_Click);
             // 
             // btnClose
             // 
