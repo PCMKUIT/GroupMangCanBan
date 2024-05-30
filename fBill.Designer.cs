@@ -1,4 +1,4 @@
-﻿namespace HotelManager
+namespace HotelManager
 {
     partial class fBill
     {
@@ -809,6 +809,7 @@
             this.Name = "fBill";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fBill";
+            this.Load += new System.EventHandler(this.fBill_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bindingBill)).EndInit();
             this.bindingBill.ResumeLayout(false);
             this.bindingBill.PerformLayout();
