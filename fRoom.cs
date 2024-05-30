@@ -1,4 +1,4 @@
-﻿using MetroFramework.Controls;
+using MetroFramework.Controls;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Xml.Linq;
