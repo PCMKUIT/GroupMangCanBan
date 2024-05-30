@@ -1,4 +1,4 @@
-﻿namespace HotelManager
+namespace HotelManager
 {
     partial class fPrintBill
     {
@@ -89,7 +89,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnPrint = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btnClose_ = new Bunifu.Framework.UI.BunifuThinButton2();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
@@ -111,7 +110,7 @@
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageActive = null;
-            this.btnClose.Location = new System.Drawing.Point(1025, 9);
+            this.btnClose.Location = new System.Drawing.Point(1022, 9);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(24, 25);
@@ -119,6 +118,7 @@
             this.btnClose.TabIndex = 35;
             this.btnClose.TabStop = false;
             this.btnClose.Zoom = 10;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // label2
             // 
@@ -129,14 +129,16 @@
             this.label2.Location = new System.Drawing.Point(4, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(202, 48);
+            this.label2.Size = new System.Drawing.Size(162, 48);
             this.label2.TabIndex = 33;
-            this.label2.Text = "In Hóa Đơn";
+            this.label2.Text = "Hóa Đơn";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // groupBox6
             // 
             this.groupBox6.BackColor = System.Drawing.Color.Black;
             this.groupBox6.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
+            this.groupBox6.Controls.Add(this.btnClose_);
             this.groupBox6.Controls.Add(this.label23);
             this.groupBox6.Controls.Add(this.lblFinalPrice);
             this.groupBox6.Controls.Add(this.label24);
@@ -193,7 +195,7 @@
             this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox6.Size = new System.Drawing.Size(1044, 995);
+            this.groupBox6.Size = new System.Drawing.Size(1044, 989);
             this.groupBox6.TabIndex = 36;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = " ";
@@ -214,8 +216,8 @@
             // 
             this.lblFinalPrice.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblFinalPrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblFinalPrice.Location = new System.Drawing.Point(783, 949);
+            this.lblFinalPrice.ForeColor = System.Drawing.Color.Gold;
+            this.lblFinalPrice.Location = new System.Drawing.Point(777, 879);
             this.lblFinalPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFinalPrice.Name = "lblFinalPrice";
             this.lblFinalPrice.Size = new System.Drawing.Size(197, 26);
@@ -228,7 +230,7 @@
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label24.Location = new System.Drawing.Point(667, 949);
+            this.label24.Location = new System.Drawing.Point(671, 877);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(107, 28);
@@ -239,8 +241,8 @@
             // 
             this.lblDiscount.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblDiscount.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiscount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblDiscount.Location = new System.Drawing.Point(462, 949);
+            this.lblDiscount.ForeColor = System.Drawing.Color.Gold;
+            this.lblDiscount.Location = new System.Drawing.Point(465, 877);
             this.lblDiscount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDiscount.Name = "lblDiscount";
             this.lblDiscount.Size = new System.Drawing.Size(198, 26);
@@ -253,7 +255,7 @@
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label29.Location = new System.Drawing.Point(375, 949);
+            this.label29.Location = new System.Drawing.Point(371, 877);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(94, 28);
@@ -264,8 +266,8 @@
             // 
             this.lblTotalPrice.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblTotalPrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblTotalPrice.Location = new System.Drawing.Point(168, 949);
+            this.lblTotalPrice.ForeColor = System.Drawing.Color.Gold;
+            this.lblTotalPrice.Location = new System.Drawing.Point(136, 877);
             this.lblTotalPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTotalPrice.Name = "lblTotalPrice";
             this.lblTotalPrice.Size = new System.Drawing.Size(197, 26);
@@ -278,7 +280,7 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label27.Location = new System.Drawing.Point(53, 949);
+            this.label27.Location = new System.Drawing.Point(41, 877);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(99, 28);
@@ -289,8 +291,8 @@
             // 
             this.lblServicePrice.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblServicePrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblServicePrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblServicePrice.Location = new System.Drawing.Point(783, 909);
+            this.lblServicePrice.ForeColor = System.Drawing.Color.Gold;
+            this.lblServicePrice.Location = new System.Drawing.Point(795, 832);
             this.lblServicePrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblServicePrice.Name = "lblServicePrice";
             this.lblServicePrice.Size = new System.Drawing.Size(231, 26);
@@ -303,7 +305,7 @@
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label25.Location = new System.Drawing.Point(663, 909);
+            this.label25.Location = new System.Drawing.Point(667, 832);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(120, 28);
@@ -314,8 +316,8 @@
             // 
             this.lblSurcharge.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblSurcharge.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSurcharge.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblSurcharge.Location = new System.Drawing.Point(460, 909);
+            this.lblSurcharge.ForeColor = System.Drawing.Color.Gold;
+            this.lblSurcharge.Location = new System.Drawing.Point(451, 836);
             this.lblSurcharge.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSurcharge.Name = "lblSurcharge";
             this.lblSurcharge.Size = new System.Drawing.Size(198, 26);
@@ -328,7 +330,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label8.Location = new System.Drawing.Point(375, 909);
+            this.label8.Location = new System.Drawing.Point(371, 834);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 28);
@@ -339,8 +341,8 @@
             // 
             this.lblRoomPrice.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblRoomPrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRoomPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblRoomPrice.Location = new System.Drawing.Point(166, 909);
+            this.lblRoomPrice.ForeColor = System.Drawing.Color.Gold;
+            this.lblRoomPrice.Location = new System.Drawing.Point(149, 834);
             this.lblRoomPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRoomPrice.Name = "lblRoomPrice";
             this.lblRoomPrice.Size = new System.Drawing.Size(198, 26);
@@ -353,7 +355,7 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label22.Location = new System.Drawing.Point(53, 909);
+            this.label22.Location = new System.Drawing.Point(41, 834);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(115, 28);
@@ -365,8 +367,8 @@
             this.bunifuSeparator3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.bunifuSeparator3.BackColor = System.Drawing.Color.Transparent;
             this.bunifuSeparator3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.bunifuSeparator3.LineThickness = 115;
-            this.bunifuSeparator3.Location = new System.Drawing.Point(27, 882);
+            this.bunifuSeparator3.LineThickness = 470;
+            this.bunifuSeparator3.Location = new System.Drawing.Point(46, 801);
             this.bunifuSeparator3.Margin = new System.Windows.Forms.Padding(14, 20, 14, 20);
             this.bunifuSeparator3.Name = "bunifuSeparator3";
             this.bunifuSeparator3.Size = new System.Drawing.Size(987, 22);
@@ -392,7 +394,7 @@
             this.listViewUseService.Location = new System.Drawing.Point(46, 578);
             this.listViewUseService.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listViewUseService.Name = "listViewUseService";
-            this.listViewUseService.Size = new System.Drawing.Size(946, 300);
+            this.listViewUseService.Size = new System.Drawing.Size(968, 218);
             this.listViewUseService.TabIndex = 100;
             this.listViewUseService.UseCompatibleStateImageBehavior = false;
             this.listViewUseService.View = System.Windows.Forms.View.Details;
@@ -425,7 +427,7 @@
             // 
             this.bunifuSeparator2.BackColor = System.Drawing.Color.Transparent;
             this.bunifuSeparator2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.bunifuSeparator2.LineThickness = 115;
+            this.bunifuSeparator2.LineThickness = 470;
             this.bunifuSeparator2.Location = new System.Drawing.Point(27, 548);
             this.bunifuSeparator2.Margin = new System.Windows.Forms.Padding(9, 12, 9, 12);
             this.bunifuSeparator2.Name = "bunifuSeparator2";
@@ -701,7 +703,7 @@
             // 
             this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
             this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.bunifuSeparator1.LineThickness = 115;
+            this.bunifuSeparator1.LineThickness = 470;
             this.bunifuSeparator1.Location = new System.Drawing.Point(27, 258);
             this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.bunifuSeparator1.Name = "bunifuSeparator1";
@@ -856,32 +858,6 @@
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             // 
-            // btnPrint
-            // 
-            this.btnPrint.ActiveBorderThickness = 1;
-            this.btnPrint.ActiveCornerRadius = 20;
-            this.btnPrint.ActiveFillColor = System.Drawing.Color.Gold;
-            this.btnPrint.ActiveForecolor = System.Drawing.Color.Black;
-            this.btnPrint.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btnPrint.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnPrint.BackColor = System.Drawing.Color.Black;
-            this.btnPrint.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPrint.BackgroundImage")));
-            this.btnPrint.ButtonText = "In Hóa Đơn";
-            this.btnPrint.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPrint.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrint.ForeColor = System.Drawing.Color.Gold;
-            this.btnPrint.IdleBorderThickness = 1;
-            this.btnPrint.IdleCornerRadius = 20;
-            this.btnPrint.IdleFillColor = System.Drawing.Color.Black;
-            this.btnPrint.IdleForecolor = System.Drawing.Color.Gold;
-            this.btnPrint.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnPrint.Location = new System.Drawing.Point(150, 1044);
-            this.btnPrint.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(305, 61);
-            this.btnPrint.TabIndex = 65;
-            this.btnPrint.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // btnClose_
             // 
             this.btnClose_.ActiveBorderThickness = 1;
@@ -901,12 +877,13 @@
             this.btnClose_.IdleFillColor = System.Drawing.Color.Black;
             this.btnClose_.IdleForecolor = System.Drawing.Color.Gold;
             this.btnClose_.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnClose_.Location = new System.Drawing.Point(597, 1044);
+            this.btnClose_.Location = new System.Drawing.Point(358, 915);
             this.btnClose_.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnClose_.Name = "btnClose_";
             this.btnClose_.Size = new System.Drawing.Size(305, 61);
             this.btnClose_.TabIndex = 66;
             this.btnClose_.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnClose_.Click += new System.EventHandler(this.btnClose__Click);
             // 
             // printDialog1
             // 
@@ -919,9 +896,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
-            this.ClientSize = new System.Drawing.Size(1057, 1106);
-            this.Controls.Add(this.btnClose_);
-            this.Controls.Add(this.btnPrint);
+            this.ClientSize = new System.Drawing.Size(1054, 1015);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label2);
@@ -1001,7 +976,6 @@
         private System.Windows.Forms.Label lblRoomPrice;
         private System.Windows.Forms.Label label22;
         private Bunifu.Framework.UI.BunifuThinButton2 btnClose_;
-        private Bunifu.Framework.UI.BunifuThinButton2 btnPrint;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.Label label23;
