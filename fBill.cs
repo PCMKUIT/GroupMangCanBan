@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System;
@@ -130,10 +130,10 @@ namespace HotelManager
              this.Hide();
 
     // Tạo một thể hiện mới của form chính (fMain)
-    fMain mainForm = new fMain();
+    /*fMain mainForm = new fMain();
 
     // Hiển thị form chính
-    mainForm.Show();
+    mainForm.Show();*/
         }
 
         private void dataGridViewBill_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -164,6 +164,11 @@ namespace HotelManager
                 else
                     MessageBox.Show("Hoá đơn chưa thanh toán\nBạn không có quyền truy cập", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void fBill_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
