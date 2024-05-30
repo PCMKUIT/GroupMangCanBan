@@ -1,6 +1,7 @@
 ﻿create database hotelmanager
 /*----- TẠO CÁC BẢNG---- */
-/*
+drop database hotelmanager
+use hotelmanager
 create table Bill (
          IDbill char(10) PRIMARY KEY ,
 	     IDReceiveRoom char(10),
@@ -77,7 +78,7 @@ CREATE TABLE ServiceType (
 	IDServiceType char(10) PRIMARY KEY ,
 	NameServiceType nvarchar(100) 
 )
-
+--drop table staff
 CREATE TABLE Staff (
     IDStaff char(10) PRIMARY KEY ,
 	UserName nvarchar(100) ,
@@ -88,7 +89,8 @@ CREATE TABLE Staff (
 	SexStaff nvarchar(100) ,
 	AddressStaff nvarchar(200) ,
 	PhoneNumberStaff int ,
-	StartDay date 
+	StartDay date ,
+	StatusLogin nvarchar(20)
 )
 
 CREATE TABLE StatusBill (
@@ -107,7 +109,7 @@ CREATE TABLE ChatMessages(
     Sender NVARCHAR(255) NOT NULL DEFAULT '',
     Timestamp DATETIME NOT NULL DEFAULT GETDATE()
 )
-*/
+
 /*------ INSERT THÔNG TIN GIẢ VÀO DATABASE-----*/
 
 /* chèn dữ liệu vào bảng customer Type */ select*from CustomerType
@@ -129,13 +131,13 @@ INSERT [dbo].[ServiceType] ([IDServiceType], [NameServiceType]) VALUES (N'LV004 
 /* chèn dữ liệu vào Staff*/ 
 -- select*from Staff
 -- delete from Staff /*Xóa dữ liệu*/
--- Select * from staff /*Xuất thông tin*/
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV01',N'kietnguyen', N'Nguyen Tuan Kiet', N'0722',  N'079204037544', CAST(N'2004-09-15' AS Date), N'Nam', N'TP HCM', N'0567147852', CAST(N'2024-01-23' AS Date))
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV02',N'kienpham', N'Pham Cao Minh Kien', N'0708',  N'079204006599', CAST(N'2004-07-30' AS Date), N'Nam', N'TP HCM', N'0982630623', CAST(N'2024-01-16' AS Date))
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV03',N'khoatran', N'Tran Mach Dang Khoa', N'0690', N'079204037566', CAST(N'2004-06-30' AS Date), N'Nam', N'TPHCM',  N'0982873872', CAST(N'2024-01-22' AS Date))
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV04',N'khanguyen', N'Nguyen Hoang Duy Kha', N'0597', N'079204037555', CAST(N'2004-06-23' AS Date), N'Nam', N'TPHCM',N'0982873604', CAST(N'2024-01-25' AS Date))
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV05',N'admin', N'Administrator', N'admin', N'079204037566', CAST(N'2004-06-30' AS Date), N'Nam', N'TPHCM', N'0982873501', CAST(N'2024-01-20' AS Date))
-INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay]) VALUES (N'NV06',N'q', N'*', N'q', N'079204037500', CAST(N'2004-06-09' AS Date), N'Nam', N'TPHCM', N'0982876060', CAST(N'2024-01-20' AS Date))
+Select * from staff /*Xuất thông tin*/
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV01',N'kietnguyen', N'Nguyen Tuan Kiet', N'0722',  N'079204037544', CAST(N'2004-09-15' AS Date), N'Nam', N'TP HCM', N'0567147852', CAST(N'2024-01-23' AS Date), N'Offline')
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV02',N'kienpham', N'Pham Cao Minh Kien', N'0708',  N'079204006599', CAST(N'2004-07-30' AS Date), N'Nam', N'TP HCM', N'0982630623', CAST(N'2024-01-16' AS Date), N'Offline')
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV03',N'khoatran', N'Tran Mach Dang Khoa', N'0690', N'079204037566', CAST(N'2004-06-30' AS Date), N'Nam', N'TPHCM',  N'0982873872', CAST(N'2024-01-22' AS Date), N'Offline')
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV04',N'khanguyen', N'Nguyen Hoang Duy Kha', N'0597', N'079204037555', CAST(N'2004-06-23' AS Date), N'Nam', N'TPHCM',N'0982873604', CAST(N'2024-01-25' AS Date), N'Offline')
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV05',N'admin', N'Administrator', N'admin', N'079204037566', CAST(N'2004-06-30' AS Date), N'Nam', N'TPHCM', N'0982873501', CAST(N'2024-01-20' AS Date), N'Offline')
+INSERT [dbo].[Staff] ([IDStaff],[UserName], [DisplayName], [PassWord],[IDCardStaff], [DateOfBirthStaff], [SexStaff], [AddressStaff], [PhoneNumberStaff], [StartDay], [StatusLogin]) VALUES (N'NV06',N'q', N'*', N'q', N'079204037500', CAST(N'2004-06-09' AS Date), N'Nam', N'TPHCM', N'0982876060', CAST(N'2024-01-20' AS Date), N'Offline')
 -- /* chèn dữ liệu vào RoomType*/ select* from RoomType
 INSERT [dbo].[RoomType] ([IDRoomType], [NameRoomType], [Price], [LimitPerson]) VALUES (N'LP001     ', N'Phòng tổng thống', 15000000, 6)
 INSERT [dbo].[RoomType] ([IDRoomType], [NameRoomType], [Price], [LimitPerson]) VALUES (N'LP002     ', N'Phòng đôi', 6500000, 4)
