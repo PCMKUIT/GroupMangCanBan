@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -63,10 +63,10 @@ namespace HotelManager
                 ListViewItem.ListViewSubItem subItem1 = new ListViewItem.ListViewSubItem(listViewItem, item["Tên dịch vụ"].ToString());
                 ListViewItem.ListViewSubItem subItem2 = new ListViewItem.ListViewSubItem(listViewItem, ((int)item["Đơn giá"]).ToString("c0", cultureInfo));
                 ListViewItem.ListViewSubItem subItem3 = new ListViewItem.ListViewSubItem(listViewItem, ((int)item["Số lượng"]).ToString());
-                ListViewItem.ListViewSubItem subItem4 = new ListViewItem.ListViewSubItem(listViewItem, ((int)item["Đơn giá"]*(int)item["Số lượng"]).ToString("c0", cultureInfo));
+                ListViewItem.ListViewSubItem subItem4 = new ListViewItem.ListViewSubItem(listViewItem, ((int)item["Đơn giá"]* (int)item["Số lượng"]).ToString("c0", cultureInfo));
 
 
-                _totalPrice += (int)item["Đơn giá"]*(int)item["Số lượng"];
+                _totalPrice += (int)item["Đơn giá"] * (int)item["Số lượng"];
 
                 listViewItem.SubItems.Add(subItem1);
                 listViewItem.SubItems.Add(subItem2);
@@ -86,21 +86,22 @@ namespace HotelManager
             listViewItemTotalPrice.SubItems.Add(_subItem3);
             listViewItemTotalPrice.SubItems.Add(subItemTotalPrice);
             listViewUseService.Items.Add(listViewItemTotalPrice);
- listViewUseService.Items.Add(listViewItemTotalPrice);
- // cập nhật Service  Price cho bill
- 
- SqlCommand cmd1;
- cmd1 = new SqlCommand();
- cmd1.CommandType = System.Data.CommandType.Text;
- cmd1.CommandText = " update Bill set ServicePrice = " + _totalPrice + " where IDBill= '"+idBill+"'  ";
- cmd1.Connection = con;
- int k = cmd1.ExecuteNonQuery();
- if ( k > 0)
- {
- } 
- 
+            // cập nhật Service  Price cho bill
+            
+            SqlCommand cmd1;
+            cmd1 = new SqlCommand();
+            cmd1.CommandType = System.Data.CommandType.Text;
+            cmd1.CommandText = " update Bill set ServicePrice = " + _totalPrice + " where IDBill= '"+idBill+"'  ";
+            cmd1.Connection = con;
+            int k = cmd1.ExecuteNonQuery();
+            if ( k > 0)
+            {
+               
+            } 
+            
             id = 1;
             con.Close();
+            
         }
         public void ShowInfo(string idBill)
         {
@@ -112,32 +113,33 @@ namespace HotelManager
             cmd = new SqlCommand();
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.CommandText = "SELECT D.Name AS HoTen, D.IDCard AS CMND, D.PhoneNumber AS SDT, E.NameCustomerType AS LoaiKH, D.Diachi AS DiaChi, D.Nationality AS QuocTich, F.NameRoom AS TenPhong, G.NameRoomType AS LoaiPhong, G.Price AS DonGia, C.DateCheckIn AS NgayDen, C.DateCheckOut AS NgayDi, A.RoomPrice AS TienPhong, A.ServicePrice AS TienDichVu, A.Surcharge AS PhuThu, A.TotalPrice AS ThanhTien, A.Discount AS GiamGia " +
-     "FROM Bill A, ReceiveRoom B, BookRoom C, Customer D, CustomerType E, Room F, RoomType G " +
-     "WHERE A.IDReceiveRoom = B.IDReceiveRoom AND B.IDBookRoom = C.IDBookRoom AND C.IDCustomer = D.IDCustomer AND D.IDCustomerType = E.IDCustomerType AND B.IDRoom = F.IDRoom AND F.IDRoomType = G.IDRoomType AND A.IDBill = '" + idBill + "'";
+                              "FROM Bill A, ReceiveRoom B, BookRoom C, Customer D, CustomerType E, Room F, RoomType G " +
+                              "WHERE A.IDReceiveRoom = B.IDReceiveRoom AND B.IDBookRoom = C.IDBookRoom AND C.IDCustomer = D.IDCustomer AND D.IDCustomerType = E.IDCustomerType AND B.IDRoom = F.IDRoom AND F.IDRoomType = G.IDRoomType AND A.IDBill = '" + idBill + "'";
             cmd.Connection = con;
             DataTable dataTable = new DataTable();
             SqlDataReader reader = cmd.ExecuteReader();
             dataTable.Load(reader);
             DataRow data = dataTable.Rows[0];
+            CultureInfo cultureInfo = new CultureInfo("vi-vn");
             DateTime dateCheckIn = (DateTime)data["NgayDen"];
             DateTime dateCheckOut = (DateTime)data["NgayDi"];
             int days = dateCheckOut.Subtract(dateCheckIn).Days;
- 
- SqlCommand cmd2;
- cmd2 = new SqlCommand();
- cmd2.CommandType = System.Data.CommandType.Text;
- int totalprice = ((int)data["DonGia"] * days + (int)data["TienDichVu"] + (int)data["PhuThu"]);
- int roomprice = (int)data["DonGia"] * days;
- cmd2.CommandText = " update Bill set RoomPrice = " + roomprice + ", TotalPrice ="+ totalprice + " "+
-                                " where IDBill= '" + idBill + "'  ";
- cmd2.Connection = con;
- int k = cmd2.ExecuteNonQuery();
- if (k > 0)
- {
-     
- }
- 
-            CultureInfo cultureInfo = new CultureInfo("vi-vn");
+            
+            SqlCommand cmd2;
+            cmd2 = new SqlCommand();
+            cmd2.CommandType = System.Data.CommandType.Text;
+            int totalprice = ((int)data["DonGia"] * days + (int)data["TienDichVu"] + (int)data["PhuThu"]);
+            int roomprice = (int)data["DonGia"] * days;
+            cmd2.CommandText = " update Bill set RoomPrice = " + roomprice + ", TotalPrice ="+ totalprice + " "+
+                                           " where IDBill= '" + idBill + "'  ";
+            cmd2.Connection = con;
+            int k = cmd2.ExecuteNonQuery();
+            if (k > 0)
+            {
+               
+            }
+            
+            
             lblCustomerName.Text = data["HoTen"].ToString();
             lblIDCard.Text = data["CMND"].ToString();
             lblPhoneNumber.Text = ((int)data["SDT"]).ToString();
@@ -155,13 +157,38 @@ namespace HotelManager
             lblTotalPrice.Text = ((int)data["ThanhTien"]).ToString("c0", cultureInfo);
             lblFinalPrice.Text = ((int)data["ThanhTien"] * ((100 - (int)data["GiamGia"]) / 100.0)).ToString("c0", cultureInfo);
             lblDiscount.Text = ((int)data["GiamGia"]).ToString() + " %";
+          
             con.Close();
         }
+
         private void btnClose_Click(object sender, EventArgs e)
-{
-    fBill fb = new fBill();
-    fb.Show();
-    this.Hide(); 
-}
+        {
+            fBill fb = new fBill();
+            fb.Show();
+            this.Hide(); 
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose__Click(object sender, EventArgs e)
+        {
+            fBill fb = new fBill();
+            fb.Show();
+            this.Hide();
+        }
     }
 }
+/*
+            cmd = new SqlCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "---- câu truy vấn----";
+            cmd.Connection = con;
+ */
