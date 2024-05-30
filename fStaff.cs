@@ -13,8 +13,12 @@ namespace HotelManager
     {
 
         string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
-        public fStaff()
+        private string userName;
+        private string passWord;
+        public fStaff(string username, string password)
         {
+            this.userName = username;
+            this.passWord = password;
             InitializeComponent();
             LoadDataToDataGridView();
             dataGridStaff.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -30,6 +34,21 @@ namespace HotelManager
             metroComboBox1.Items.Add("PhoneNumberStaff");
             metroComboBox1.SelectedItem = "IDStaff";
 
+            DataBinding();
+            CheckAdminPermission(username,password);
+        }
+
+        private void DataBinding()
+        {
+            txbUserName.DataBindings.Clear();
+            txbStartDay.DataBindings.Clear();
+            txbName.DataBindings.Clear();
+            txbIDcard.DataBindings.Clear();
+            comboBoxSex.DataBindings.Clear();
+            datepickerDateOfBirth.DataBindings.Clear();
+            txbPhoneNumber.DataBindings.Clear();
+            txbAddress.DataBindings.Clear();
+
             txbUserName.DataBindings.Add("Text", dataGridStaff.DataSource, "UserName");
             txbStartDay.DataBindings.Add("Text", dataGridStaff.DataSource, "StartDay");
             txbName.DataBindings.Add("Text", dataGridStaff.DataSource, "DisplayName");
@@ -39,6 +58,20 @@ namespace HotelManager
             txbPhoneNumber.DataBindings.Add("Text", dataGridStaff.DataSource, "PhoneNumberStaff");
             txbAddress.DataBindings.Add("Text", dataGridStaff.DataSource, "AddressStaff");
         }
+        private void CheckAdminPermission(string username,string password)
+        {
+            if (username != "admin" || password != "admin")
+            {
+                txbUserName.Enabled = false;
+                txbName.Enabled = false;
+                txbIDcard.Enabled = false;
+                txbAddress.Enabled = false;
+                txbPhoneNumber.Enabled = false;
+                comboBoxSex.Enabled = false;
+                comboBoxStaffType.Enabled = false;
+            }
+        }
+
         private void LoadDataToDataGridView()
         {
             string query = "SELECT * FROM Staff";
@@ -131,6 +164,12 @@ namespace HotelManager
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            string userName = txbUserName.Text.Trim();
+            if (this.userName != "admin" || passWord != "admin")
+            {
+                MessageBox.Show("Bạn không có quyền cập nhật thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (comboBoxStaffType.SelectedItem.ToString() != "Chế độ cập nhật")
             {
                 MessageBox.Show("Vui lòng chuyển sang chế độ cập nhật trước khi cập nhật nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -146,9 +185,58 @@ namespace HotelManager
                 MessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string idCard = txbIDcard.Text.Trim();
+            bool isDuplicateIDCard = false;
+
+            string queryCheckDuplicateIDCard = "SELECT COUNT(*) FROM Staff WHERE IDCardStaff = @IDCard AND UserName != @UserName";
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicateIDCard, connection))
+                {
+                    command.Parameters.AddWithValue("@IDCard", idCard);
+                    command.Parameters.AddWithValue("@UserName", userName);
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicateIDCard = true;
+                    }
+                }
+            }
+
+            if (isDuplicateIDCard)
+            {
+                MessageBox.Show("Số căn cước/ CMND đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!IsValidPhoneNumber(txbPhoneNumber.Text))
             {
                 MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string phoneNumber = txbPhoneNumber.Text.Trim();
+            bool isDuplicatePhoneNumber = false;
+            string queryCheckDuplicatePhoneNumber = "SELECT COUNT(*) FROM Staff WHERE PhoneNumberStaff = @PhoneNumber AND UserName != @UserName";
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicatePhoneNumber, connection))
+                {
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                    command.Parameters.AddWithValue("@UserName", userName);
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicatePhoneNumber = true;
+                    }
+                }
+            }
+
+            if (isDuplicatePhoneNumber)
+            {
+                MessageBox.Show("Số điện thoại đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -172,7 +260,8 @@ namespace HotelManager
                 return;
             }
 
-            string query = "UPDATE Staff SET UserName=@UserName, DisplayName = @DisplayName, IDCardStaff = @IDCardStaff, SexStaff = @SexStaff, DateOfBirthStaff = @DateOfBirthStaff, PhoneNumberStaff = @PhoneNumberStaff, AddressStaff = @AddressStaff WHERE UserName = @UserName";
+
+            string query = $"UPDATE Staff SET UserName=@UserName, DisplayName = @DisplayName, IDCardStaff = @IDCardStaff, SexStaff = @SexStaff, DateOfBirthStaff = @DateOfBirthStaff, PhoneNumberStaff = @PhoneNumberStaff, AddressStaff = @AddressStaff WHERE PhoneNumberStaff = @PhoneNumberStaff AND IDCardStaff = @IDCardStaff AND UserName=@UserName";
 
             using (SqlConnection connection = new SqlConnection(connectstring))
             {
@@ -199,27 +288,36 @@ namespace HotelManager
                 }
             }
             LoadDataToDataGridView();
+            DataBinding();
             dataGridStaff.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            if (userName != "admin" || passWord != "admin")
+            {
+                MessageBox.Show("Bạn không có quyền xóa thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (comboBoxStaffType.SelectedItem.ToString() != "Chế độ xóa")
             {
                 MessageBox.Show("Vui lòng chuyển sang chế độ xóa trước khi xóa nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string selectedProperty = metroComboBox1.SelectedItem.ToString();
-            string valueToDelete = txbSearch.Text.Trim();
+            //Xoa theo yeu cau dua tren truong search
+            //string selectedProperty = metroComboBox1.SelectedItem.ToString();
+            //string valueToDelete = txbSearch.Text.Trim();
 
-            if (string.IsNullOrEmpty(valueToDelete))
-            {
-                MessageBox.Show("Vui lòng nhập giá trị cần xóa trước khi thực hiện.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string query = $"DELETE FROM Staff WHERE {selectedProperty} = @ValueToDelete";
+            //if (string.IsNullOrEmpty(valueToDelete))
+            //{
+            //  MessageBox.Show("Vui lòng nhập giá trị cần xóa trước khi thực hiện.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //string query = $"DELETE FROM Staff WHERE {selectedProperty} = @ValueToDelete";
+            string idCard = txbIDcard.Text.Trim();
+            string phoneNumber = txbPhoneNumber.Text.Trim();
+            string query = $"DELETE FROM Staff WHERE IDCardStaff=@IDCard AND PhoneNumberStaff=@PhoneNumber";
 
             using (SqlConnection connection = new SqlConnection(connectstring))
             {
@@ -230,12 +328,16 @@ namespace HotelManager
                     {
                         using (SqlCommand command = new SqlCommand(query, connection, transaction))
                         {
-                            command.Parameters.AddWithValue("@ValueToDelete", valueToDelete);
+                            command.Parameters.AddWithValue("@IDCard", idCard);
+                            command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
                             int rowsAffected = command.ExecuteNonQuery();
+
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Nhân viên đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 DataTable dataTable = new DataTable();
+
                                 using (SqlCommand selectCommand = new SqlCommand("SELECT IDStaff FROM Staff ORDER BY CAST(SUBSTRING(IDStaff, 3, 2) AS INT)", connection, transaction))
                                 {
                                     using (SqlDataAdapter adapter = new SqlDataAdapter(selectCommand))
@@ -251,6 +353,7 @@ namespace HotelManager
                                     string newID = "NV" + newIndex.ToString("D2");
 
                                     string updateQuery = "UPDATE Staff SET IDStaff = @NewID WHERE IDStaff = @OldID";
+
                                     using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction))
                                     {
                                         updateCommand.Parameters.AddWithValue("@NewID", newID);
@@ -275,7 +378,9 @@ namespace HotelManager
                 }
             }
 
+
             LoadDataToDataGridView();
+            DataBinding();
             dataGridStaff.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
 
@@ -283,6 +388,22 @@ namespace HotelManager
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            string userName = txbUserName.Text.Trim();
+            DateTime startDay = DateTime.Now.Date;
+            string displayName = txbName.Text.Trim();
+            string idCard = txbIDcard.Text.Trim();
+            string sex = comboBoxSex.SelectedItem.ToString();
+            DateTime dateOfBirth = datepickerDateOfBirth.Value;
+            string phoneNumber = txbPhoneNumber.Text.Trim();
+            string address = txbAddress.Text.Trim();
+            string countQuery = "SELECT COUNT(*) FROM Staff";
+            string id;
+
+            if (this.userName != "admin" || passWord != "admin")
+            {
+                MessageBox.Show("Bạn không có quyền thêm thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (comboBoxStaffType.SelectedItem.ToString() != "Chế độ thêm")
             {
                 MessageBox.Show("Vui lòng chuyển sang chế độ thêm trước khi thêm nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -299,12 +420,56 @@ namespace HotelManager
                 MessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            bool isDuplicateIDCard = false;
+
+            string queryCheckDuplicateIDCard = "SELECT COUNT(*) FROM Staff WHERE IDCardStaff = @IDCard";
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicateIDCard, connection))
+                {
+                    command.Parameters.AddWithValue("@IDCard", idCard);
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicateIDCard = true;
+                    }
+                }
+            }
+
+            if (isDuplicateIDCard)
+            {
+                MessageBox.Show("Số căn cước/ CMND đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!IsValidPhoneNumber(txbPhoneNumber.Text))
             {
                 MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            bool isDuplicatePhoneNumber = false;
+            string queryCheckDuplicatePhoneNumber = "SELECT COUNT(*) FROM Staff WHERE PhoneNumberStaff = @PhoneNumber";
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicatePhoneNumber, connection))
+                {
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicatePhoneNumber = true;
+                    }
+                }
+            }
+
+            if (isDuplicatePhoneNumber)
+            {
+                MessageBox.Show("Số điện thoại đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (datepickerDateOfBirth.Value > DateTime.Now.Date)
             {
                 MessageBox.Show("Ngày sinh không thể lớn hơn ngày hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -325,16 +490,30 @@ namespace HotelManager
                 MessageBox.Show("Không được để trống thông tin địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string userName = txbUserName.Text.Trim();
-            DateTime startDay = DateTime.Now.Date;
-            string displayName = txbName.Text.Trim();
-            string idCard = txbIDcard.Text.Trim();
-            string sex = comboBoxSex.SelectedItem.ToString();
-            DateTime dateOfBirth = datepickerDateOfBirth.Value;
-            string phoneNumber = txbPhoneNumber.Text.Trim();
-            string address = txbAddress.Text.Trim();
-            string countQuery = "SELECT COUNT(*) FROM Staff";
-            string id;
+
+            bool isDuplicateUserName = false;
+            string queryCheckDuplicateUserName = "SELECT COUNT(*) FROM Staff WHERE UserName = @UserName";
+
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(queryCheckDuplicateUserName, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", userName);
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    if (count > 0)
+                    {
+                        isDuplicateUserName = true;
+                    }
+                }
+            }
+
+            if (isDuplicateUserName)
+            {
+                MessageBox.Show("Tên người dùng đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             using (SqlConnection connect = new SqlConnection(connectstring))
             {
                 connect.Open();
@@ -375,15 +554,16 @@ namespace HotelManager
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Nhân viên đã được thêm mới thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Nhân viên đã được thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Không thể thêm mới nhân viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Không thể thêm nhân viên mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             LoadDataToDataGridView();
+            DataBinding();
             dataGridStaff.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
@@ -448,4 +628,3 @@ namespace HotelManager
         }
     }
 }
-
