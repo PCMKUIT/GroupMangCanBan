@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,8 +10,10 @@ namespace HotelManager
     public partial class fProfile : Form
     {
         string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
+        private string userName;
         public fProfile(string userName)
         {
+            this.userName = userName;
             InitializeComponent();
             LoadProfile(userName);
         }
@@ -27,7 +29,8 @@ namespace HotelManager
                     {
                         if (reader.Read())
                         {
-                            txbStaffType.Text = "Nhân viên";
+                            if (username != "admin") txbStaffType.Text = "Nhân viên";
+                            else txbStaffType.Text = "Quản lý";
                             txbUserName.Text = reader["UserName"].ToString();
                             txbDisplayName.Text = reader["DisplayName"].ToString();
                             txbIDCard.Text = reader["IDCardStaff"].ToString();
@@ -129,6 +132,7 @@ namespace HotelManager
             string currentPassword = txbPass.Text;
             string newPassword = txbNewPass.Text;
             string confirmNewPassword = txbReNewPass.Text;
+
             if (currentPassword == string.Empty)
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -137,6 +141,11 @@ namespace HotelManager
             if (newPassword == string.Empty)
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (userName == "admin")
+            {
+                MessageBox.Show("Mật khẩu của admin là cố định.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!CheckCurrentPassword(username, currentPassword))
@@ -244,8 +253,5 @@ namespace HotelManager
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
     }
 }
