@@ -35,6 +35,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fCustomer));
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.groupCustomer = new System.Windows.Forms.GroupBox();
+            this.comboBoxSex = new MetroFramework.Controls.MetroComboBox();
+            this.txbIDCustomer = new Bunifu.Framework.UI.BunifuMetroTextbox();
+            this.comboBoxCustomerType = new MetroFramework.Controls.MetroComboBox();
+            this.txbNationality = new MetroFramework.Controls.MetroComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txbAddress = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txbPhoneNumber = new Bunifu.Framework.UI.BunifuMetroTextbox();
@@ -75,10 +79,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.btnClose = new Bunifu.Framework.UI.BunifuImageButton();
-            this.txbIDCustomer = new Bunifu.Framework.UI.BunifuMetroTextbox();
-            this.comboBoxCustomerType = new MetroFramework.Controls.MetroComboBox();
-            this.comboBoxSex = new MetroFramework.Controls.MetroComboBox();
-            this.txbNationality = new MetroFramework.Controls.MetroComboBox();
             this.groupCustomer.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCus)).BeginInit();
@@ -127,6 +127,83 @@
             this.groupCustomer.TabStop = false;
             this.groupCustomer.Text = "Thông tin khách hàng";
             // 
+            // comboBoxSex
+            // 
+            this.comboBoxSex.BackColor = System.Drawing.Color.Black;
+            this.comboBoxSex.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxSex.FormattingEnabled = true;
+            this.comboBoxSex.ItemHeight = 23;
+            this.comboBoxSex.Location = new System.Drawing.Point(12, 272);
+            this.comboBoxSex.Name = "comboBoxSex";
+            this.comboBoxSex.Size = new System.Drawing.Size(175, 29);
+            this.comboBoxSex.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.comboBoxSex.TabIndex = 61;
+            this.comboBoxSex.UseSelectable = true;
+            // 
+            // txbIDCustomer
+            // 
+            this.txbIDCustomer.BorderColorFocused = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderColorIdle = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderColorMouseHover = System.Drawing.Color.Gold;
+            this.txbIDCustomer.BorderThickness = 1;
+            this.txbIDCustomer.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txbIDCustomer.Enabled = false;
+            this.txbIDCustomer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbIDCustomer.ForeColor = System.Drawing.Color.Gold;
+            this.txbIDCustomer.isPassword = false;
+            this.txbIDCustomer.Location = new System.Drawing.Point(12, 44);
+            this.txbIDCustomer.Margin = new System.Windows.Forms.Padding(0);
+            this.txbIDCustomer.Name = "txbIDCustomer";
+            this.txbIDCustomer.Size = new System.Drawing.Size(175, 29);
+            this.txbIDCustomer.TabIndex = 60;
+            this.txbIDCustomer.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbIDCustomer.OnValueChanged += new System.EventHandler(this.txbIDCustomer_OnValueChanged);
+            // 
+            // comboBoxCustomerType
+            // 
+            this.comboBoxCustomerType.BackColor = System.Drawing.Color.Black;
+            this.comboBoxCustomerType.ForeColor = System.Drawing.Color.Gold;
+            this.comboBoxCustomerType.FormattingEnabled = true;
+            this.comboBoxCustomerType.ItemHeight = 23;
+            this.comboBoxCustomerType.Location = new System.Drawing.Point(12, 216);
+            this.comboBoxCustomerType.Name = "comboBoxCustomerType";
+            this.comboBoxCustomerType.Size = new System.Drawing.Size(175, 29);
+            this.comboBoxCustomerType.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.comboBoxCustomerType.TabIndex = 59;
+            this.comboBoxCustomerType.UseSelectable = true;
+            // 
+            // txbNationality
+            // 
+            this.txbNationality.BackColor = System.Drawing.Color.Black;
+            this.txbNationality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.txbNationality.ForeColor = System.Drawing.Color.Gold;
+            this.txbNationality.FormattingEnabled = true;
+            this.txbNationality.ItemHeight = 23;
+            this.txbNationality.Items.AddRange(new object[] {
+            "Việt Nam",
+            "Trung Quốc",
+            "Hàn Quốc",
+            "Nhật Bản",
+            "Đài Loan",
+            "Malaysia",
+            "Thái Lan",
+            "Singapore",
+            "Nga",
+            "Anh",
+            "Pháp",
+            "Đức",
+            "Hoa Kỳ",
+            "Hà Lan",
+            "Tây Ban Nha",
+            "Ý",
+            "Khác"});
+            this.txbNationality.Location = new System.Drawing.Point(216, 211);
+            this.txbNationality.Name = "txbNationality";
+            this.txbNationality.Size = new System.Drawing.Size(179, 29);
+            this.txbNationality.Style = MetroFramework.MetroColorStyle.Yellow;
+            this.txbNationality.TabIndex = 58;
+            this.txbNationality.UseSelectable = true;
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -135,7 +212,7 @@
             this.label14.ForeColor = System.Drawing.Color.Gold;
             this.label14.Location = new System.Drawing.Point(216, 77);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(127, 25);
+            this.label14.Size = new System.Drawing.Size(100, 20);
             this.label14.TabIndex = 55;
             this.label14.Text = "Số điện thoại:";
             // 
@@ -181,7 +258,7 @@
             this.label11.ForeColor = System.Drawing.Color.Gold;
             this.label11.Location = new System.Drawing.Point(216, 133);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(74, 25);
+            this.label11.Size = new System.Drawing.Size(58, 20);
             this.label11.TabIndex = 57;
             this.label11.Text = "Địa chỉ:";
             // 
@@ -193,7 +270,7 @@
             this.label12.ForeColor = System.Drawing.Color.Gold;
             this.label12.Location = new System.Drawing.Point(216, 188);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(97, 25);
+            this.label12.Size = new System.Drawing.Size(75, 20);
             this.label12.TabIndex = 56;
             this.label12.Text = "Quốc tịch:";
             // 
@@ -205,7 +282,7 @@
             this.label2.ForeColor = System.Drawing.Color.Gold;
             this.label2.Location = new System.Drawing.Point(12, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(146, 25);
+            this.label2.Size = new System.Drawing.Size(112, 20);
             this.label2.TabIndex = 51;
             this.label2.Text = "Mã khách hàng:";
             // 
@@ -249,7 +326,7 @@
             this.label13.ForeColor = System.Drawing.Color.Gold;
             this.label13.Location = new System.Drawing.Point(12, 244);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(88, 25);
+            this.label13.Size = new System.Drawing.Size(68, 20);
             this.label13.TabIndex = 28;
             this.label13.Text = "Giới tính:";
             // 
@@ -261,7 +338,7 @@
             this.label20.ForeColor = System.Drawing.Color.Gold;
             this.label20.Location = new System.Drawing.Point(12, 188);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(154, 25);
+            this.label20.Size = new System.Drawing.Size(119, 20);
             this.label20.TabIndex = 41;
             this.label20.Text = "Loại khách hàng:";
             // 
@@ -273,7 +350,7 @@
             this.label15.ForeColor = System.Drawing.Color.Gold;
             this.label15.Location = new System.Drawing.Point(12, 133);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(98, 25);
+            this.label15.Size = new System.Drawing.Size(77, 20);
             this.label15.TabIndex = 24;
             this.label15.Text = "Số CMND:";
             // 
@@ -285,7 +362,7 @@
             this.label1.ForeColor = System.Drawing.Color.Gold;
             this.label1.Location = new System.Drawing.Point(216, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 25);
+            this.label1.Size = new System.Drawing.Size(77, 20);
             this.label1.TabIndex = 49;
             this.label1.Text = "Ngày sinh:";
             // 
@@ -314,7 +391,7 @@
             this.label16.ForeColor = System.Drawing.Color.Gold;
             this.label16.Location = new System.Drawing.Point(12, 77);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(96, 25);
+            this.label16.Size = new System.Drawing.Size(76, 20);
             this.label16.TabIndex = 22;
             this.label16.Text = "Họ và tên:";
             // 
@@ -359,7 +436,7 @@
             this.dataGridCus.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridCus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridCus.GridColor = System.Drawing.Color.Gold;
-            this.dataGridCus.Location = new System.Drawing.Point(3, 73);
+            this.dataGridCus.Location = new System.Drawing.Point(3, 68);
             this.dataGridCus.Name = "dataGridCus";
             this.dataGridCus.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -376,7 +453,7 @@
             this.dataGridCus.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridCus.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridCus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridCus.Size = new System.Drawing.Size(1090, 479);
+            this.dataGridCus.Size = new System.Drawing.Size(1090, 484);
             this.dataGridCus.TabIndex = 30;
             // 
             // bindingCustomer
@@ -400,7 +477,7 @@
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.toolStripLabel1});
-            this.bindingCustomer.Location = new System.Drawing.Point(3, 30);
+            this.bindingCustomer.Location = new System.Drawing.Point(3, 25);
             this.bindingCustomer.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingCustomer.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingCustomer.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -415,7 +492,7 @@
             // 
             this.bindingNavigatorCountItem.ForeColor = System.Drawing.Color.Gold;
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(61, 40);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(47, 40);
             this.bindingNavigatorCountItem.Text = "của {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Tổng số khách hàng";
             // 
@@ -487,7 +564,7 @@
             // 
             this.toolStripLabel1.ForeColor = System.Drawing.Color.Gold;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(45, 40);
+            this.toolStripLabel1.Size = new System.Drawing.Size(34, 40);
             this.toolStripLabel1.Text = "Xuất";
             this.toolStripLabel1.ToolTipText = "Xuất";
             // 
@@ -514,14 +591,14 @@
             this.cbCustomerSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbCustomerSearch.ForeColor = System.Drawing.Color.Gold;
             this.cbCustomerSearch.FormattingEnabled = true;
-            this.cbCustomerSearch.ItemHeight = 24;
+            this.cbCustomerSearch.ItemHeight = 23;
             this.cbCustomerSearch.Items.AddRange(new object[] {
             "Nam",
             "Nữ",
             "Khác"});
             this.cbCustomerSearch.Location = new System.Drawing.Point(12, 71);
             this.cbCustomerSearch.Name = "cbCustomerSearch";
-            this.cbCustomerSearch.Size = new System.Drawing.Size(179, 30);
+            this.cbCustomerSearch.Size = new System.Drawing.Size(179, 29);
             this.cbCustomerSearch.Style = MetroFramework.MetroColorStyle.Yellow;
             this.cbCustomerSearch.TabIndex = 60;
             this.cbCustomerSearch.UseCustomBackColor = true;
@@ -574,12 +651,13 @@
             this.btnSearch.IdleFillColor = System.Drawing.Color.Black;
             this.btnSearch.IdleForecolor = System.Drawing.Color.Gold;
             this.btnSearch.IdleLineColor = System.Drawing.Color.Gold;
-            this.btnSearch.Location = new System.Drawing.Point(220, 62);
+            this.btnSearch.Location = new System.Drawing.Point(220, 60);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(175, 40);
             this.btnSearch.TabIndex = 46;
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnCancel
             // 
@@ -606,6 +684,7 @@
             this.btnCancel.TabIndex = 49;
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // SaveCustomer
             // 
@@ -680,6 +759,7 @@
             this.btnUpdate.TabIndex = 51;
             this.btnUpdate.TabStop = false;
             this.btnUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click_1);
             // 
             // btnAddCustomer
             // 
@@ -706,6 +786,7 @@
             this.btnAddCustomer.TabIndex = 8;
             this.btnAddCustomer.TabStop = false;
             this.btnAddCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnAddCustomer.Click += new System.EventHandler(this.btnAddCustomer_Click);
             // 
             // label6
             // 
@@ -715,7 +796,7 @@
             this.label6.ForeColor = System.Drawing.Color.Gold;
             this.label6.Location = new System.Drawing.Point(9, 6);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(323, 46);
+            this.label6.Size = new System.Drawing.Size(258, 37);
             this.label6.TabIndex = 42;
             this.label6.Text = "Quản Lí Khách Hàng";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -739,7 +820,7 @@
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageActive = null;
-            this.btnClose.Location = new System.Drawing.Point(1102, 6);
+            this.btnClose.Location = new System.Drawing.Point(1149, 6);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(16, 16);
             this.btnClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -748,88 +829,13 @@
             this.btnClose.Zoom = 10;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // txbIDCustomer
-            // 
-            this.txbIDCustomer.BorderColorFocused = System.Drawing.Color.Gold;
-            this.txbIDCustomer.BorderColorIdle = System.Drawing.Color.Gold;
-            this.txbIDCustomer.BorderColorMouseHover = System.Drawing.Color.Gold;
-            this.txbIDCustomer.BorderThickness = 1;
-            this.txbIDCustomer.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txbIDCustomer.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbIDCustomer.ForeColor = System.Drawing.Color.Gold;
-            this.txbIDCustomer.isPassword = false;
-            this.txbIDCustomer.Location = new System.Drawing.Point(12, 44);
-            this.txbIDCustomer.Margin = new System.Windows.Forms.Padding(0);
-            this.txbIDCustomer.Name = "txbIDCustomer";
-            this.txbIDCustomer.Size = new System.Drawing.Size(175, 29);
-            this.txbIDCustomer.TabIndex = 60;
-            this.txbIDCustomer.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // comboBoxCustomerType
-            // 
-            this.comboBoxCustomerType.BackColor = System.Drawing.Color.Black;
-            this.comboBoxCustomerType.ForeColor = System.Drawing.Color.Gold;
-            this.comboBoxCustomerType.FormattingEnabled = true;
-            this.comboBoxCustomerType.ItemHeight = 24;
-            this.comboBoxCustomerType.Location = new System.Drawing.Point(12, 216);
-            this.comboBoxCustomerType.Name = "comboBoxCustomerType";
-            this.comboBoxCustomerType.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxCustomerType.Style = MetroFramework.MetroColorStyle.Blue;
-            this.comboBoxCustomerType.TabIndex = 59;
-            this.comboBoxCustomerType.UseSelectable = true;
-            // 
-            // comboBoxSex
-            // 
-            this.comboBoxSex.BackColor = System.Drawing.Color.Black;
-            this.comboBoxSex.ForeColor = System.Drawing.Color.Gold;
-            this.comboBoxSex.FormattingEnabled = true;
-            this.comboBoxSex.ItemHeight = 24;
-            this.comboBoxSex.Location = new System.Drawing.Point(12, 272);
-            this.comboBoxSex.Name = "comboBoxSex";
-            this.comboBoxSex.Size = new System.Drawing.Size(175, 30);
-            this.comboBoxSex.Style = MetroFramework.MetroColorStyle.Blue;
-            this.comboBoxSex.TabIndex = 61;
-            this.comboBoxSex.UseSelectable = true;
-            // 
-            // txbNationality
-            // 
-            this.txbNationality.BackColor = System.Drawing.Color.Black;
-            this.txbNationality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.txbNationality.ForeColor = System.Drawing.Color.Gold;
-            this.txbNationality.FormattingEnabled = true;
-            this.txbNationality.ItemHeight = 24;
-            this.txbNationality.Items.AddRange(new object[] {
-            "Việt Nam",
-            "Trung Quốc",
-            "Hàn Quốc",
-            "Nhật Bản",
-            "Đài Loan",
-            "Malaysia",
-            "Thái Lan",
-            "Singapore",
-            "Nga",
-            "Anh",
-            "Pháp",
-            "Đức",
-            "Hoa Kỳ",
-            "Hà Lan",
-            "Tây Ban Nha",
-            "Ý",
-            "Khác"});
-            this.txbNationality.Location = new System.Drawing.Point(216, 211);
-            this.txbNationality.Name = "txbNationality";
-            this.txbNationality.Size = new System.Drawing.Size(179, 30);
-            this.txbNationality.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txbNationality.TabIndex = 58;
-            this.txbNationality.UseSelectable = true;
-            // 
             // fCustomer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
-            this.ClientSize = new System.Drawing.Size(1123, 614);
+            this.ClientSize = new System.Drawing.Size(1170, 614);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.bunifuSeparator1);

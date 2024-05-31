@@ -218,15 +218,15 @@
             // 
             // comboboxID
             // 
-            this.comboboxID.BackColor = System.Drawing.Color.Black;
+            this.comboboxID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboboxID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboboxID.ForeColor = System.Drawing.Color.Gold;
             this.comboboxID.FormattingEnabled = true;
             this.comboboxID.ItemHeight = 23;
-            this.comboboxID.Location = new System.Drawing.Point(22, 50);
+            this.comboboxID.Location = new System.Drawing.Point(21, 44);
             this.comboboxID.Name = "comboboxID";
             this.comboboxID.Size = new System.Drawing.Size(175, 29);
-            this.comboboxID.Style = MetroFramework.MetroColorStyle.Blue;
+            this.comboboxID.Style = MetroFramework.MetroColorStyle.Yellow;
             this.comboboxID.TabIndex = 47;
             this.comboboxID.UseCustomBackColor = true;
             this.comboboxID.UseCustomForeColor = true;
@@ -325,7 +325,7 @@
             // 
             // comboBoxStatusRoom
             // 
-            this.comboBoxStatusRoom.BackColor = System.Drawing.Color.Black;
+            this.comboBoxStatusRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBoxStatusRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxStatusRoom.ForeColor = System.Drawing.Color.Gold;
             this.comboBoxStatusRoom.FormattingEnabled = true;
@@ -333,7 +333,7 @@
             this.comboBoxStatusRoom.Location = new System.Drawing.Point(22, 156);
             this.comboBoxStatusRoom.Name = "comboBoxStatusRoom";
             this.comboBoxStatusRoom.Size = new System.Drawing.Size(175, 29);
-            this.comboBoxStatusRoom.Style = MetroFramework.MetroColorStyle.Blue;
+            this.comboBoxStatusRoom.Style = MetroFramework.MetroColorStyle.Yellow;
             this.comboBoxStatusRoom.TabIndex = 4;
             this.comboBoxStatusRoom.UseCustomBackColor = true;
             this.comboBoxStatusRoom.UseCustomForeColor = true;
@@ -378,15 +378,15 @@
             // 
             // comboBoxRoomType
             // 
-            this.comboBoxRoomType.BackColor = System.Drawing.Color.Black;
+            this.comboBoxRoomType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBoxRoomType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxRoomType.ForeColor = System.Drawing.Color.Gold;
             this.comboBoxRoomType.FormattingEnabled = true;
             this.comboBoxRoomType.ItemHeight = 23;
-            this.comboBoxRoomType.Location = new System.Drawing.Point(247, 50);
+            this.comboBoxRoomType.Location = new System.Drawing.Point(247, 44);
             this.comboBoxRoomType.Name = "comboBoxRoomType";
             this.comboBoxRoomType.Size = new System.Drawing.Size(175, 29);
-            this.comboBoxRoomType.Style = MetroFramework.MetroColorStyle.Blue;
+            this.comboBoxRoomType.Style = MetroFramework.MetroColorStyle.Yellow;
             this.comboBoxRoomType.TabIndex = 2;
             this.comboBoxRoomType.UseCustomBackColor = true;
             this.comboBoxRoomType.UseCustomForeColor = true;
@@ -724,7 +724,7 @@
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageActive = null;
-            this.btnClose.Location = new System.Drawing.Point(1090, 5);
+            this.btnClose.Location = new System.Drawing.Point(1131, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(16, 16);
             this.btnClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -738,7 +738,7 @@
             this.bunifuImageButton1.BackColor = System.Drawing.Color.Transparent;
             this.bunifuImageButton1.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton1.Image")));
             this.bunifuImageButton1.ImageActive = null;
-            this.bunifuImageButton1.Location = new System.Drawing.Point(1012, 6);
+            this.bunifuImageButton1.Location = new System.Drawing.Point(1053, 6);
             this.bunifuImageButton1.Name = "bunifuImageButton1";
             this.bunifuImageButton1.Size = new System.Drawing.Size(16, 16);
             this.bunifuImageButton1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -753,7 +753,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1040, 496);
+            this.ClientSize = new System.Drawing.Size(1081, 496);
             this.Controls.Add(this.bunifuImageButton1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.bunifuSeparator1);

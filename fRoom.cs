@@ -1,4 +1,4 @@
-using MetroFramework.Controls;
+﻿using MetroFramework.Controls;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -34,7 +34,7 @@ namespace HotelManager
             DataBinding();
             CheckAdminPermission(username, password);
         }
-        private void DataBinding()
+        private void DataBindingOld()
         {
             comboboxID.DataBindings.Clear();
             txbNameRoom.DataBindings.Clear();
@@ -49,6 +49,27 @@ namespace HotelManager
             comboBoxRoomType.DataBindings.Add("Text", dataGridViewRoom.DataSource, "NameRoomType");
             txbPrice.DataBindings.Add("Text", dataGridViewRoom.DataSource, "Price");
             txbLimitPerson.DataBindings.Add("Text", dataGridViewRoom.DataSource, "LimitPerson");
+        }
+        private void DataBinding()
+        {
+            BindingSource bindingSource = new BindingSource();
+            bindingSource.DataSource = dataGridViewRoom.DataSource;
+
+            comboboxID.DataBindings.Clear();
+            txbNameRoom.DataBindings.Clear();
+            comboBoxStatusRoom.DataBindings.Clear();
+            comboBoxRoomType.DataBindings.Clear();
+            txbPrice.DataBindings.Clear();
+            txbLimitPerson.DataBindings.Clear();
+
+            comboboxID.DataBindings.Add("Text", bindingSource, "IDRoom", true, DataSourceUpdateMode.Never);
+            txbNameRoom.DataBindings.Add("Text", bindingSource, "NameRoom", true, DataSourceUpdateMode.Never);
+            comboBoxStatusRoom.DataBindings.Add("Text", bindingSource, "NameStatusRoom", true, DataSourceUpdateMode.Never);
+            comboBoxRoomType.DataBindings.Add("Text", bindingSource, "NameRoomType", true, DataSourceUpdateMode.Never);
+            txbPrice.DataBindings.Add("Text", bindingSource, "Price", true, DataSourceUpdateMode.Never);
+            txbLimitPerson.DataBindings.Add("Text", bindingSource, "LimitPerson", true, DataSourceUpdateMode.Never);
+
+            dataGridViewRoom.DataSource = bindingSource;
         }
         private void CheckAdminPermission(string username, string password)
         {
@@ -105,7 +126,7 @@ namespace HotelManager
             string searchValue = txbSearch.Text.Trim();
             if (searchValue == string.Empty)
             {
-                MessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string query = $"SELECT Room.IDRoom AS IDRoom, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, RoomType.Price AS Price, RoomType.LimitPerson AS LimitPerson, StatusRoom.NameStatusRoom AS NameStatusRoom FROM Room INNER JOIN StatusRoom ON Room.IDStatusRoom = StatusRoom.IDStatusRoom INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType WHERE IDRoom LIKE '%{searchValue}%' OR NameRoom LIKE '%{searchValue}%';";
@@ -148,6 +169,8 @@ namespace HotelManager
             }
             btnSearch.Visible = false;
             btnCancel.Visible = true;
+            DataBinding();
+            dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -161,20 +184,20 @@ namespace HotelManager
         {
             if (this.userName != "admin" || passWord != "admin")
             {
-                MessageBox.Show("Bạn không có quyền thêm thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Bạn không có quyền thêm thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (txbNameRoom.Text == string.Empty)
             {
-                MessageBox.Show("Tên phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Tên phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string roomName = txbNameRoom.Text;
             string roomNumber = roomName.Substring(6);
             if (roomName.Length != 9 || !roomName.StartsWith("Phòng ") || !int.TryParse(roomNumber, out int number))
             {
-                MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -199,28 +222,28 @@ namespace HotelManager
 
             if (isDuplicate)
             {
-                MessageBox.Show("Phòng này đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Phòng này đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (txbPrice.Text == string.Empty)
             {
-                MessageBox.Show("Giá phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Giá phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbPrice.Text, out int price) || price < 1000)
             {
-                    MessageBox.Show("Giá phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                cMessageBox.Show("Giá phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             if (txbLimitPerson.Text == string.Empty)
             {
-                MessageBox.Show("Số người tối đa trong phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số người tối đa trong phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbLimitPerson.Text, out int limitPerson) || limitPerson <= 0 || limitPerson > 12)
             {
-                MessageBox.Show("Số người tối đa trong phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số người tối đa trong phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -271,11 +294,11 @@ namespace HotelManager
 
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Phòng đã được thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Phòng đã được thêm thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không thể thêm phòng mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cMessageBox.Show("Không thể thêm phòng mới.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             LoadDataToDataGridView();
             DataBinding();
@@ -286,20 +309,20 @@ namespace HotelManager
         {
             if (this.userName != "admin" || passWord != "admin")
             {
-                MessageBox.Show("Bạn không có quyền cập nhật thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Bạn không có quyền cập nhật thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (txbNameRoom.Text == string.Empty)
             {
-                MessageBox.Show("Tên phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Tên phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string roomName = txbNameRoom.Text;
             string roomNumber = roomName.Substring(6);
             if (roomName.Length != 9 || !roomName.StartsWith("Phòng ") || !int.TryParse(roomNumber, out int number))
             {
-                MessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             bool isDuplicate = false;
@@ -324,28 +347,28 @@ namespace HotelManager
 
             if (isDuplicate)
             {
-                MessageBox.Show("Phòng này đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Phòng này đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (txbPrice.Text == string.Empty)
             {
-                MessageBox.Show("Giá phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Giá phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbPrice.Text, out int price) || price < 1000)
             {
-                MessageBox.Show("Giá phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Giá phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (txbLimitPerson.Text == string.Empty)
             {
-                MessageBox.Show("Số người tối đa trong phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số người tối đa trong phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!int.TryParse(txbLimitPerson.Text, out int limitPerson) || limitPerson <= 0 || limitPerson > 12)
             {
-                MessageBox.Show("Số người tối đa trong phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số người tối đa trong phòng không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -366,7 +389,7 @@ namespace HotelManager
 
             int rowsAffected;
   
-            string queryroom = "UPDATE Room SET NameRoom=@NameRoom, IDRoomType = @IDRoomType, IDStatusRoom = @IDStatusRoom WHERE NameRoom=@NameRoom AND IDRoom=@ID";
+            string queryroom = "UPDATE Room SET NameRoom=@NameRoom, IDRoomType = @IDRoomType, IDStatusRoom = @IDStatusRoom WHERE IDRoom=@ID";
 
             using (SqlConnection connection = new SqlConnection(connectstring))
             {
@@ -384,11 +407,11 @@ namespace HotelManager
 
             if (rowsAffected > 0)
             {
-                MessageBox.Show("Phòng đã được cập nhật thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Phòng đã được cập nhật thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LoadDataToDataGridView();
             DataBinding();
@@ -399,7 +422,7 @@ namespace HotelManager
         {
             if (userName != "admin" || passWord != "admin")
             {
-                MessageBox.Show("Bạn không có quyền xóa thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Bạn không có quyền xóa thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -453,14 +476,14 @@ namespace HotelManager
                             }
                             else
                             {
-                                MessageBox.Show("Không tìm thấy phòng có thông tin này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                cMessageBox.Show("Không tìm thấy phòng có thông tin này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 transaction.Rollback();
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cMessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         transaction.Rollback();
                     }
                 }
@@ -475,6 +498,7 @@ namespace HotelManager
         private void btnCancel_Click_1(object sender, EventArgs e)
         {
             LoadDataToDataGridView();
+            DataBinding();
             dataGridViewRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             btnSearch.Visible = true;
         }
