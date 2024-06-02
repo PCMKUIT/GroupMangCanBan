@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fChatServer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fChatClient));
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.labelID = new System.Windows.Forms.Label();
             this.txbID = new Bunifu.Framework.UI.BunifuMetroTextbox();
@@ -42,6 +42,7 @@
             this.cbSearch = new MetroFramework.Controls.MetroComboBox();
             this.btnCancel = new Bunifu.Framework.UI.BunifuThinButton2();
             this.btSearch = new Bunifu.Framework.UI.BunifuThinButton2();
+            this.bt_close = new Bunifu.Framework.UI.BunifuThinButton2();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,7 +182,7 @@
             this.lv1.Size = new System.Drawing.Size(604, 393);
             this.lv1.Style = MetroFramework.MetroColorStyle.Black;
             this.lv1.TabIndex = 73;
-            this.lv1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lv1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.lv1.UseCompatibleStateImageBehavior = false;
             this.lv1.UseSelectable = true;
             // 
@@ -244,21 +245,48 @@
             this.btSearch.IdleFillColor = System.Drawing.Color.Black;
             this.btSearch.IdleForecolor = System.Drawing.Color.Gold;
             this.btSearch.IdleLineColor = System.Drawing.Color.Gold;
-            this.btSearch.Location = new System.Drawing.Point(25, 340);
+            this.btSearch.Location = new System.Drawing.Point(33, 340);
             this.btSearch.Margin = new System.Windows.Forms.Padding(5);
             this.btSearch.Name = "btSearch";
-            this.btSearch.Size = new System.Drawing.Size(276, 47);
+            this.btSearch.Size = new System.Drawing.Size(268, 47);
             this.btSearch.TabIndex = 83;
             this.btSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
             // 
-            // fChatServer
+            // bt_close
+            // 
+            this.bt_close.ActiveBorderThickness = 1;
+            this.bt_close.ActiveCornerRadius = 20;
+            this.bt_close.ActiveFillColor = System.Drawing.Color.Gold;
+            this.bt_close.ActiveForecolor = System.Drawing.Color.Black;
+            this.bt_close.ActiveLineColor = System.Drawing.Color.Gold;
+            this.bt_close.BackColor = System.Drawing.Color.Black;
+            this.bt_close.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bt_close.BackgroundImage")));
+            this.bt_close.ButtonText = "Đóng";
+            this.bt_close.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_close.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bt_close.ForeColor = System.Drawing.Color.Transparent;
+            this.bt_close.IdleBorderThickness = 1;
+            this.bt_close.IdleCornerRadius = 20;
+            this.bt_close.IdleFillColor = System.Drawing.Color.Black;
+            this.bt_close.IdleForecolor = System.Drawing.Color.Gold;
+            this.bt_close.IdleLineColor = System.Drawing.Color.Gold;
+            this.bt_close.Location = new System.Drawing.Point(33, 397);
+            this.bt_close.Margin = new System.Windows.Forms.Padding(5);
+            this.bt_close.Name = "bt_close";
+            this.bt_close.Size = new System.Drawing.Size(268, 47);
+            this.bt_close.TabIndex = 84;
+            this.bt_close.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.bt_close.Click += new System.EventHandler(this.bt_close_Click_1);
+            // 
+            // fChatClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
             this.ClientSize = new System.Drawing.Size(958, 488);
+            this.Controls.Add(this.bt_close);
             this.Controls.Add(this.btSearch);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.cbSearch);
@@ -271,7 +299,7 @@
             this.Controls.Add(this.labelID);
             this.Controls.Add(this.txbID);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "fChatServer";
+            this.Name = "fChatClient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fChat";
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
@@ -293,5 +321,6 @@
         private MetroFramework.Controls.MetroComboBox cbSearch;
         private Bunifu.Framework.UI.BunifuThinButton2 btnCancel;
         private Bunifu.Framework.UI.BunifuThinButton2 btSearch;
+        private Bunifu.Framework.UI.BunifuThinButton2 bt_close;
     }
 }

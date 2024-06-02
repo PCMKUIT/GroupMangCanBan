@@ -181,7 +181,7 @@
             this.lv1.Size = new System.Drawing.Size(604, 393);
             this.lv1.Style = MetroFramework.MetroColorStyle.Black;
             this.lv1.TabIndex = 73;
-            this.lv1.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lv1.Theme = MetroFramework.MetroThemeStyle.Light;
             this.lv1.UseCompatibleStateImageBehavior = false;
             this.lv1.UseSelectable = true;
             // 

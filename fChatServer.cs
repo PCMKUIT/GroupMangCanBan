@@ -20,14 +20,13 @@ namespace HotelManager
         string connectstring = @"Data Source=HONDAMACH\SQLEXPRESS; Database=HotelManager;Trusted_Connection=True";
         SqlConnection con;
         SqlCommand cmd;
-        SqlDataAdapter adapter;
         SqlDataReader reader;
         public fChatServer(string username)
         {
             InitializeComponent();
             _username = username;
             txbID.Text = _username;
-            lv1.Font = new Font("Segoe UI", 10f);
+            lv1.Font = new Font("Segoe UI", 12f);
             lv1.ForeColor = Color.Gold; // Change the text color here
             lv1.View = View.Details;
             lv1.Columns.Add("Messages", -2, HorizontalAlignment.Left);
