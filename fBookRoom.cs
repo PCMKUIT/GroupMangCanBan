@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Net;
 using System.Collections;
+using System.Linq;
 namespace HotelManager
 {
     public partial class fBookRoom : Form
@@ -115,6 +116,15 @@ namespace HotelManager
             adapter.Fill(src);
             dataGridViewBookRoom.DataSource = src;
         }
+        private bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return phoneNumber.Length == 10 && phoneNumber.All(char.IsDigit);
+        }
+        private bool IsValidID(string idCard)
+        {
+            return idCard.Length == 12 && idCard.All(char.IsDigit);
+        }
+
         private string getID(string typeId, string table)
         {
             string id, newid;
@@ -157,13 +167,23 @@ namespace HotelManager
             if (cMessageBox.Show("Bạn có muốn đặt phòng không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (txbIDCard.Text != String.Empty && txbFullName.Text != String.Empty && txbAddress.Text != String.Empty && txbPhoneNumber.Text != String.Empty && cbNationality.Text != String.Empty)
-                {
+                {  
+                     if (!IsValidID(txbIDCard.Text))
+                        {
+                            MessageBox.Show("ID không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    if (!IsValidPhoneNumber(txbPhoneNumber.Text))
+                    {
+                        MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     if (!IsIdCardExists(txbIDCard.Text))
                     {
                         txtIDCustomer.Text = getID("IDCustomer", "Customer");
                         int idCustomerTypee_index = cbCustomerType.SelectedIndex;
                         string idCustomerType = ((DataTable)cbCustomerType.DataSource).Rows[idCustomerTypee_index]["idCustomerType"].ToString();
-                        InsertCustomer(txtIDCustomer.Text, txbIDCard.Text, txbFullName.Text, idCustomerType, dpkDateOfBirth.Value, txbAddress.Text, int.Parse(txbPhoneNumber.Text), cbSex.Text, cbNationality.Text);
+                        InsertCustomer(txtIDCustomer.Text, txbIDCard.Text, txbFullName.Text, idCustomerType, dpkDateOfBirth.Value, txbAddress.Text, txbPhoneNumber.Text, cbSex.Text, cbNationality.Text);
                     }
                     string idBookroom = getID("IDBookroom", "BookRoom");
                     if (con == null) { con = new SqlConnection(connectstring); }
@@ -215,8 +235,9 @@ namespace HotelManager
             int count = src.Rows.Count;
             return count > 0;
         }
-        private void  InsertCustomer (string IDCustomer, string idCard, string name, string idCustomerType, DateTime dateofBirth, string Diachi, int phonenumber, string sex, string nationality)
+        private void  InsertCustomer (string IDCustomer, string idCard, string name, string idCustomerType, DateTime dateofBirth, string Diachi, string phonenumber, string sex, string nationality)
         {
+            
             if (con == null) { con = new SqlConnection(connectstring); }
             if (con.State == System.Data.ConnectionState.Closed)
             {

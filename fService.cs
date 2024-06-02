@@ -14,7 +14,8 @@ namespace HotelManager
         SqlConnection con;
         SqlCommand cmd;
         SqlDataAdapter adapter;
-        public fService()
+        string _username;
+        public fService(string username)
         {
             this.DoubleBuffered = true;
             InitializeComponent();
@@ -22,6 +23,7 @@ namespace HotelManager
             LoadFullService(GetFullService());
             comboboxID.DisplayMember = "id";
             dataGridViewService.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            _username = username;
         }
         private void LoadFullService(DataTable table)
         {
@@ -73,6 +75,15 @@ namespace HotelManager
         }
         private void btnInsert_Click(object sender, System.EventArgs e)
         {   
+            if(_username == "admin")
+            {
+                DialogResult result = cMessageBox.Show("Bạn có muốn thêm dịch vụ mới?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                cMessageBox.Show("Bạn không có quyền thêm dịch vụ mới", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
             txbName.DataBindings.Clear();
             txbPrice.DataBindings.Clear();
             fAddService fAddService = new fAddService();
@@ -88,9 +99,17 @@ namespace HotelManager
         private void btnUpdate_Click(object sender, System.EventArgs e)
         {
             DialogResult result = cMessageBox.Show("Bạn có muốn cập nhật lại dịch vụ?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-           if (result == DialogResult.OK)
-                UpdateService();
-            comboboxID.Focus();
+           if (_username == "admin")
+            {
+                if (result == DialogResult.OK)
+                    UpdateService();
+                comboboxID.Focus();
+            }
+            else
+            {
+                cMessageBox.Show("Bạn không có quyền cập nhật dịch vụ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
         }
 
         private void UpdateService()

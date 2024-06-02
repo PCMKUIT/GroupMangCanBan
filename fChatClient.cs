@@ -31,7 +31,7 @@ namespace HotelManager
             txbID.Text = _username;
             lv1.View = View.Details;
             lv1.Columns.Add("Messages", -2, HorizontalAlignment.Left);
-            lv1.Font = new Font("Segoe UI", 10f);
+            lv1.Font = new Font("Segoe UI", 12f);
             lv1.ForeColor = Color.Gold; // Change the text color here
             cbSearch.Items.Add("search by Name");
             cbSearch.Items.Add("search by Message");
@@ -85,7 +85,7 @@ namespace HotelManager
             {
                 // Handle connection errors here
                 cMessageBox.Show("Error connecting to server: " + ex.Message);
-                btSend.Enabled = false;
+                btSend.Visible = false;
             }
         }
 
@@ -199,7 +199,8 @@ namespace HotelManager
             btSearch.Visible = true;
         }
 
-        private void bt_close_Click(object sender, EventArgs e)
+
+        private void bt_close_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }
