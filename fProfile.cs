@@ -132,7 +132,11 @@ namespace HotelManager
             string currentPassword = txbPass.Text;
             string newPassword = txbNewPass.Text;
             string confirmNewPassword = txbReNewPass.Text;
-
+            if (userName == "admin")
+            {
+                MessageBox.Show("Mật khẩu của admin là cố định.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (currentPassword == string.Empty)
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -143,11 +147,7 @@ namespace HotelManager
                 MessageBox.Show("Vui lòng nhập mật khẩu mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (userName == "admin")
-            {
-                MessageBox.Show("Mật khẩu của admin là cố định.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+
             if (!CheckCurrentPassword(username, currentPassword))
             {
                 MessageBox.Show("Mật khẩu không đúng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
