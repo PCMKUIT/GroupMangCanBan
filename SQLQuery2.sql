@@ -31,7 +31,7 @@ CREATE TABLE BookRoom(
 	DateCheckIn date ,
 	DateCheckOut date 
 )
-
+Drop table Customer
 CREATE TABLE Customer(
 	IDCustomer char(10) PRIMARY KEY ,
 	IDCard nvarchar(100) ,
@@ -39,7 +39,7 @@ CREATE TABLE Customer(
 	Name nvarchar(100) ,
 	DateOfBirth date ,
 	Diachi nvarchar(200) ,
-	PhoneNumber int ,
+	PhoneNumber char(10) ,
 	Sex nvarchar(100) ,
 	Nationality nvarchar(100) 
 )
@@ -78,7 +78,7 @@ CREATE TABLE ServiceType (
 	IDServiceType char(10) PRIMARY KEY ,
 	NameServiceType nvarchar(100) 
 )
---drop table staff
+drop table staff
 CREATE TABLE Staff (
     IDStaff char(10) PRIMARY KEY ,
 	UserName nvarchar(100) ,
@@ -88,7 +88,7 @@ CREATE TABLE Staff (
 	DateOfBirthStaff date ,
 	SexStaff nvarchar(100) ,
 	AddressStaff nvarchar(200) ,
-	PhoneNumberStaff int ,
+	PhoneNumberStaff char(10) ,
 	StartDay date ,
 	StatusLogin nvarchar(20)
 )
