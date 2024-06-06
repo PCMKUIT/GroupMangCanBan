@@ -449,7 +449,7 @@ namespace HotelManager
 
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Phòng đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                cMessageBox.Show("Phòng đã được xóa thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 DataTable dataTable = new DataTable();
 
                                 using (SqlCommand selectCommand = new SqlCommand("SELECT IDRoom FROM Room ORDER BY CAST(SUBSTRING(IDRoom, 3, 3) AS INT)", connection, transaction))
