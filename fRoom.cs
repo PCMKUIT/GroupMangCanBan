@@ -1,4 +1,4 @@
-﻿using MetroFramework.Controls;
+using MetroFramework.Controls;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -193,7 +193,13 @@ namespace HotelManager
                 cMessageBox.Show("Tên phòng không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             string roomName = txbNameRoom.Text;
+            if (roomName.Length < 6)
+            {
+                cMessageBox.Show("Tên phòng phải có định dạng (Phòng ___).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             string roomNumber = roomName.Substring(6);
             if (roomName.Length != 9 || !roomName.StartsWith("Phòng ") || !int.TryParse(roomNumber, out int number))
             {
