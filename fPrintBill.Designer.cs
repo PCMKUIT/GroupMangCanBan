@@ -91,6 +91,7 @@ namespace HotelManager
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.bunifuSeparator3 = new Bunifu.Framework.UI.BunifuSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -135,6 +136,7 @@ namespace HotelManager
             // 
             this.groupBox6.BackColor = System.Drawing.Color.Black;
             this.groupBox6.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
+            this.groupBox6.Controls.Add(this.bunifuSeparator3);
             this.groupBox6.Controls.Add(this.btnClose_);
             this.groupBox6.Controls.Add(this.label23);
             this.groupBox6.Controls.Add(this.lblFinalPrice);
@@ -387,7 +389,7 @@ namespace HotelManager
             this.listViewUseService.HideSelection = false;
             this.listViewUseService.Location = new System.Drawing.Point(31, 376);
             this.listViewUseService.Name = "listViewUseService";
-            this.listViewUseService.Size = new System.Drawing.Size(628, 162);
+            this.listViewUseService.Size = new System.Drawing.Size(628, 140);
             this.listViewUseService.TabIndex = 100;
             this.listViewUseService.UseCompatibleStateImageBehavior = false;
             this.listViewUseService.View = System.Windows.Forms.View.Details;
@@ -420,7 +422,7 @@ namespace HotelManager
             // 
             this.bunifuSeparator2.BackColor = System.Drawing.Color.Transparent;
             this.bunifuSeparator2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.bunifuSeparator2.LineThickness = 759;
+            this.bunifuSeparator2.LineThickness = 1226;
             this.bunifuSeparator2.Location = new System.Drawing.Point(18, 356);
             this.bunifuSeparator2.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.bunifuSeparator2.Name = "bunifuSeparator2";
@@ -675,7 +677,7 @@ namespace HotelManager
             // 
             this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
             this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.bunifuSeparator1.LineThickness = 759;
+            this.bunifuSeparator1.LineThickness = 1226;
             this.bunifuSeparator1.Location = new System.Drawing.Point(18, 168);
             this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bunifuSeparator1.Name = "bunifuSeparator1";
@@ -823,6 +825,19 @@ namespace HotelManager
             this.printDialog1.Document = this.printDocument1;
             this.printDialog1.UseEXDialog = true;
             // 
+            // bunifuSeparator3
+            // 
+            this.bunifuSeparator3.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.bunifuSeparator3.LineThickness = 1980;
+            this.bunifuSeparator3.Location = new System.Drawing.Point(18, 520);
+            this.bunifuSeparator3.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
+            this.bunifuSeparator3.Name = "bunifuSeparator3";
+            this.bunifuSeparator3.Size = new System.Drawing.Size(658, 19);
+            this.bunifuSeparator3.TabIndex = 115;
+            this.bunifuSeparator3.Transparency = 255;
+            this.bunifuSeparator3.Vertical = false;
+            // 
             // fPrintBill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -910,5 +925,6 @@ namespace HotelManager
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.Label label23;
+        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator3;
     }
 }
