@@ -13,7 +13,6 @@ namespace HotelManager
         string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
         private string userName;
         private string passWord;
-        bool first_time = true;
         public fRoom(string username, string password)
         {
             this.userName = username;
@@ -99,16 +98,14 @@ namespace HotelManager
                 }
             }
             dataGridViewRoom.DataSource = dataTable;
-            if (first_time)
+
+            List<string> idRooms = new List<string>();
+            idRooms.Clear();
+            foreach (DataRow row in dataTable.Rows)
             {
-                List<string> idRooms = new List<string>();
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    idRooms.Add(row["IDRoom"].ToString());
-                }
-                comboboxID.DataSource = idRooms;
-                first_time = false;
+                idRooms.Add(row["IDRoom"].ToString());
             }
+            comboboxID.DataSource = idRooms;
         }
 
         private void bunifuImageButton1_Click(object sender, System.EventArgs e)
