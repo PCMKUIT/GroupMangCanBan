@@ -13,7 +13,8 @@ namespace HotelManager
         {
             InitializeComponent();
         }
-        string connectstring = @"Data Source=LAPTOP-2IQS7P3R; Database=hotelmanager;Trusted_Connection=True";
+        string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
+        //string connectstring = @"Data Source=LAPTOP-2IQS7P3R; Database=hotelmanager;Trusted_Connection=True";
         SqlConnection con;
         SqlCommand cmd;
         public void SetPrintBill(string idBill, string dateOfCreate)
@@ -142,7 +143,7 @@ namespace HotelManager
             
             lblCustomerName.Text = data["HoTen"].ToString();
             lblIDCard.Text = data["CMND"].ToString();
-            lblPhoneNumber.Text = ((int)data["SDT"]).ToString();
+            lblPhoneNumber.Text = (data["SDT"]).ToString();
             lblCustomerTypeName.Text = data["LoaiKH"].ToString();
             label23.Text = data["DiaChi"].ToString();
             lblNationality.Text = data["QuocTich"].ToString();

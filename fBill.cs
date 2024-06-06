@@ -17,7 +17,8 @@ namespace HotelManager
             LoadFullBill();
             UpdateRecordCount();
         }
-        string connectstring = @"Data Source=LAPTOP-2IQS7P3R; Database=hotelmanager;Trusted_Connection=True";
+        string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
+        //string connectstring = @"Data Source=LAPTOP-2IQS7P3R; Database=hotelmanager;Trusted_Connection=True";
         SqlConnection con;
         SqlCommand cmd;
         private void LoadFullBill()
@@ -95,12 +96,18 @@ namespace HotelManager
                 }
                 cmd = new SqlCommand();
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "SELECT b.IDBill, r.NameRoom, c.Name,b.StaffSetUp ,b.DateofCreate, sb.NameStatusBill, b.TotalPrice, (cast(Discount as nvarchar(4)) + '%') [Discount], cast(TotalPrice*( (100-Discount)/100.0) as int) [FinalPrice]  "+
-                                  "FROM Bill b, receiveroom rv, bookroom br, Customer c, Room r, StatusBill sb " +
-                                  "WHERE b.IDReceiveRoom = rv.IDReceiveRoom AND rv.IDBookRoom = br.IDBookRoom AND br.IDCustomer = c.IDCustomer " +
-                                  "AND rv.IDRoom = r.IDRoom AND b.IDStatusBill = sb.IDStatusBill AND c.PhoneNumber='"+ txbSearch.Text+"' " +
-                                  "order by b.IDBill ASC";
+                cmd.CommandText = "SELECT b.IDBill, r.NameRoom, c.Name, b.StaffSetUp, b.DateofCreate, sb.NameStatusBill, b.TotalPrice, " +
+                                  "(cast(Discount as nvarchar(4)) + '%') [Discount], cast(TotalPrice * ((100 - Discount) / 100.0) as int) [FinalPrice] " +
+                                  "FROM Bill b " +
+                                  "JOIN receiveroom rv ON b.IDReceiveRoom = rv.IDReceiveRoom " +
+                                  "JOIN bookroom br ON rv.IDBookRoom = br.IDBookRoom " +
+                                  "JOIN Customer c ON br.IDCustomer = c.IDCustomer " +
+                                  "JOIN Room r ON rv.IDRoom = r.IDRoom " +
+                                  "JOIN StatusBill sb ON b.IDStatusBill = sb.IDStatusBill " +
+                                  "WHERE c.PhoneNumber LIKE @PhoneNumber " +
+                                  "ORDER BY b.IDBill ASC";
 
+                cmd.Parameters.AddWithValue("@PhoneNumber", "%" + txbSearch.Text + "%");
 
                 cmd.Connection = con;
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -114,6 +121,11 @@ namespace HotelManager
                 }
 
                 con.Close();
+            }
+            else
+            {
+                cMessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
 
@@ -162,13 +174,18 @@ namespace HotelManager
                     this.Hide() ;
                 }
                 else
-                    MessageBox.Show("Hoá đơn chưa thanh toán\nBạn không có quyền truy cập", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cMessageBox.Show("Hoá đơn chưa thanh toán.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void fBill_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
