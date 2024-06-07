@@ -19,8 +19,10 @@ namespace HotelManager
         SqlCommand cmd;
         SqlDataAdapter adapter;
         SqlDataReader reader;
-        public fBookRoom()
+        string username;
+        public fBookRoom(string _username)
         {
+            this.username = _username;
             this.DoubleBuffered = true;
             InitializeComponent();
             LoadData();
@@ -162,6 +164,11 @@ namespace HotelManager
             }
             return newid;
         }
+
+        private bool IsValidDOB(DateTime dateOfBirth)
+        {
+            return dateOfBirth <= DateTime.Now;
+        }
         private void btnBookRoom_Click(object sender, System.EventArgs e)
         {
             if (cMessageBox.Show("Bạn có muốn đặt phòng không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -176,6 +183,11 @@ namespace HotelManager
                     if (!IsValidPhoneNumber(txbPhoneNumber.Text))
                     {
                         MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (!IsValidDOB(dpkDateOfBirth.Value))
+                    {
+                        MessageBox.Show("Ngày sinh không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (!IsIdCardExists(txbIDCard.Text))
@@ -317,7 +329,7 @@ namespace HotelManager
         {
             string idBookRoom = dataGridViewBookRoom.SelectedRows[0].Cells[0].Value.ToString();
             string idCard = dataGridViewBookRoom.SelectedRows[0].Cells[2].Value.ToString();
-            fBookRoomDetails f = new fBookRoomDetails(idBookRoom, idCard);
+            fBookRoomDetails f = new fBookRoomDetails(idBookRoom, idCard, username);
             this.Hide();
             f.ShowDialog();
             this.Show();

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Data;
 using System;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace HotelManager
 {
@@ -10,15 +11,17 @@ namespace HotelManager
     {
         string idBookRoom;
         string idCard;
+        string username;
         string connectstring = @"Data Source=HONDAMACH\SQLEXPRESS; Database=HotelManager;Trusted_Connection=True";
         SqlConnection con;
         SqlCommand cmd;
         SqlDataAdapter adapter;
         SqlDataReader reader;
-        public fBookRoomDetails(string _idBookRoom, string _idCard)
+        public fBookRoomDetails(string _idBookRoom, string _idCard, string _username)
         {
             idBookRoom = _idBookRoom;
             idCard = _idCard;
+            username = _username;
             InitializeComponent();
             LoadRoomType();
             LoadCustomerType();
@@ -112,7 +115,7 @@ namespace HotelManager
         {
             txbDays.Text = (dpkDateCheckOut.Value.Date - dpkDateCheckIn.Value.Date).Days.ToString();
         }
-        public bool IsIdCardExists(string IDCard)
+        public bool IsIdCardExists(string IDCard, string IDBookRoom)
         {
             if (con == null) { con = new SqlConnection(connectstring); }
             if (con.State == System.Data.ConnectionState.Closed)
@@ -121,9 +124,10 @@ namespace HotelManager
             }
             cmd = new SqlCommand();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "select * from Customer where IDCard=@idCard ";
+            cmd.CommandText = "select * from Customer, BookRoom where IDCard=@idCard and IDBookRoom != @idbookroom";
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@idCard", IDCard);
+            cmd.Parameters.AddWithValue("@idbookroom", IDBookRoom);
             DataTable src = new DataTable();
             adapter = new SqlDataAdapter(cmd);
             adapter.Fill(src);
@@ -131,11 +135,43 @@ namespace HotelManager
             int count = src.Rows.Count;
             return count > 0;
         }
+        private bool IsValidDOB(DateTime dateOfBirth)
+        {
+            return dateOfBirth <= DateTime.Now;
+        }
+        private bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return phoneNumber.Length == 10 && phoneNumber.All(char.IsDigit);
+        }
+        private bool IsValidID(string idCard)
+        {
+            return idCard.Length == 12 && idCard.All(char.IsDigit);
+        }
         private void btnUpdateCustomer_Click(object sender, EventArgs e)
         {      
+            if (username != "admin")
+            {
+                cMessageBox.Show("Bạn không có quyền thực hiện chức năng này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (txbFullName.Text != string.Empty && txbIDCard.Text != string.Empty && txbAddress.Text != string.Empty && cbNationality.Text != string.Empty && txbPhoneNumber.Text != string.Empty)
             {
-                if (!IsIdCardExists(txbIDCard.Text))
+                 if (!IsValidID(txbIDCard.Text))
+                        {
+                            MessageBox.Show("ID không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    if (!IsValidPhoneNumber(txbPhoneNumber.Text))
+                    {
+                        MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (!IsValidDOB(dpkDateOfBirth.Value))
+                    {
+                        MessageBox.Show("Ngày sinh không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                if (!IsIdCardExists(txbIDCard.Text, txbIDBookRoom.Text))
                 {
                     UpdateCustomer();
                 }
@@ -160,10 +196,10 @@ namespace HotelManager
             adapter.Fill(src);
             DataRow dataRow = src.Rows[0];
             string idCustomer = dataRow["IDCustomer"].ToString();
-            UpdateCustomer(idCustomer, txbFullName.Text, txbIDCard.Text, idCustomerType, int.Parse(txbPhoneNumber.Text), dpkDateOfBirth.Value, txbAddress.Text, cbSex.Text, cbNationality.Text);
+            UpdateCustomer(idCustomer, txbFullName.Text, txbIDCard.Text, idCustomerType, txbPhoneNumber.Text, dpkDateOfBirth.Value, txbAddress.Text, cbSex.Text, cbNationality.Text);
            
         }
-        private void UpdateCustomer(string IDCustomer, string Name, string IDCard, string IDCustomerType, int phoneNumber, DateTime dateOfBirth, string Diachi, string sex, string nationality)
+        private void UpdateCustomer(string IDCustomer, string Name, string IDCard, string IDCustomerType, string phoneNumber, DateTime dateOfBirth, string Diachi, string sex, string nationality)
         {
             string query = "UPDATE Customer SET Name=@Name,IDCard = @IDCard ,IDCustomerType=@IDCustomerType,PhoneNumber=@PhoneNumber,DateOfBirth=@DateOfBirth,Diachi=@Diachi,Sex=@Sex,Nationality=@Nationality WHERE IDCustomer=@IDCustomer";
             if (con == null) { con = new SqlConnection(connectstring); }
