@@ -115,26 +115,6 @@ namespace HotelManager
         {
             txbDays.Text = (dpkDateCheckOut.Value.Date - dpkDateCheckIn.Value.Date).Days.ToString();
         }
-        public bool IsIdCardExists(string IDCard, string IDBookRoom)
-        {
-            if (con == null) { con = new SqlConnection(connectstring); }
-            if (con.State == System.Data.ConnectionState.Closed)
-            {
-                con.Open();
-            }
-            cmd = new SqlCommand();
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "select * from Customer, BookRoom where IDCard=@idCard and IDBookRoom != @idbookroom";
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@idCard", IDCard);
-            cmd.Parameters.AddWithValue("@idbookroom", IDBookRoom);
-            DataTable src = new DataTable();
-            adapter = new SqlDataAdapter(cmd);
-            adapter.Fill(src);
-            con.Close();
-            int count = src.Rows.Count;
-            return count > 0;
-        }
         private bool IsValidDOB(DateTime dateOfBirth)
         {
             return dateOfBirth <= DateTime.Now;
@@ -161,22 +141,17 @@ namespace HotelManager
                             MessageBox.Show("ID không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                    if (!IsValidPhoneNumber(txbPhoneNumber.Text))
-                    {
-                        MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (!IsValidDOB(dpkDateOfBirth.Value))
-                    {
-                        MessageBox.Show("Ngày sinh không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                if (!IsIdCardExists(txbIDCard.Text, txbIDBookRoom.Text))
+                if (!IsValidPhoneNumber(txbPhoneNumber.Text))
                 {
-                    UpdateCustomer();
+                    MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else
-                    cMessageBox.Show("Thẻ căn cước/ CMND không hợp lệ.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!IsValidDOB(dpkDateOfBirth.Value))
+                {
+                    MessageBox.Show("Ngày sinh không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                UpdateCustomer();
             }
             else
                 cMessageBox.Show("Vui lòng nhập đầy đủ thông tin.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -300,6 +275,31 @@ namespace HotelManager
                     cMessageBox.Show("Xóa thông tin đặt phòng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void dpkDateCheckIn_onValueChanged(object sender, EventArgs e)
+        {
+            if (dpkDateCheckIn.Value < DateTime.Now)
+                LoadData();
+            if (dpkDateCheckOut.Value.Date <= dpkDateCheckIn.Value.Date)
+                LoadData();
+            LoadDays();
+        }
+
+        private void dpkDateCheckOut_onValueChanged(object sender, EventArgs e)
+        {
+            
+            if (dpkDateCheckOut.Value < DateTime.Now)
+                LoadData();
+            if (dpkDateCheckOut.Value <= dpkDateCheckIn.Value)
+                LoadData();
+            LoadDays();
+        }
+
+        private void dpkDateOfBirth_onValueChanged(object sender, EventArgs e)
+        {
+            if (dpkDateOfBirth.Value > DateTime.Now)
+                LoadData();
         }
     }
 }

@@ -219,6 +219,7 @@
             this.dpkDateCheckOut.Size = new System.Drawing.Size(269, 36);
             this.dpkDateCheckOut.TabIndex = 54;
             this.dpkDateCheckOut.Value = new System.DateTime(2018, 2, 23, 23, 29, 57, 962);
+            this.dpkDateCheckOut.onValueChanged += new System.EventHandler(this.dpkDateCheckOut_onValueChanged);
             // 
             // label15
             // 
@@ -247,6 +248,7 @@
             this.dpkDateCheckIn.Size = new System.Drawing.Size(269, 36);
             this.dpkDateCheckIn.TabIndex = 53;
             this.dpkDateCheckIn.Value = new System.DateTime(2018, 2, 23, 23, 29, 57, 962);
+            this.dpkDateCheckIn.onValueChanged += new System.EventHandler(this.dpkDateCheckIn_onValueChanged);
             // 
             // txbIDBookRoom
             // 
@@ -388,7 +390,7 @@
             this.btnEraseCustomer.ActiveFillColor = System.Drawing.Color.Gold;
             this.btnEraseCustomer.ActiveForecolor = System.Drawing.Color.Black;
             this.btnEraseCustomer.ActiveLineColor = System.Drawing.Color.Gold;
-            this.btnEraseCustomer.BackColor = System.Drawing.Color.Transparent;
+            this.btnEraseCustomer.BackColor = System.Drawing.Color.Black;
             this.btnEraseCustomer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnEraseCustomer.BackgroundImage")));
             this.btnEraseCustomer.ButtonText = "Xóa ";
             this.btnEraseCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -447,6 +449,7 @@
             this.dpkDateOfBirth.Size = new System.Drawing.Size(269, 36);
             this.dpkDateOfBirth.TabIndex = 50;
             this.dpkDateOfBirth.Value = new System.DateTime(2018, 2, 23, 23, 29, 57, 962);
+            this.dpkDateOfBirth.onValueChanged += new System.EventHandler(this.dpkDateOfBirth_onValueChanged);
             // 
             // cbNationality
             // 

@@ -74,9 +74,13 @@ namespace HotelManager
             txbPrice.Text = row["Price"].ToString();
             txbAmountPeople.Text = row["LimitPerson"].ToString();
         }
-        public void LoadDate()
+        public void LoadDOB()
         {
             dpkDateOfBirth.Value = new DateTime(2004, 1, 1);
+        }
+        public void LoadDate()
+        {
+            
             dpkDateCheckIn.Value = DateTime.Now;
             dpkDateCheckOut.Value = DateTime.Now.AddDays(1);
         }
@@ -385,7 +389,7 @@ namespace HotelManager
 
         private void dpkDateCheckOut_onValueChanged(object sender, EventArgs e)
         {
-            if (dpkDateCheckOut.Value < DateTime.Now)
+            if (dpkDateCheckOut.Value <= DateTime.Now)
                 LoadDate();
             if (dpkDateCheckOut.Value <= dpkDateCheckIn.Value)
                 LoadDate();
@@ -394,11 +398,17 @@ namespace HotelManager
 
         private void dpkDateCheckIn_onValueChanged(object sender, EventArgs e)
         {
-            if (dpkDateCheckIn.Value <= DateTime.Now)
+            if (dpkDateCheckIn.Value < DateTime.Now)
                 LoadDate();
-            if (dpkDateCheckOut.Value <= dpkDateCheckIn.Value)
+            if (dpkDateCheckOut.Value.Date <= dpkDateCheckIn.Value.Date)
                 LoadDate();
             LoadDays();
+        }
+
+        private void dpkDateOfBirth_onValueChanged(object sender, EventArgs e)
+        {
+            if (dpkDateOfBirth.Value> DateTime.Now)
+                LoadDOB();
         }
     }
 }
