@@ -94,6 +94,7 @@ namespace HotelManager
                 return;
             }
             UpdateProfile(username, displayName);
+            LoadProfile(userName);
         }
         private bool CheckCurrentPassword(string username, string currentPassword)
         {
