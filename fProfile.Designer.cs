@@ -71,11 +71,19 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.textBox2 = new Bunifu.Framework.UI.BunifuMetroTextbox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // bunifuDragControl1
@@ -88,14 +96,20 @@
             // groupBox3
             // 
             this.groupBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("groupBox3.BackgroundImage")));
+            this.groupBox3.Controls.Add(this.button6);
+            this.groupBox3.Controls.Add(this.button5);
+            this.groupBox3.Controls.Add(this.button4);
+            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.bunifuThinButton22);
             this.groupBox3.Controls.Add(this.txbReNewPass);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.txbNewPass);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.txbPass);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.bunifuCheckbox2);
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.txbPass);
             this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.groupBox3.ForeColor = System.Drawing.Color.Gold;
@@ -148,6 +162,7 @@
             this.txbReNewPass.Size = new System.Drawing.Size(203, 29);
             this.txbReNewPass.TabIndex = 66;
             this.txbReNewPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbReNewPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbReNewPass_KeyDown);
             // 
             // label14
             // 
@@ -177,6 +192,7 @@
             this.txbNewPass.Size = new System.Drawing.Size(203, 29);
             this.txbNewPass.TabIndex = 64;
             this.txbNewPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbNewPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbNewPass_KeyDown);
             // 
             // label15
             // 
@@ -206,6 +222,7 @@
             this.txbPass.Size = new System.Drawing.Size(203, 29);
             this.txbPass.TabIndex = 62;
             this.txbPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbPass_KeyDown);
             // 
             // label17
             // 
@@ -261,9 +278,9 @@
             // 
             // cbSex
             // 
-            this.cbSex.BackColor = System.Drawing.Color.Black;
+            this.cbSex.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbSex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbSex.ForeColor = System.Drawing.Color.Gold;
+            this.cbSex.ForeColor = System.Drawing.Color.Yellow;
             this.cbSex.FormattingEnabled = true;
             this.cbSex.ItemHeight = 23;
             this.cbSex.Items.AddRange(new object[] {
@@ -273,7 +290,7 @@
             this.cbSex.Location = new System.Drawing.Point(494, 54);
             this.cbSex.Name = "cbSex";
             this.cbSex.Size = new System.Drawing.Size(203, 29);
-            this.cbSex.Style = MetroFramework.MetroColorStyle.Blue;
+            this.cbSex.Style = MetroFramework.MetroColorStyle.Yellow;
             this.cbSex.TabIndex = 75;
             this.cbSex.UseCustomBackColor = true;
             this.cbSex.UseCustomForeColor = true;
@@ -311,6 +328,7 @@
             this.txbIDCard.Size = new System.Drawing.Size(203, 29);
             this.txbIDCard.TabIndex = 70;
             this.txbIDCard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbIDCard.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbIDcard_KeyDown);
             // 
             // label10
             // 
@@ -416,6 +434,7 @@
             this.txbAddress.Size = new System.Drawing.Size(203, 29);
             this.txbAddress.TabIndex = 54;
             this.txbAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbAddress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbAddress_KeyDown);
             // 
             // label5
             // 
@@ -444,6 +463,7 @@
             this.txbPhoneNumber.Size = new System.Drawing.Size(203, 29);
             this.txbPhoneNumber.TabIndex = 52;
             this.txbPhoneNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbPhoneNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbPhoneNumber_KeyDown);
             // 
             // label3
             // 
@@ -562,6 +582,7 @@
             this.txbDisplayName.Size = new System.Drawing.Size(203, 29);
             this.txbDisplayName.TabIndex = 50;
             this.txbDisplayName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txbDisplayName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbDisplayName_KeyDown);
             // 
             // label1
             // 
@@ -705,11 +726,11 @@
             this.textBox1.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.textBox1.ForeColor = System.Drawing.Color.Gold;
             this.textBox1.isPassword = false;
-            this.textBox1.Location = new System.Drawing.Point(58, 204);
+            this.textBox1.Location = new System.Drawing.Point(30, 204);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.textBox1.Size = new System.Drawing.Size(102, 29);
+            this.textBox1.Size = new System.Drawing.Size(160, 29);
             this.textBox1.TabIndex = 62;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -724,12 +745,89 @@
             this.textBox2.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.textBox2.ForeColor = System.Drawing.Color.Gold;
             this.textBox2.isPassword = false;
-            this.textBox2.Location = new System.Drawing.Point(58, 250);
+            this.textBox2.Location = new System.Drawing.Point(30, 250);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(102, 29);
+            this.textBox2.Size = new System.Drawing.Size(160, 29);
             this.textBox2.TabIndex = 63;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Image = global::HotelManager.Properties.Resources._652e2c74_6ca8_4452_afb5_48e415a70cfa_removebg_preview;
+            this.pictureBox2.Location = new System.Drawing.Point(30, 69);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(160, 128);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 64;
+            this.pictureBox2.TabStop = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(192, 52);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(38, 29);
+            this.button1.TabIndex = 69;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.Location = new System.Drawing.Point(192, 53);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(38, 29);
+            this.button2.TabIndex = 70;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(192, 111);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(38, 29);
+            this.button3.TabIndex = 71;
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.White;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.Location = new System.Drawing.Point(192, 170);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(38, 29);
+            this.button4.TabIndex = 72;
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.White;
+            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
+            this.button5.Location = new System.Drawing.Point(192, 111);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(38, 29);
+            this.button5.TabIndex = 73;
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.Color.White;
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.Location = new System.Drawing.Point(192, 171);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(38, 29);
+            this.button6.TabIndex = 74;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // fProfile
             // 
@@ -738,6 +836,7 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::HotelManager.Properties.Resources.background_vang_den_toi_gian_082943093;
             this.ClientSize = new System.Drawing.Size(748, 581);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnClose_);
@@ -762,6 +861,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -810,5 +910,12 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private Bunifu.Framework.UI.BunifuMetroTextbox textBox2;
         private Bunifu.Framework.UI.BunifuMetroTextbox textBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
     }
 }

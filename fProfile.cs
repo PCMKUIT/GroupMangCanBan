@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace HotelManager
                         }
                         else
                         {
-                            MessageBox.Show("Không tìm thấy dữ liệu cho ID đã cho.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            cMessageBox.Show("Không tìm thấy dữ liệu cho ID đã cho.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -64,11 +64,11 @@ namespace HotelManager
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cMessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cMessageBox.Show("Không có dữ liệu nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 connection.Close();
@@ -90,7 +90,7 @@ namespace HotelManager
             string displayName = txbDisplayName.Text;
             if (displayName == string.Empty)
             {
-                MessageBox.Show("Tên hiển thị không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Tên hiển thị không được để trống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             UpdateProfile(username, displayName);
@@ -133,46 +133,46 @@ namespace HotelManager
             string currentPassword = txbPass.Text;
             string newPassword = txbNewPass.Text;
             string confirmNewPassword = txbReNewPass.Text;
+
             if (userName == "admin")
             {
-                MessageBox.Show("Mật khẩu của admin là cố định.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Mật khẩu của admin là cố định.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (currentPassword == string.Empty)
             {
-                MessageBox.Show("Vui lòng nhập mật khẩu hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Vui lòng nhập mật khẩu hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (newPassword == string.Empty)
             {
-                MessageBox.Show("Vui lòng nhập mật khẩu mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Vui lòng nhập mật khẩu mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (!CheckCurrentPassword(username, currentPassword))
             {
-                MessageBox.Show("Mật khẩu không đúng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Mật khẩu không đúng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (newPassword != confirmNewPassword)
             {
-                MessageBox.Show("Xác nhận mật khẩu mới không khớp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Xác nhận mật khẩu mới không khớp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (currentPassword == newPassword)
             {
-                MessageBox.Show("Mật khẩu mới trùng với mật khẩu cũ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Mật khẩu mới trùng với mật khẩu cũ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (UpdatePassword(username, newPassword))
             {
-                MessageBox.Show("Mật khẩu đã được thay đổi thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Mật khẩu đã được thay đổi thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 txbPass.Text = newPassword;
             }
             else
             {
-                MessageBox.Show("Đã xảy ra lỗi khi cập nhật mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               cMessageBox.Show("Đã xảy ra lỗi khi cập nhật mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -215,24 +215,24 @@ namespace HotelManager
 
             if (!IsValidID(idCard))
             {
-                MessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số căn cước/ CMND không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (!IsValidPhoneNumber(phoneNumber))
             {
-                MessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Số điện thoại không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (dpkDateOfBirth.Value > DateTime.Now.Date)
             {
-                MessageBox.Show("Ngày sinh không thể lớn hơn ngày hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Ngày sinh không thể lớn hơn ngày hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             TimeSpan maxAge = new TimeSpan(365 * 100, 0, 0, 0);
             if (DateTime.Now.Date - dpkDateOfBirth.Value > maxAge)
             {
-                DialogResult result = MessageBox.Show("Ngày sinh này có vẻ không hợp lý, bạn có chắc muốn lưu như vậy không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = cMessageBox.Show("Ngày sinh này có vẻ không hợp lý, bạn có chắc muốn lưu như vậy không?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                 {
                     return;
@@ -240,19 +240,109 @@ namespace HotelManager
             }
             if (address == string.Empty)
             {
-                MessageBox.Show("Không được để trống thông tin địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cMessageBox.Show("Không được để trống thông tin địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (SaveDataToDatabase(username, idCard, phoneNumber, sex, address, dateOfBirth))
             {
-                MessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cMessageBox.Show("Cập nhật thông tin thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Đã xảy ra lỗi khi lưu thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cMessageBox.Show("Đã xảy ra lỗi khi lưu thông tin.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            txbPass.isPassword = false;
+            button1.Visible = false;
+            button2.Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            txbPass.isPassword = true;
+            button1.Visible = true;
+            button2.Visible = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            txbNewPass.isPassword = false;
+            button5.Visible = false;
+            button3.Visible = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            txbNewPass.isPassword = true;
+            button5.Visible = true;
+            button3.Visible = false;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            txbReNewPass.isPassword = false;
+            button6.Visible = false;
+            button4.Visible = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            txbReNewPass.isPassword = true;
+            button6.Visible = true;
+            button4.Visible = false;
+        }
+        private void txbPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton22_Click(this, new EventArgs());
+            }
+        }
+        private void txbNewPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton22_Click(this, new EventArgs());
+            }
+        }
+        private void txbReNewPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton22_Click(this, new EventArgs());
+            }
+        }
+        private void txbDisplayName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnBookRoom_Click(this, new EventArgs());
+            }
+        }
+        private void txbIDcard_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton21_Click(this, new EventArgs());
+            }
+        }
+        private void txbPhoneNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton21_Click(this, new EventArgs());
+            }
+        }
+        private void txbAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bunifuThinButton21_Click(this, new EventArgs());
+            }
+        }
     }
 }
