@@ -1,149 +1,115 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+using System.Linq;
+using System;
 using System.Windows.Forms;
+using System.Net;
+using System.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using MetroFramework.Controls;
 
 namespace HotelManager
 {
+
     public partial class fReceiveRoom : Form
     {
-        List<string> ListIDCustomer = new List<string>();
-        string IDBookRoom;
-        DateTime dateCheckIn;
-        string connectstring = @"Data Source=NHDK\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
-
-        public fReceiveRoom(string idBookRoom)
-        {
-            IDBookRoom = idBookRoom;
-            InitializeComponent();
-            LoadData();
-            ShowBookRoomInfo(IDBookRoom);
-        }
+        string strCon = @"Data Source=NHDK\SQLEXPRESS;Initial Catalog=hotelmanager;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
 
         public fReceiveRoom()
         {
             InitializeComponent();
-            LoadData();
+            InitializeComboBox();
         }
-
-        public void LoadData()
+        private void InitializeComboBox()
         {
-            LoadListRoomType();
-            LoadReceiveRoomInfo();
-        }
-
-        public void LoadListRoomType()
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
+            cbRoomType.Items.AddRange(new object[]
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM RoomType", connection);
-                SqlDataReader reader = command.ExecuteReader();
-                List<RoomType> rooms = new List<RoomType>();
-                while (reader.Read())
+            "Phòng Tổng Thống",
+            "Phòng Đôi",
+            "Phòng Tiện Ích",
+            "Phòng Tiêu Chuẩn",
+            "Không"
+            });
+
+        }
+        private void fReceiveRoom_Load(object sender, EventArgs e)
+        {
+            Hienthidanhsach();
+        }
+        private void dataGridViewReceiveRoom_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridViewReceiveRoom.Rows.Count)
+            {
+                DataGridViewRow row = dataGridViewReceiveRoom.Rows[e.RowIndex];
+
+                // Lấy IDBookRoom từ cột có tên là IDBookRoom trong DataGridView
+                string idBookRoom = row.Cells["IDBookRoom"].Value.ToString();
+
+                // Sử dụng IDBookRoom để truy vấn và lấy thông tin từ bảng BookRoom
+                string query = "SELECT * FROM BookRoom WHERE IDBookRoom = @IDBookRoom";
+
+                try
                 {
-                    RoomType room = new RoomType
+                    using (SqlConnection connection = new SqlConnection(strCon))
                     {
-                        Id = reader["Id"].ToString(),
-                        Name = reader["Name"].ToString()
-                    };
-                    rooms.Add(room);
-                }
-                cbRoomType.DataSource = rooms;
-                cbRoomType.DisplayMember = "Name";
-            }
-        }
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Parameters.AddWithValue("@IDBookRoom", idBookRoom);
 
-        public void LoadEmptyRoom(string idRoomType)
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Room WHERE RoomTypeId = @RoomTypeId AND Status = 'Empty'", connection);
-                command.Parameters.AddWithValue("@RoomTypeId", idRoomType);
-                SqlDataReader reader = command.ExecuteReader();
-                List<Room> rooms = new List<Room>();
-                while (reader.Read())
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            txbDateCheckIn.Text = reader["DateCheckin"].ToString();
+                            txbDateCheckOut.Text = reader["DateCheckOut"].ToString();
+                            txbFullName.Text = reader["FullName"].ToString();
+                            txbIDCard.Text = reader["IDCard"].ToString();
+                            txbRoomName.Text = reader["RoomName"].ToString();
+                            txbRoomTypeName.Text = reader["RoomTypeName"].ToString();
+                            txbPrice.Text = reader["Price"].ToString();
+                            txbAmountPeople.Text = reader["AmountPeople"].ToString();
+                        }
+                        reader.Close();
+                    }
+                }
+                catch (Exception ex)
                 {
-                    Room room = new Room
-                    {
-                        Id = reader["Id"].ToString(),
-                        Name = reader["Name"].ToString()
-                    };
-                    rooms.Add(room);
+                    MessageBox.Show("Lỗi khi lấy thông tin từ BookRoom: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                cbRoom.DataSource = rooms;
-                cbRoom.DisplayMember = "Name";
             }
         }
-
-        public bool IsIDBookRoomExists(string idBookRoom)
+        private string GetIDCustomerFromBookRoom(string idBookRoom)
         {
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BookRoom WHERE Id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", idBookRoom);
-                return (int)command.ExecuteScalar() > 0;
-            }
-        }
+            string idCustomer = "";
 
-        public void ShowBookRoomInfo(string idBookRoom)
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
+            try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM BookRoom WHERE Id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", idBookRoom);
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-
-                if (dataTable.Rows.Count > 0)
+                using (SqlConnection connection = new SqlConnection(strCon))
                 {
-                    DataRow dataRow = dataTable.Rows[0];
-                    txbFullName.Text = dataRow["FullName"].ToString();
-                    txbIDCard.Text = dataRow["IDCard"].ToString();
-                    txbRoomTypeName.Text = dataRow["RoomTypeName"].ToString();
-                    cbRoomType.Text = dataRow["RoomTypeName"].ToString();
-                    txbDateCheckIn.Text = dataRow["DateCheckIn"].ToString().Split(' ')[0];
-                    dateCheckIn = (DateTime)dataRow["DateCheckIn"];
-                    txbDateCheckOut.Text = dataRow["DateCheckOut"].ToString().Split(' ')[0];
-                    txbAmountPeople.Text = dataRow["LimitPerson"].ToString();
-                    txbPrice.Text = dataRow["Price"].ToString();
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT IDCustomer FROM BookRoom WHERE IDBookRoom = @IDBookRoom", connection);
+                    command.Parameters.AddWithValue("@IDBookRoom", idBookRoom);
+                    idCustomer = command.ExecuteScalar()?.ToString();
                 }
             }
-        }
-
-        public bool InsertReceiveRoom(string id, string idBookRoom, string idRoom)
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
+            catch (Exception ex)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO ReceiveRoom (Id, BookRoomId, RoomId) VALUES (@Id, @BookRoomId, @RoomId)", connection);
-                command.Parameters.AddWithValue("@Id", id);
-                command.Parameters.AddWithValue("@BookRoomId", idBookRoom);
-                command.Parameters.AddWithValue("@RoomId", idRoom);
-                return command.ExecuteNonQuery() > 0;
+                MessageBox.Show("Lỗi khi lấy IDCustomer từ BookRoom: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            return idCustomer;
         }
 
-        public bool InsertReceiveRoomDetails(string idReceiveRoom, string idCustomerOther)
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO ReceiveRoomDetails (ReceiveRoomId, CustomerId) VALUES (@ReceiveRoomId, @CustomerId)", connection);
-                command.Parameters.AddWithValue("@ReceiveRoomId", idReceiveRoom);
-                command.Parameters.AddWithValue("@CustomerId", idCustomerOther);
-                return command.ExecuteNonQuery() > 0;
-            }
-        }
 
-        public void LoadReceiveRoomInfo()
+
+
+        private void btnReceiveRoom_Click(object sender, System.EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(connectstring))
+
+        }
+        private void Hienthidanhsach()
+        {
+            using (SqlConnection connection = new SqlConnection(strCon))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM ReceiveRoom", connection);
@@ -154,100 +120,36 @@ namespace HotelManager
             }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string idBookRoomToSearch = txbIDBookRoom.Text.Trim();
+
+            if (idBookRoomToSearch != string.Empty)
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM ReceiveRoom WHERE IDBookRoom LIKE @IDBookRoom", connection);
+                    command.Parameters.AddWithValue("@IDBookRoom", "%" + idBookRoomToSearch + "%"); // Sử dụng % để cho phép tìm kiếm gần đúng
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+                    dataGridViewReceiveRoom.DataSource = dataTable;
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập ID để tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void cbRoomType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            txbRoomTypeName.Text = (cbRoomType.SelectedItem as RoomType).Name;
-            LoadEmptyRoom((cbRoomType.SelectedItem as RoomType).Id);
-        }
-
-        private void cbRoom_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            txbRoomName.Text = cbRoom.Text;
-        }
-
-        private void txbIDBookRoom_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                btnSearch_Click(sender, null);
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            if (txbIDBookRoom.Text != string.Empty)
-            {
-                if (IsIDBookRoomExists(txbIDBookRoom.Text))
-                {
-                    btnSearch.Tag = txbIDBookRoom.Text;
-                    ShowBookRoomInfo(txbIDBookRoom.Text);
-                }
-                else
-                    MessageBox.Show("Mã đặt phòng không tồn tại.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txbIDBookRoom.Text = string.Empty;
-            }
-        }
-
-        private void btnAddCustomer_Click(object sender, EventArgs e)
-        {
-            fCustomer customer = new fCustomer();
-            customer.ShowDialog(); 
-        }
-
-
-        private void btnReceiveRoom_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Bạn có muốn nhận phòng không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                if (txbRoomName.Text != string.Empty && txbRoomTypeName.Text != string.Empty && txbFullName.Text != string.Empty && txbIDCard.Text != string.Empty && txbDateCheckIn.Text != string.Empty && txbDateCheckOut.Text != string.Empty && txbAmountPeople.Text != string.Empty && txbPrice.Text != string.Empty)
-                {
-                    if (dateCheckIn == DateTime.Now.Date)
-                    {
-                        string idBookRoom;
-                        if (IDBookRoom != "")
-                            idBookRoom = IDBookRoom;
-                        else
-                            idBookRoom = btnSearch.Tag.ToString();
-                        string idRoom = (cbRoom.SelectedItem as Room).Id;
-                        string idReceiveRoom = GetAutomaticIDReceiveRoom();
-                        if (InsertReceiveRoom(idReceiveRoom, idBookRoom, idRoom))
-                        {
-                            if (fCustomer.ListIdCustomer != null)
-                            {
-                                foreach (string item in fCustomer.ListIdCustomer)
-                                {
-                                    if (item != txbIDCard.Text)
-                                        InsertReceiveRoomDetails(idReceiveRoom, item);
-                                }
-                            }
-                            MessageBox.Show("Nhận phòng thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadEmptyRoom((cbRoomType.SelectedItem as RoomType).Id); // Chuyển đổi về RoomType
-                        }
-                        else
-                            MessageBox.Show("Tạo phiếu nhận phòng thất bại.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                        MessageBox.Show("Ngày nhận phòng không hợp lệ.\nVui lòng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ClearData();
-                    LoadReceiveRoomInfo();
-                }
-                else
-                    MessageBox.Show("Vui lòng nhập lại đầy đủ thông tin.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        public void ClearData()
-        {
-            txbFullName.Text = txbIDCard.Text = txbRoomTypeName.Text = txbDateCheckIn.Text = txbDateCheckOut.Text = txbAmountPeople.Text = txbPrice.Text = string.Empty;
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            ClearData();
         }
 
         private void btnClose__Click(object sender, EventArgs e)
@@ -256,30 +158,5 @@ namespace HotelManager
         }
 
 
-        private string GetAutomaticIDReceiveRoom()
-        {
-            return GetAutomaticID("ReceiveRoom", "ID");
-        }
-
-        private string GetAutomaticIDRoom()
-        {
-            return GetAutomaticID("Room", "ID");
-        }
-
-        private string GetAutomaticIDBookRoom()
-        {
-            return GetAutomaticID("BookRoom", "ID");
-        }
-
-        private string GetAutomaticID(string tableName, string columnName)
-        {
-            using (SqlConnection connection = new SqlConnection(connectstring))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand($"SELECT MAX(CAST(SUBSTRING({columnName}, 3, LEN({columnName}) - 2) AS INT)) + 1 FROM {tableName}", connection);
-                object result = command.ExecuteScalar();
-                return "ID" + (result != DBNull.Value ? result.ToString() : "1");
-            }
-        }
     }
 }

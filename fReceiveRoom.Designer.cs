@@ -270,6 +270,7 @@
             this.btnClose_.Size = new System.Drawing.Size(271, 49);
             this.btnClose_.TabIndex = 48;
             this.btnClose_.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnClose_.Click += new System.EventHandler(this.btnClose__Click);
             // 
             // btnAddCustomer
             // 
@@ -345,6 +346,7 @@
             this.btnReceiveRoom.Size = new System.Drawing.Size(271, 49);
             this.btnReceiveRoom.TabIndex = 45;
             this.btnReceiveRoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnReceiveRoom.Click += new System.EventHandler(this.btnReceiveRoom_Click);
             // 
             // label5
             // 
@@ -417,6 +419,7 @@
             this.btnSearch.Size = new System.Drawing.Size(271, 49);
             this.btnSearch.TabIndex = 46;
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // groupBox6
             // 
@@ -790,6 +793,7 @@
             this.btnClose.TabIndex = 27;
             this.btnClose.TabStop = false;
             this.btnClose.Zoom = 10;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // fReceiveRoom
             // 
@@ -812,6 +816,7 @@
             this.Name = "fReceiveRoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "fReceiveRoom";
+            this.Load += new System.EventHandler(this.fReceiveRoom_Load);
             this.groupBox4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReceiveRoom)).EndInit();
