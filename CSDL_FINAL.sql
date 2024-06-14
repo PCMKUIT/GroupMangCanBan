@@ -78,7 +78,7 @@ CREATE TABLE ServiceType (
 	IDServiceType char(10) PRIMARY KEY ,
 	NameServiceType nvarchar(100) 
 )
-drop table staff
+
 CREATE TABLE Staff (
     IDStaff char(10) PRIMARY KEY ,
 	UserName nvarchar(100) ,
