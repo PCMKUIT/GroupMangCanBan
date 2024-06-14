@@ -14,135 +14,207 @@ namespace HotelManager
 
     public partial class fReceiveRoom : Form
     {
-        string strCon = @"Data Source=NHDK\SQLEXPRESS;Initial Catalog=hotelmanager;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
-
-        public fReceiveRoom()
+        string connectstring = @"Data Source=NHDK\SQLEXPRESS;Initial Catalog=hotelmanager;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        //string connectstring = @"Data Source=PHAMCAOMINHKIEN\SQL;Initial Catalog=hotelmanager;Integrated Security=True";
+        private string userName;
+        public fReceiveRoom(string username)
         {
+            this.userName = username;
             InitializeComponent();
+            LoadDataToDataGridView();
+            dataGridViewReceiveRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            metroComboBox1.Items.Clear();
+            metroComboBox1.Items.Add("Name");
+            metroComboBox1.Items.Add("IDCard");
+            metroComboBox1.Items.Add("NameRoom");
+            metroComboBox1.Items.Add("NameRoomType");
+            metroComboBox1.Items.Add("DateCheckIn");
+            metroComboBox1.Items.Add("DateCheckOut");
+            metroComboBox1.Items.Add("LimitPerson");
+            metroComboBox1.Items.Add("Price");
+            metroComboBox1.SelectedItem = "Name";
             InitializeComboBox();
+            DataBinding();
+        }
+
+        private void DataBinding()
+        {
+            BindingSource bindingSource = new BindingSource();
+            bindingSource.DataSource = dataGridViewReceiveRoom.DataSource;
+
+            txbFullName.DataBindings.Clear();
+            txbIDCard.DataBindings.Clear();
+            txbRoomName.DataBindings.Clear();
+            txbRoomTypeName.DataBindings.Clear();
+            txbDateCheckIn.DataBindings.Clear();
+            txbDateCheckOut.DataBindings.Clear();
+            txbAmountPeople.DataBindings.Clear();
+            txbPrice.DataBindings.Clear();
+
+            txbFullName.DataBindings.Add("Text", bindingSource, "Name", true, DataSourceUpdateMode.Never);
+            txbIDCard.DataBindings.Add("Text", bindingSource, "IDCard", true, DataSourceUpdateMode.Never);
+            txbRoomName.DataBindings.Add("Text", bindingSource, "NameRoom", true, DataSourceUpdateMode.Never);
+            txbRoomTypeName.DataBindings.Add("Text", bindingSource, "NameRoomType", true, DataSourceUpdateMode.Never);
+            txbDateCheckIn.DataBindings.Add("Text", bindingSource, "DateCheckIn", true, DataSourceUpdateMode.Never);
+            txbDateCheckOut.DataBindings.Add("Text", bindingSource, "DateCheckOut", true, DataSourceUpdateMode.Never);
+            txbAmountPeople.DataBindings.Add("Text", bindingSource, "LimitPerson", true, DataSourceUpdateMode.Never);
+            txbPrice.DataBindings.Add("Text", bindingSource, "Price", true, DataSourceUpdateMode.Never);
+           
+            dataGridViewReceiveRoom.DataSource = bindingSource;
+        }
+        private void LoadDataToDataGridView()
+        {
+            string query =  "SELECT Customer.Name AS Name, Customer.IDCard AS IDCard, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, BookRoom.DateCheckIn AS DateCheckIn, BookRoom.DateCheckOut AS DateCheckOut, RoomType.LimitPerson AS LimitPerson, RoomType.Price AS Price " +
+                            "FROM ReceiveRoom " +
+                            "INNER JOIN BookRoom ON ReceiveRoom.IDBookRoom = BookRoom.IDBookRoom " +
+                            "INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom " +
+                            "INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType " +
+                            "INNER JOIN Customer ON BookRoom.IDCustomer = Customer.IDCustomer " +
+                            "WHERE BookRoom.DateCheckIn >= @currentDate;";
+
+            DataTable dataTable = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@currentDate", DateTime.Now.Date);
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTable);
+                }
+            }
+            dataGridViewReceiveRoom.DataSource = dataTable;
         }
         private void InitializeComboBox()
         {
-            cbRoomType.Items.AddRange(new object[]
-            {
-            "Phòng Tổng Thống",
-            "Phòng Đôi",
-            "Phòng Tiện Ích",
-            "Phòng Tiêu Chuẩn",
-            "Không"
-            });
+            cbRoomType.Items.Clear();
+            cbRoomType.Items.Add("Phòng tiêu chuẩn");
+            cbRoomType.Items.Add("Phòng đôi");
+            cbRoomType.Items.Add("Phòng tiện ích");
+            cbRoomType.Items.Add("Phòng tổng thống");
+            cbRoomType.SelectedItem = "Phòng tiêu chuẩn";
 
+            cbRoomType.SelectedIndexChanged += new EventHandler(cbRoomType_SelectedIndexChanged);
+
+            LoadRoomsBasedOnRoomType(cbRoomType.SelectedItem.ToString());
         }
-        private void fReceiveRoom_Load(object sender, EventArgs e)
+
+        private void cbRoomType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Hienthidanhsach();
+            LoadRoomsBasedOnRoomType(cbRoomType.SelectedItem.ToString());
         }
-        private void dataGridViewReceiveRoom_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        private void LoadRoomsBasedOnRoomType(string roomType)
         {
-            if (e.RowIndex >= 0 && e.RowIndex < dataGridViewReceiveRoom.Rows.Count)
+            string query = "SELECT DISTINCT Room.NameRoom AS NameRoom " +
+                           "FROM ReceiveRoom " +
+                           "INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom " +
+                           "INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType " +
+                           "WHERE Room.IDStatusRoom = 1 AND RoomType.NameRoomType = @RoomType;";
+
+            DataTable dataTable = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectstring))
             {
-                DataGridViewRow row = dataGridViewReceiveRoom.Rows[e.RowIndex];
-
-                // Lấy IDBookRoom từ cột có tên là IDBookRoom trong DataGridView
-                string idBookRoom = row.Cells["IDBookRoom"].Value.ToString();
-
-                // Sử dụng IDBookRoom để truy vấn và lấy thông tin từ bảng BookRoom
-                string query = "SELECT * FROM BookRoom WHERE IDBookRoom = @IDBookRoom";
-
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    using (SqlConnection connection = new SqlConnection(strCon))
-                    {
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(query, connection);
-                        command.Parameters.AddWithValue("@IDBookRoom", idBookRoom);
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        if (reader.Read())
-                        {
-                            txbDateCheckIn.Text = reader["DateCheckin"].ToString();
-                            txbDateCheckOut.Text = reader["DateCheckOut"].ToString();
-                            txbFullName.Text = reader["FullName"].ToString();
-                            txbIDCard.Text = reader["IDCard"].ToString();
-                            txbRoomName.Text = reader["RoomName"].ToString();
-                            txbRoomTypeName.Text = reader["RoomTypeName"].ToString();
-                            txbPrice.Text = reader["Price"].ToString();
-                            txbAmountPeople.Text = reader["AmountPeople"].ToString();
-                        }
-                        reader.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi lấy thông tin từ BookRoom: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-        private string GetIDCustomerFromBookRoom(string idBookRoom)
-        {
-            string idCustomer = "";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(strCon))
-                {
+                    command.Parameters.AddWithValue("@RoomType", roomType);
                     connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT IDCustomer FROM BookRoom WHERE IDBookRoom = @IDBookRoom", connection);
-                    command.Parameters.AddWithValue("@IDBookRoom", idBookRoom);
-                    idCustomer = command.ExecuteScalar()?.ToString();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTable);
                 }
             }
-            catch (Exception ex)
+            cbRoom.Items.Clear();
+            foreach (DataRow row in dataTable.Rows)
             {
-                MessageBox.Show("Lỗi khi lấy IDCustomer từ BookRoom: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbRoom.Items.Add(row["NameRoom"].ToString());
             }
 
-            return idCustomer;
-        }
 
-
-
-
-        private void btnReceiveRoom_Click(object sender, System.EventArgs e)
-        {
-
-        }
-        private void Hienthidanhsach()
-        {
-            using (SqlConnection connection = new SqlConnection(strCon))
+            if (cbRoom.Items.Count > 0)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM ReceiveRoom", connection);
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                dataGridViewReceiveRoom.DataSource = dataTable;
+                cbRoom.SelectedIndex = 0;
             }
         }
+
+
+
+
+
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string idBookRoomToSearch = txbIDBookRoom.Text.Trim();
-
-            if (idBookRoomToSearch != string.Empty)
+            string fieldToSearch = metroComboBox1.SelectedItem.ToString();
+            string searchValue = txbSearch.Text.Trim();
+            if (searchValue == string.Empty)
             {
-                using (SqlConnection connection = new SqlConnection(strCon))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT * FROM ReceiveRoom WHERE IDBookRoom LIKE @IDBookRoom", connection);
-                    command.Parameters.AddWithValue("@IDBookRoom", "%" + idBookRoomToSearch + "%"); // Sử dụng % để cho phép tìm kiếm gần đúng
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-                    dataGridViewReceiveRoom.DataSource = dataTable;
-
-                }
+                cMessageBox.Show("Vui lòng nhập thông tin trước khi tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string query = "";
+            if (btnDisplay.Visible == false)
+            {
+                query = "SELECT Customer.Name AS Name, Customer.IDCard AS IDCard, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, BookRoom.DateCheckIn AS DateCheckIn, BookRoom.DateCheckOut AS DateCheckOut, RoomType.LimitPerson AS LimitPerson, RoomType.Price AS Price " +
+                        "FROM ReceiveRoom " +
+                        "INNER JOIN BookRoom ON ReceiveRoom.IDBookRoom = BookRoom.IDBookRoom " +
+                        "INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom " +
+                        "INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType " +
+                        "INNER JOIN Customer ON BookRoom.IDCustomer = Customer.IDCustomer " +
+                        $"WHERE BookRoom.DateCheckIn >= @currentDate AND {fieldToSearch} LIKE '%' + @SearchValue + '%';";
             }
             else
             {
-                MessageBox.Show("Vui lòng nhập ID để tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                query = "SELECT Customer.Name AS Name, Customer.IDCard AS IDCard, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, BookRoom.DateCheckIn AS DateCheckIn, BookRoom.DateCheckOut AS DateCheckOut, RoomType.LimitPerson AS LimitPerson, RoomType.Price AS Price " +
+                        "FROM ReceiveRoom " +
+                        "INNER JOIN BookRoom ON ReceiveRoom.IDBookRoom = BookRoom.IDBookRoom " +
+                        "INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom " +
+                        "INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType " +
+                        "INNER JOIN Customer ON BookRoom.IDCustomer = Customer.IDCustomer " +
+                        $"WHERE {fieldToSearch} LIKE '%' + @SearchValue + '%';";
             }
 
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@SearchValue", searchValue);
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+                    connection.Close();
+
+
+                    dataGridViewReceiveRoom.DataSource = dataTable;
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        DataRow firstRow = dataTable.Rows[0];
+                        txbFullName.Text = firstRow["Name"].ToString();
+                        txbIDCard.Text = firstRow["IDCard"].ToString();
+                        txbRoomName.Text = firstRow["NameRoom"].ToString();
+                        txbRoomTypeName.Text = firstRow["NameRoomType"].ToString();
+                        txbDateCheckIn.Text = firstRow["DateCheckIn"].ToString();
+                        txbDateCheckOut.Text = firstRow["DateCheckOut"].ToString();
+                        txbAmountPeople.Text = firstRow["LimitPerson"].ToString();
+                        txbPrice.Text = firstRow["Price"].ToString();
+                    }
+                    else
+                    {
+                        txbFullName.Text = string.Empty;
+                        txbIDCard.Text = string.Empty;
+                        txbRoomName.Text = string.Empty;
+                        txbRoomTypeName.Text = string.Empty;
+                        txbDateCheckIn.Text = string.Empty;
+                        txbDateCheckOut.Text = string.Empty;
+                        txbAmountPeople.Text = string.Empty;
+                        txbPrice.Text = string.Empty;
+                        cMessageBox.Show("Không tìm thấy dữ liệu cho thông tin đã nhập.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            btnSearch.Visible = false;
+            btnCancel.Visible = true;
         }
 
 
@@ -157,6 +229,128 @@ namespace HotelManager
             this.Close();
         }
 
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewReceiveRoom.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridViewReceiveRoom.SelectedRows[0];
+                string idBookRoom = selectedRow.Cells["IDBookRoom"].Value.ToString();
 
+                // Lấy thông tin từ bảng BookRoom
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectstring))
+                    {
+                        connection.Open();
+                        SqlCommand command = new SqlCommand("SELECT DateCheckIn FROM BookRoom WHERE IDBookRoom = @IDBookRoom", connection);
+                        command.Parameters.AddWithValue("@IDBookRoom", idBookRoom);
+
+
+                        object dateCheckIn = command.ExecuteScalar();
+                        if (dateCheckIn != null && dateCheckIn != DBNull.Value)
+                        {
+                            txbDateCheckIn.Text = ((DateTime)dateCheckIn).ToString("dd/MM/yyyy");
+                        }
+                        else
+                        {
+                            txbDateCheckIn.Text = "";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi lấy thông tin DateCheckIn từ BookRoom: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để xem chi tiết.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnDisplayAll_Click(object sender, EventArgs e)
+        {
+            ClearData();
+            string query = "SELECT Customer.Name AS Name, Customer.IDCard AS IDCard, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, BookRoom.DateCheckIn AS DateCheckIn, BookRoom.DateCheckOut AS DateCheckOut, RoomType.LimitPerson AS LimitPerson, RoomType.Price AS Price FROM ReceiveRoom INNER JOIN BookRoom ON ReceiveRoom.IDBookRoom = BookRoom.IDBookRoom INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType INNER JOIN Customer ON BookRoom.IDCustomer = Customer.IDCustomer;";
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectstring))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTable);
+                }
+            }
+            dataGridViewReceiveRoom.DataSource = dataTable;
+            dataGridViewReceiveRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            DataBinding();
+            btnDisplayAll.Visible = false;
+            btnDisplay.Visible = true;
+            btnSearch.Visible = true;
+            btnCancel.Visible = false;
+        }
+
+        private void btnDisplay_Click(object sender, EventArgs e)
+        {
+            ClearData();
+            LoadDataToDataGridView();
+            dataGridViewReceiveRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            DataBinding();
+            btnDisplayAll.Visible = true;
+            btnDisplay.Visible = false;
+            btnSearch.Visible = true;
+            btnCancel.Visible = false;
+        }
+
+        private void ClearData()
+        {
+            txbFullName.Text = "";
+            txbIDCard.Text = "";
+            txbRoomName.Text = "";
+            txbRoomTypeName.Text = "";
+            txbDateCheckIn.Text = "";
+            txbDateCheckOut.Text = "";
+            txbAmountPeople.Text = "";
+            txbPrice.Text = "";
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            if (btnDisplay.Visible == false)
+            {
+                ClearData();
+                LoadDataToDataGridView();
+                dataGridViewReceiveRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                DataBinding();
+            }
+            else
+            {
+                ClearData();
+                string query = "SELECT Customer.Name AS Name, Customer.IDCard AS IDCard, Room.NameRoom AS NameRoom, RoomType.NameRoomType AS NameRoomType, BookRoom.DateCheckIn AS DateCheckIn, BookRoom.DateCheckOut AS DateCheckOut, RoomType.LimitPerson AS LimitPerson, RoomType.Price AS Price FROM ReceiveRoom INNER JOIN BookRoom ON ReceiveRoom.IDBookRoom = BookRoom.IDBookRoom INNER JOIN Room ON Room.IDRoom = ReceiveRoom.IDRoom INNER JOIN RoomType ON Room.IDRoomType = RoomType.IDRoomType INNER JOIN Customer ON BookRoom.IDCustomer = Customer.IDCustomer;";
+                DataTable dataTable = new DataTable();
+
+                using (SqlConnection connection = new SqlConnection(connectstring))
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        connection.Open();
+                        SqlDataAdapter adapter = new SqlDataAdapter(command);
+                        adapter.Fill(dataTable);
+                    }
+                }
+                dataGridViewReceiveRoom.DataSource = dataTable;
+                dataGridViewReceiveRoom.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                DataBinding();
+            }
+            btnSearch.Visible = true;
+            btnCancel.Visible = false;
+        }
+
+        private void btnReceiveRoom_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
