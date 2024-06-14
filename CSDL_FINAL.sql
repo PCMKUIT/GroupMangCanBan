@@ -31,7 +31,7 @@ CREATE TABLE BookRoom(
 	DateCheckIn date ,
 	DateCheckOut date 
 )
-Drop table Customer
+
 CREATE TABLE Customer(
 	IDCustomer char(10) PRIMARY KEY ,
 	IDCard nvarchar(100) ,
